@@ -1,9 +1,22 @@
-import React from 'react'
+import Button from "../Button/Button";
+import nextIcon from "../../assets/images/next_icon.svg";
+import endIcon from "../../assets/images/end_icon.svg";
 
 const Pagination = () => {
   return (
-    <div>Pagination</div>
-  )
-}
+    <section>
+      <Button src={endIcon} />
+      <Button src={nextIcon} />
 
-export default Pagination
+      <form>
+        <input />
+        <span></span>
+      </form>
+
+      <Button src={nextIcon} />
+      <Button src={endIcon} />
+    </section>
+  );
+};
+
+export default Pagination;

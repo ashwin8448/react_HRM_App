@@ -1,11 +1,16 @@
-
-const Button = ({description, src}:{description: string, src: string}) => {
-  return (
-    <button>
-      <span>{description}</span>
-      <img src={src}/>  
-    </button>
-  )
+interface buttonAttributes {
+  description?: string;
+  src?: string;
+  alt?: string;
 }
 
-export default Button
+const Button = ({ description, src, alt }: buttonAttributes) => {
+  return (
+    <button>
+      {description && <span>{description}</span>}
+      {src && <img src={src} alt={alt} />}
+    </button>
+  );
+};
+
+export default Button;

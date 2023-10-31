@@ -1,22 +1,14 @@
-import Footer from "./components/Footer/Footer";
-import Header from "./components/Header/Header";
-import Pagination from "./components/Pagination/Pagination";
-import Table from "./components/Table/Table";
-import TableOptions from "./components/TableOptions/TableOptions";
+import EmployeeListingPage from "./EmployeeListingPage/EmployeeListingPage";
+import Layout from "./Layout/Layout";
+import NewOrEditEmployee from "./NewOrEditEmployeePage/NewOrEditEmployee";
+
 
 function App() {
   return (
-    <>
-      <Header />
-      <br />
-      <TableOptions />
-      <br />
-      <Table />
-      <br />
-      <Pagination />
-      <br />
-      <Footer />
-    </>
+      <Layout>
+         <EmployeeListingPage />
+         <NewOrEditEmployee />
+      </Layout>
   );
 }
 

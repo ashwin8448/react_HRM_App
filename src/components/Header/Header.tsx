@@ -1,13 +1,14 @@
 import SearchBar from "../SearchBar/SearchBar";
-import Logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.png";
+import searchIcon from "../../assets/images/search_icon.svg"
 
 const Header = () => {
   return (
     <header>
       <h1>
-        <img src={Logo} alt="logo" />
+        <img src={logo} alt="logo" />
       </h1>
-      <SearchBar></SearchBar>
+      <SearchBar placeholder="Search by name" src={searchIcon} alt="Search icon"></SearchBar>
     </header>
   );
 };
