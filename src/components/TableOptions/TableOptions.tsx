@@ -1,12 +1,10 @@
 import Button from "../Button/Button";
+import AddEmployeeIcon from "../../assets/images/add_user_icon.svg"
 
 const TableOptions = () => {
   return (
     <div>
-      <div>
-        Add employee button
-        <Button></Button>
-      </div>
+      <Button description="Add new employee" src={AddEmployeeIcon}/>
       <div>Filter employee</div>
     </div>
   );
