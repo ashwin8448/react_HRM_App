@@ -5,13 +5,9 @@ import TableOptions from "../components/TableOptions/TableOptions";
 const EmployeeListingPage = () => {
   return (
     <>
-      <br />
       <TableOptions />
-      <br />
       <Table />
-      <br />
       <Pagination />
-      <br />
     </>
   );
 };

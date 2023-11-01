@@ -1,15 +1,18 @@
+import ButtonWrapper from "./Button.style";
+
 interface buttonAttributes {
+  className?: string;
   description?: string;
   src?: string;
   alt?: string;
 }
 
-const Button = ({ description, src, alt }: buttonAttributes) => {
+const Button = ({ className, description, src, alt }: buttonAttributes) => {
   return (
-    <button>
+    <ButtonWrapper className="flex">
       {description && <span>{description}</span>}
-      {src && <img src={src} alt={alt} />}
-    </button>
+      {src && <img src={src} alt={alt} className={`icon ${className}`} />}
+    </ButtonWrapper>
   );
 };
 

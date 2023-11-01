@@ -2,6 +2,8 @@ import Button from "../Button/Button";
 import viewIcon from "../../assets/images/view_user_icon.svg";
 import editIcon from "../../assets/images/edit_icon.svg";
 import deleteIcon from "../../assets/images/delete_icon.svg";
+import sortIcon from "../../assets/images/ascending_order_icon.svg";
+import TableWrapper from "./Table.style";
 
 interface rowProps {
   id: string;
@@ -31,6 +33,21 @@ const data: rowProps[] = [
   },
 ];
 
+const TableHeader = ({
+  tableHeader,
+  isSortable,
+}: {
+  tableHeader?: string;
+  isSortable?: boolean;
+}) => {
+  return (
+    <th>
+      <span>{tableHeader}</span>
+      {isSortable && <img src={sortIcon} alt="Sort icon" />}
+    </th>
+  );
+};
+
 const EmployeeRow = ({ id, employeeName, department, role }: rowProps) => {
   return (
     <tr>
@@ -38,7 +55,7 @@ const EmployeeRow = ({ id, employeeName, department, role }: rowProps) => {
       <td>{employeeName}</td>
       <td>{department}</td>
       <td>{role}</td>
-      <td>
+      <td className="flex">
         <Button src={viewIcon} alt="View employee button"></Button>
         <Button src={editIcon} alt="Edit employee button"></Button>
         <Button src={deleteIcon} alt="Delete employee button"></Button>
@@ -48,28 +65,40 @@ const EmployeeRow = ({ id, employeeName, department, role }: rowProps) => {
 };
 
 const Table = () => {
+  const tableHeaders = ["Employee Number", "Name", "Department", "Role"];
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Employee Number</th>
-          <th>Name</th>
-          <th>Department</th>
-          <th>Role</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((element) => (
-          <EmployeeRow
-            id={element.id}
-            employeeName={element.employeeName}
-            department={element.department}
-            role={element.role}
-          />
-        ))}
-      </tbody>
-    </table>
+    <TableWrapper className="container">
+      <table>
+        <thead>
+          <tr>
+            <>
+              {tableHeaders.map((element) => {
+                return (
+                  <TableHeader
+                    tableHeader={element}
+                    isSortable={true}
+                  ></TableHeader>
+                );
+              })}
+              <TableHeader
+                tableHeader="Actions"
+                isSortable={false}
+              ></TableHeader>
+            </>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((element) => (
+            <EmployeeRow
+              id={element.id}
+              employeeName={element.employeeName}
+              department={element.department}
+              role={element.role}
+            />
+          ))}
+        </tbody>
+      </table>
+    </TableWrapper>
   );
 };
 

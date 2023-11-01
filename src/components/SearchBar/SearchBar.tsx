@@ -1,3 +1,5 @@
+import SearchBarWrapper from "./SearchBar.style";
+
 interface searchBarProps {
   placeholder?: string;
   src?: string;
@@ -6,12 +8,12 @@ interface searchBarProps {
 
 const SearchBar = ({ placeholder, src, alt }: searchBarProps) => {
   return (
-    <div>
+    <SearchBarWrapper className="flex">
       <form>
         <input type="text" placeholder={placeholder} />
       </form>
       <img src={src} alt={alt} />
-    </div>
+    </SearchBarWrapper>
   );
 };
 

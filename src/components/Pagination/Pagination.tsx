@@ -1,21 +1,22 @@
 import Button from "../Button/Button";
 import nextIcon from "../../assets/images/next_icon.svg";
 import endIcon from "../../assets/images/end_icon.svg";
+import PaginationWrapper from "./Pagination.style";
 
 const Pagination = () => {
   return (
-    <section>
-      <Button src={endIcon} />
-      <Button src={nextIcon} />
+    <PaginationWrapper className="flex container">
+      <Button className="mirror" src={endIcon} alt="Show first page icon" />
+      <Button className="mirror" src={nextIcon} alt="Show previous page icon" />
 
       <form>
         <input />
         <span></span>
       </form>
 
-      <Button src={nextIcon} />
-      <Button src={endIcon} />
-    </section>
+      <Button src={nextIcon} alt="Show next page icon" />
+      <Button src={endIcon} alt="Show last page icon" />
+    </PaginationWrapper>
   );
 };
 
