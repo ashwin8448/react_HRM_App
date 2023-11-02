@@ -1,4 +1,4 @@
-import Dropdown from "../components/Dropdown/Dropdown";
+import Dropdown from "../../components/Dropdown/Dropdown";
 
 const data: { skills: string[]; departments: string[]; roles: string[] } = {
   skills: ["Git", "CSS", "HTML", "JavaScript", "React"],
@@ -9,6 +9,7 @@ const data: { skills: string[]; departments: string[]; roles: string[] } = {
 const NewOrEditEmployee = () => {
   return (
     <form>
+      <h2>Add New Employee</h2>
       <fieldset>
         <legend>Personal Details</legend>
         <label>

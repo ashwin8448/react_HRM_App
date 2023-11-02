@@ -1,7 +1,11 @@
+import FooterWrapper from "./FooterWrapper";
+
 const Footer = () => {
   return (
-    <footer>HRM React Application</footer>
-  )
-}
+    <FooterWrapper className="container flex">
+      HRM React Application
+    </FooterWrapper>
+  );
+};
 
-export default Footer
+export default Footer;

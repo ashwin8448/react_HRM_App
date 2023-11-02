@@ -1,14 +1,12 @@
-import EmployeeListingPage from "./EmployeeListingPage/EmployeeListingPage";
 import Layout from "./Layout/Layout";
-import NewOrEditEmployee from "./NewOrEditEmployeePage/NewOrEditEmployee";
-
+import { RouterProvider } from "react-router-dom";
+import router from "./core/routing/routing";
 
 function App() {
   return (
-      <Layout>
-         <EmployeeListingPage />
-         <NewOrEditEmployee />
-      </Layout>
+    <Layout>
+      <RouterProvider router={router}></RouterProvider>
+    </Layout>
   );
 }
 

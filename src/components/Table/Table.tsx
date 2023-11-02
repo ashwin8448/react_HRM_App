@@ -4,6 +4,7 @@ import editIcon from "../../assets/images/edit_icon.svg";
 import deleteIcon from "../../assets/images/delete_icon.svg";
 import sortIcon from "../../assets/images/ascending_order_icon.svg";
 import TableWrapper from "./Table.style";
+import { useNavigate } from "react-router-dom";
 
 interface rowProps {
   id: string;
@@ -42,8 +43,15 @@ const TableHeader = ({
 }) => {
   return (
     <th>
-      <span>{tableHeader}</span>
-      {isSortable && <img src={sortIcon} alt="Sort icon" />}
+      {isSortable ? (
+        <Button
+          description={tableHeader}
+          src={sortIcon}
+          alt="Sort icon"
+        ></Button>
+      ) : (
+        <span>{tableHeader}</span>
+      )}
     </th>
   );
 };
@@ -56,9 +64,21 @@ const EmployeeRow = ({ id, employeeName, department, role }: rowProps) => {
       <td>{department}</td>
       <td>{role}</td>
       <td className="flex">
-        <Button src={viewIcon} alt="View employee button"></Button>
-        <Button src={editIcon} alt="Edit employee button"></Button>
-        <Button src={deleteIcon} alt="Delete employee button"></Button>
+        <Button
+          src={viewIcon}
+          alt="View employee button"
+          action="view"
+        ></Button>
+        <Button
+          src={editIcon}
+          alt="Edit employee button"
+          action="edit"
+        ></Button>
+        <Button
+          src={deleteIcon}
+          alt="Delete employee button"
+          action="delete"
+        ></Button>
       </td>
     </tr>
   );
@@ -66,30 +86,52 @@ const EmployeeRow = ({ id, employeeName, department, role }: rowProps) => {
 
 const Table = () => {
   const tableHeaders = ["Employee Number", "Name", "Department", "Role"];
+  const navigate = useNavigate();
+
+  const handleTableClick = (e: React.MouseEvent<HTMLElement>) => {
+    const targetElement = (e.target as HTMLElement).closest("button");
+    if (targetElement) {
+      switch (targetElement.parentElement?.tagName) {
+        case "TH":
+          alert("Sorted");
+          break;
+        case "TD":
+          switch (targetElement.dataset.action) {
+            case "edit":
+              navigate("/form_page");
+              break;
+            case "view":
+              navigate("/view_employee_page");
+              break;
+            case "delete":
+              alert("Deleted");
+              break;
+          }
+          break;
+      }
+    }
+  };
   return (
     <TableWrapper className="container">
-      <table>
+      <table onClick={handleTableClick}>
         <thead>
           <tr>
-            <>
-              {tableHeaders.map((element) => {
-                return (
-                  <TableHeader
-                    tableHeader={element}
-                    isSortable={true}
-                  ></TableHeader>
-                );
-              })}
-              <TableHeader
-                tableHeader="Actions"
-                isSortable={false}
-              ></TableHeader>
-            </>
+            {tableHeaders.map((element) => {
+              return (
+                <TableHeader
+                  key={element}
+                  tableHeader={element}
+                  isSortable={true}
+                ></TableHeader>
+              );
+            })}
+            <TableHeader tableHeader="Actions" isSortable={false}></TableHeader>
           </tr>
         </thead>
         <tbody>
           {data.map((element) => (
             <EmployeeRow
+              key={element.id}
               id={element.id}
               employeeName={element.employeeName}
               department={element.department}

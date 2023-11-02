@@ -1,9 +1,15 @@
-import React from 'react'
+import closeButton from "../../assets/images/close_button_icon.svg";
+import { ReactNode } from "react";
+import Button from "../Button/Button";
+import ModalWrapper from "./Modal.style";
 
-const Modal = () => {
+const Modal = ({ children }: { children: ReactNode }) => {
   return (
-    <div>Modal</div>
-  )
-}
+    <ModalWrapper>
+      <Button className="icon" src={closeButton} alt="Close icon"></Button>
+      {children}
+    </ModalWrapper>
+  );
+};
 
-export default Modal
+export default Modal;

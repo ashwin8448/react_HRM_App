@@ -11,7 +11,7 @@ const Pagination = () => {
 
       <form>
         <input />
-        <span></span>
+        <span>(Page info)</span>
       </form>
 
       <Button src={nextIcon} alt="Show next page icon" />

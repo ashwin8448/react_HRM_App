@@ -6,12 +6,14 @@ const Dropdown = ({
   inputField: string;
 }) => {
   return (
-    <select autoComplete="off">
-      <option value={`Select a ${inputField}`} selected disabled>
+    <select autoComplete="off" defaultValue={`Select a ${inputField}`}>
+      <option value={`Select a ${inputField}`} disabled>
         Select a {inputField}
       </option>
       {options.map((element) => (
-        <option value={element}>{element}</option>
+        <option key={element} value={element}>
+          {element}
+        </option>
       ))}
     </select>
   );
