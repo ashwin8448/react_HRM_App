@@ -6,7 +6,7 @@ import ModalWrapper from "./Modal.style";
 const Modal = ({ children }: { children: ReactNode }) => {
   return (
     <ModalWrapper>
-      <Button className="icon" src={closeButton} alt="Close icon"></Button>
+      <Button className="icon close-button" src={closeButton} alt="Close icon"></Button>
       {children}
     </ModalWrapper>
   );

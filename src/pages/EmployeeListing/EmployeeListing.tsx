@@ -9,7 +9,7 @@ const EmployeeListing = () => {
       <TableOptions />
       <Table />
       <Pagination />
-      <ConfirmBox />
+      {/* <ConfirmBox /> */}
     </>
   );
 };

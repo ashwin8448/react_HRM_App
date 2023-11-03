@@ -1,15 +1,6 @@
+import { IButtonAttributes } from "../../core/interface/interface";
 import ButtonWrapper from "./Button.style";
 
-interface buttonAttributes {
-  className?: string;
-  description?: string;
-  src?: string;
-  alt?: string;
-  action?: string;
-  onClick?: () => void;
-}
-
-<button></button>
 const Button = ({
   className = "",
   description,
@@ -17,12 +8,16 @@ const Button = ({
   alt,
   action,
   onClick,
-}: buttonAttributes) => {
+}: IButtonAttributes) => {
   return (
-    <ButtonWrapper className="flex" onClick={onClick} data-action={action}>
+    <ButtonWrapper
+      className={`flex ${className}`}
+      onClick={onClick}
+      data-action={action}
+    >
       {description && <span>{description}</span>}
-      {src && <img src={src} alt={alt} className={`icon ${className}`} />}
-    </ButtonWrapper>    
+      {src && <img src={src} alt={alt} className={`icon`} />}
+    </ButtonWrapper>
   );
 };
 
