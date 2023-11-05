@@ -5,8 +5,8 @@ import deleteIcon from "../../assets/images/delete_icon.svg";
 import sortIcon from "../../assets/images/ascending_order_icon.svg";
 import TableWrapper from "./styles";
 import { Link } from "react-router-dom";
-import { IRowProps } from "../../core/interface/interface";
 import { employees, tableHeaders } from "../../core/config/constants";
+// import { IRowProps } from "../../core/interface/interface";
 
 const TableHeader = ({
   tableHeader,
