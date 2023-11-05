@@ -1,4 +1,4 @@
-import SearchBarWrapper from "./SearchBar.style";
+import SearchBarWrapper from "./styles";
 
 interface searchBarProps {
   placeholder?: string;

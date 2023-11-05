@@ -1,7 +1,7 @@
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
 
-import ConfirmBoxWrapper from "./ConfirmBox.style";
+import ConfirmBoxWrapper from "./styles";
 
 const ConfirmBox = () => {
   return (
@@ -13,8 +13,8 @@ const ConfirmBox = () => {
           <span className="negative">"Employee Name"</span>?
         </p>
         <div className="flex confirm-box-buttons">
-          <Button description="Yes" className="negative" />
-          <Button description="No" />
+          <Button description="Yes" className="primary-button negative" />
+          <Button className="primary-button" description="No" />
         </div>
       </ConfirmBoxWrapper>
     </Modal>

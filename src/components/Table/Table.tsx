@@ -3,8 +3,8 @@ import viewIcon from "../../assets/images/view_user_icon.svg";
 import editIcon from "../../assets/images/edit_icon.svg";
 import deleteIcon from "../../assets/images/delete_icon.svg";
 import sortIcon from "../../assets/images/ascending_order_icon.svg";
-import TableWrapper from "./Table.style";
-import { useNavigate } from "react-router-dom";
+import TableWrapper from "./styles";
+import { Link } from "react-router-dom";
 import { IRowProps } from "../../core/interface/interface";
 import { employees, tableHeaders } from "../../core/config/constants";
 
@@ -15,6 +15,9 @@ const TableHeader = ({
   tableHeader?: string;
   isSortable?: boolean;
 }) => {
+  const sortHandler = () => {
+    alert("SORTED");
+  };
   return (
     <th>
       {isSortable ? (
@@ -22,6 +25,8 @@ const TableHeader = ({
           description={tableHeader}
           src={sortIcon}
           alt="Sort icon"
+          onClick={sortHandler}
+          className="primary-button"
         ></Button>
       ) : (
         <span>{tableHeader}</span>
@@ -31,37 +36,36 @@ const TableHeader = ({
 };
 
 const EmployeeRow = ({ employee }: any) => {
+  const deleteButtonHandler = () => {
+    alert("DELETED");
+  };
   return (
     <tr>
       {tableHeaders.map((tableHeader) => {
-        return (
-          <td key={tableHeader.headerName}>
-            {
-              tableHeader.id.reduce((currentHeaderName, headerId) => {
-                return currentHeaderName + " " + employee[headerId];
-              }, "")
-              // employee[tableHeader.id]
-            }
-          </td>
-        );
+        return <td key={tableHeader.headerName}>{employee[tableHeader.id]}</td>;
       })}
 
       <td>
         <div className="flex employee-actions">
+          <Link to="view_employee_page">
+            <Button
+              className="primary-button"
+              src={viewIcon}
+              alt="View employee button"
+            ></Button>
+          </Link>
+          <Link to="/form_page">
+            <Button
+              className="primary-button"
+              src={editIcon}
+              alt="Edit employee button"
+            ></Button>
+          </Link>
           <Button
-            src={viewIcon}
-            alt="View employee button"
-            action="view"
-          ></Button>
-          <Button
-            src={editIcon}
-            alt="Edit employee button"
-            action="edit"
-          ></Button>
-          <Button
+            className="primary-button"
             src={deleteIcon}
             alt="Delete employee button"
-            action="delete"
+            onClick={deleteButtonHandler}
           ></Button>
         </div>
       </td>
@@ -70,34 +74,9 @@ const EmployeeRow = ({ employee }: any) => {
 };
 
 const Table = () => {
-  const navigate = useNavigate();
-
-  const handleTableClick = (e: React.MouseEvent<HTMLElement>) => {
-    const targetElement = (e.target as HTMLElement).closest("button");
-    if (targetElement) {
-      switch (targetElement.parentElement?.tagName) {
-        case "TH":
-          alert("Sorted");
-          break;
-        case "TD":
-          switch (targetElement.dataset.action) {
-            case "edit":
-              navigate("/form_page");
-              break;
-            case "view":
-              navigate("/view_employee_page");
-              break;
-            case "delete":
-              alert("Deleted");
-              break;
-          }
-          break;
-      }
-    }
-  };
   return (
-    <TableWrapper className="container table-section">
-      <table onClick={handleTableClick}>
+    <TableWrapper className=" table-section">
+      <table>
         <thead>
           <tr>
             {tableHeaders.map((tableHeader) => {
@@ -114,7 +93,13 @@ const Table = () => {
         </thead>
         <tbody>
           {employees.map((employee) => (
-            <EmployeeRow key={employee.id} employee={employee} />
+            <EmployeeRow
+              key={employee.id}
+              employee={{
+                ...employee,
+                name: `${employee.fname} ${employee.lname}`,
+              }}
+            />
           ))}
         </tbody>
       </table>

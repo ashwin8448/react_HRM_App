@@ -1,11 +1,11 @@
 import SearchBar from "../SearchBar/SearchBar";
 import logo from "../../assets/images/logo.png";
 import searchIcon from "../../assets/images/search_icon.svg";
-import HeaderWrapper from "./Header.style";
+import HeaderWrapper from "./styles";
 
 const Header = () => {
   return (
-    <HeaderWrapper className="flex container">
+    <HeaderWrapper className="flex">
       <h1>
         <img className="logo" src={logo} alt="logo" />
       </h1>

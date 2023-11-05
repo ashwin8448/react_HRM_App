@@ -86,19 +86,70 @@ export const employees = [
 
 export const tableHeaders = [
   {
-    id: ["id"],
+    id: "id",
     headerName: "Employee Number",
   },
   {
-    id: ["fname", "lname"],
+    id: "name",
     headerName: "Name",
   },
   {
-    id: ["department"],
+    id: "department",
     headerName: "Department",
   },
   {
-    id: ["role"],
+    id: "role",
     headerName: "Role",
+  },
+];
+
+
+export const dropdownData: { skills: string[]; departments: string[]; roles: string[] } = {
+  skills: ["Git", "CSS", "HTML", "JavaScript", "React"],
+  departments: ["BDG", "FEED", "Backend", "Accounts"],
+  roles: ["Business Analyst", "Engineer", "Architect", "Intern"],
+};
+
+export const formData = [
+  {
+    legend: "Personal Details",
+    fields: [
+      { description: "First name", inputType: "text", isMandatory: true },
+      { description: "Last name", inputType: "text", isMandatory: true },
+      { description: "Date of birth", inputType: "date", isMandatory: true },
+    ],
+  },
+  {
+    legend: "Contact Details",
+    fields: [
+      { description: "Address", inputType: "text", isMandatory: true },
+      { description: "Phone", inputType: "tel", isMandatory: true },
+      { description: "Email", inputType: "text", isMandatory: true },
+    ],
+  },
+  {
+    legend: "Employment Details",
+    fields: [
+      {
+        description: "Date of joining",
+        inputType: "date",
+        isMandatory: true,
+      },
+      {
+        description: "Department",
+        inputType: "custom:department",
+        isMandatory: true,
+      },
+      {
+        description: "Role",
+        inputType: "custom:role",
+        isMandatory: true,
+      },
+      {
+        description: "Skills",
+        inputType: "custom:skill",
+        isMandatory: false,
+      },
+    ],
   },
 ];

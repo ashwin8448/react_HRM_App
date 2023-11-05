@@ -5,16 +5,16 @@ const GlobalStyle = createGlobalStyle`
   --bg-blue: #659dbd;
   --bg-green: #8d8;
   --font: black;
-  --table-row-border: black;
   --input: #ffffff;
   --table: #dddddd;
   --search-bar: #dddddd;
   --modal-bg: #dddddd;
   --button: #ffffff;
+  --button-hover: #d4af9b;
   --overlay-bg: rgba(0, 0, 0, 0.459);
   --hover-bg: #958989b5;
   --toast-bg: rgb(70, 161, 70);
-  --selected-skill: #ffcb00;
+  --selected-skill: #d4af9b;
   --asterisk: red;
   --validation-message: red;
   --dropdown-bg: white;
@@ -34,9 +34,10 @@ body {
 }
 
 .container {
-  max-width: 1440px;
+  max-width: 1200px;
   width: 90%;
   margin: 0 auto;
+  height: 100vh;
 }
 
 .flex {
@@ -47,27 +48,56 @@ body {
     flex-direction: column;
 }
 
-input[type="text"]:focus,
-textarea:focus {
-  outline: 1px solid black;
+input,
+select{
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: var(--input);
+  }
+
+[type="submit"]:focus-visible,
+[type="reset"]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible
+.primary-button:focus-visible {
+  outline: 2px solid blue;
 }
 
 button,
 input[type="submit"],
 input[type="reset"] {
-  background: none;
   color: inherit;
-  border: none;
-  padding: 0;
   font: inherit;
   cursor: pointer;
   outline: inherit;
+  background: none;
+  border: none;
 }
 
 .icon {
   width: 32px;
 }
 
+main{
+  flex-grow: 1;
+}
+
+.primary-button{
+  align-items: center;
+  background-color: var(--button);
+  border-radius: 5px;
+  gap: 5px;
+  padding: 5px;
+  border: none;
+  justify-content: space-between;
+}
+
+.primary-button:hover{
+  background-color: var(--button-hover);
+}
 `;
 
 export default GlobalStyle;

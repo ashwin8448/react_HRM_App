@@ -1,6 +1,9 @@
+import SelectedSkills from "../../components/SelectedSkills/SelectedSkills";
+import DivWrapper from "./styles";
+
 const ViewEmployee = () => {
   return (
-    <div className="container">
+    <DivWrapper>
       <div>
         <h2>Employee Details</h2>
       </div>
@@ -28,10 +31,10 @@ const ViewEmployee = () => {
       <p>
         Role: <span></span>
       </p>
-      <p>
-        Skills: <span></span>
-      </p>
-    </div>
+      <div>
+      <SelectedSkills description="Skill(s)" isView={true}></SelectedSkills>
+      </div>
+    </DivWrapper>
   );
 };
 
