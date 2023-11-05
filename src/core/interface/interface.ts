@@ -7,11 +7,11 @@ export interface IButtonAttributes {
   onClick?: () => void;
 }
 
-export interface IRowProps {
-  id: string;
-  employeeName: string;
-  department: string;
-  role: string;
-}
+// export interface IRowProps {
+//   id: string;
+//   employeeName: string;
+//   department: string;
+//   role: string;
+// }
 
 // export const tableHeaders = ["Employee Number", "Name", "Department", "Role"];
