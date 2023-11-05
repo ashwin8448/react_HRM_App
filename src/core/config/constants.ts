@@ -1,4 +1,4 @@
-import { IRowProps } from "../../core/interface/interface";
+// import { IRowProps } from "../../core/interface/interface";
 
 export const skills = [
   "HTML",
