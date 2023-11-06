@@ -3,10 +3,13 @@ import EmployeeListing from "../../pages/EmployeeListing/EmployeeListing";
 import NewOrEditEmployee from "../../pages/NewOrEditEmployee/NewOrEditEmployee";
 import ViewEmployee from "../../pages/ViewEmployee/ViewEmployee";
 
-const router = createBrowserRouter([
-  { path: "/", element: <EmployeeListing /> },
-  { path: "/form_page", element: <NewOrEditEmployee /> },
-  { path: "/view_employee_page", element: <ViewEmployee /> },
-]);
+const router = createBrowserRouter(
+  [
+    { path: "/", element: <EmployeeListing /> },
+    { path: "/form_page", element: <NewOrEditEmployee /> },
+    { path: "/view_employee_page", element: <ViewEmployee /> },
+  ],
+  { basename: import.meta.env.DEV ? "/" : "/react_HRM_App/" }
+);
 
 export default router;

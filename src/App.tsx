@@ -5,7 +5,7 @@ import router from "./core/routing/routing";
 function App() {
   return (
     <Layout>
-      <RouterProvider router={router}></RouterProvider>
+      <RouterProvider router={router} ></RouterProvider>
     </Layout>
   );
 }
