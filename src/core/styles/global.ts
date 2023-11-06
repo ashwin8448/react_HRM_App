@@ -98,6 +98,12 @@ main{
 .primary-button:hover{
   background-color: var(--button-hover);
 }
+
+.page-content{
+  background-color: var(--table);
+  border-radius: 5px;
+  padding: 25px;
+}
 `;
 
 export default GlobalStyle;

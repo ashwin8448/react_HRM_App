@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
 const FormWrapper = styled.form`
-  background-color: var(--table);
-  border-radius: 5px;
-  padding: 10px;
-
   h2 {
     margin-top: 0;
   }
@@ -43,7 +39,7 @@ const FormWrapper = styled.form`
   }
 
   .buttons-container {
-    justify-content:right;
+    justify-content: right;
     gap: 20px;
     .primary-button {
       width: 100px;

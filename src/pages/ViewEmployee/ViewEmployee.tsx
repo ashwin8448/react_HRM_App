@@ -3,7 +3,7 @@ import DivWrapper from "./styles";
 
 const ViewEmployee = () => {
   return (
-    <DivWrapper>
+    <DivWrapper className="page-content">
       <div>
         <h2>Employee Details</h2>
       </div>

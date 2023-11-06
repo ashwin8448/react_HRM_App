@@ -9,8 +9,7 @@ const SelectedSkillsWrapper = styled.div`
   /* visibility: hidden; */
 
   .selected-skills {
-    overflow: auto;
-    height: 40px;
+    flex-wrap: wrap;
     gap: 15px;
     padding: 0 10px;
   }

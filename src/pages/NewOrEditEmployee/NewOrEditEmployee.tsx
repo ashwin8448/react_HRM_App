@@ -5,7 +5,7 @@ import FormWrapper from "./styles";
 
 const NewOrEditEmployee = () => {
   return (
-    <FormWrapper className=" employee-details-form">
+    <FormWrapper className="page-content employee-details-form">
       <h2>Add New Employee</h2>
       {formData.map((fieldsetObj) => {
         return (
@@ -25,7 +25,10 @@ const NewOrEditEmployee = () => {
         );
       })}
       <div>
-      <SelectedSkills description="Selected skill(s)" isView={false}></SelectedSkills>
+        <SelectedSkills
+          description="Selected skill(s)"
+          isView={false}
+        ></SelectedSkills>
       </div>
       <div className="buttons-container flex">
         <input className="primary-button" type="reset" />

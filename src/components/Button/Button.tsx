@@ -1,4 +1,4 @@
-import { IButtonAttributes } from "../../core/interface/interface";
+import { IButtonAttributes } from "./types";
 import ButtonWrapper from "./styles";
 
 const Button = ({

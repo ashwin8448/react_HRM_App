@@ -11,6 +11,7 @@ const ButtonWrapper = styled.button`
 
   &.mirror > img {
     transform: rotate(180deg);
+    
   }
 `;
 
