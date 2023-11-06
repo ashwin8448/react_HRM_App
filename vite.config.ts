@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => {
   }
 
   if (command !== 'serve') {
-    config.base = '/react-HRM-App/'
+    config.base = '/react_HRM_App/'
   }
 
   return config
