@@ -104,6 +104,12 @@ main{
   border-radius: 5px;
   padding: 25px;
 }
+
+ul {
+  list-style-type: none; 
+  padding: 0; 
+  margin: 0; 
+}
 `;
 
 export default GlobalStyle;

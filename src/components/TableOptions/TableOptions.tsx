@@ -5,11 +5,18 @@ import SearchBar from "../SearchBar/SearchBar";
 import TableOptionsWapper from "./styles";
 import { useNavigate } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
+import { useState } from "react";
+import CustomDropdown from "../CustomDropdown/CustomDropdown";
 
 const TableOptions = () => {
   const navigate = useNavigate();
   const handleBtnClick = () => {
     navigate("/form_page");
+  };
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+
+  const handleSelectedSkills = (currentSkill: string) => {
+    setSelectedSkills((prev) => [...prev, currentSkill]);
   };
 
   return (
@@ -22,13 +29,19 @@ const TableOptions = () => {
           src={addEmployeeIcon}
           alt="Add employee icon"
         />
+        <CustomDropdown handleSelectedSkills={handleSelectedSkills} />
         <SearchBar
           placeholder="Filter by skills"
           src={clearFilterIcon}
           alt="Filter icon"
+          // selectedSkills={selectedSkills}
         />
       </div>
-      <SelectedSkills description="Applied filter(s)" isView={false}></SelectedSkills>
+      <SelectedSkills
+        description="Applied filter(s)"
+        isView={false}
+        selectedSkills={selectedSkills}
+      ></SelectedSkills>
     </TableOptionsWapper>
   );
 };

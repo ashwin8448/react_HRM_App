@@ -1,9 +1,11 @@
-import InputField from "../../components/Input/Input";
+import InputField from "../../components/InputField/InputField";
 import SelectedSkills from "../../components/SelectedSkills/SelectedSkills";
 import { formData } from "../../core/config/constants";
 import FormWrapper from "./styles";
 
 const NewOrEditEmployee = () => {
+  //Change this to state
+  const selectedSkills = ["Hi"];
   return (
     <FormWrapper className="page-content employee-details-form">
       <h2>Add New Employee</h2>
@@ -28,7 +30,8 @@ const NewOrEditEmployee = () => {
         <SelectedSkills
           description="Selected skill(s)"
           isView={false}
-        ></SelectedSkills>
+          selectedSkills={selectedSkills}
+        />
       </div>
       <div className="buttons-container flex">
         <input className="primary-button" type="reset" />
