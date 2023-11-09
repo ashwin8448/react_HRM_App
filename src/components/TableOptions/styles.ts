@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
-const TableOptionsWapper = styled.section`
+const TableOptionsWrapper = styled.section`
   .table-options {
     justify-content: space-between;
     align-items: center;
-  }  
+  }
+
+
 `;
 
-export default TableOptionsWapper;
+export default TableOptionsWrapper;

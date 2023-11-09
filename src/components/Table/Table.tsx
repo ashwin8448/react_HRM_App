@@ -21,13 +21,10 @@ const TableHeader = ({
   return (
     <th>
       {isSortable ? (
-        <Button
-          description={tableHeader}
-          src={sortIcon}
-          alt="Sort icon"
-          onClick={sortHandler}
-          className="primary-button"
-        ></Button>
+        <Button onClick={sortHandler} className="primary-button">
+          <span>{tableHeader}</span>
+          <img src={sortIcon} alt="Sort icon" className="icon" />
+        </Button>
       ) : (
         <span>{tableHeader}</span>
       )}
@@ -48,25 +45,22 @@ const EmployeeRow = ({ employee }: any) => {
       <td>
         <div className="flex employee-actions">
           <Link to="view_employee_page">
-            <Button
-              className="primary-button"
-              src={viewIcon}
-              alt="View employee button"
-            ></Button>
+            <Button className="primary-button">
+              <img src={viewIcon} alt="View employee button" className="icon" />
+            </Button>
           </Link>
           <Link to="/form_page">
-            <Button
-              className="primary-button"
-              src={editIcon}
-              alt="Edit employee button"
-            ></Button>
+            <Button className="primary-button">
+              <img src={editIcon} alt="Edit employee button" className="icon" />
+            </Button>
           </Link>
-          <Button
-            className="primary-button"
-            src={deleteIcon}
-            alt="Delete employee button"
-            onClick={deleteButtonHandler}
-          ></Button>
+          <Button className="primary-button" onClick={deleteButtonHandler}>
+            <img
+              src={deleteIcon}
+              alt="Delete employee button"
+              className="icon"
+            />
+          </Button>
         </div>
       </td>
     </tr>

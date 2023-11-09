@@ -1,32 +1,27 @@
 import styled from "styled-components";
 
 const CustomDropdownWrapper = styled.div`
-  width: 65%;
-  background-color: var(--input);
-  flex-wrap: wrap;
-  padding: 10px;
-  box-sizing: border-box;
-  gap: 10px;
+  background-color: var(--search-bar);
+  padding: 5px;
   border-radius: 5px;
   position: relative;
+  align-items: center;
 
   input {
-    width: 100%;
-  }
-
-  .searchable-input {
-    flex-grow: 1;
+    height: 35px;
   }
 
   .options {
     position: absolute;
-    background-color: var(--dropdown-bg);
+    background-color: var(--input);
     width: 100%;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
     box-sizing: border-box;
-    top: 20px;
+    top: 42px;
     left: 0;
-    max-height: 200px;
+    max-height: 140px;
+    overflow: scroll;
+    border-radius: 0 0 5px 5px;
   }
 
   .option {

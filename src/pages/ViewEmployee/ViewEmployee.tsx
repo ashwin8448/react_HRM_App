@@ -32,7 +32,11 @@ const ViewEmployee = () => {
         Role: <span></span>
       </p>
       <div>
-      <SelectedSkills description="Skill(s)" isView={true}></SelectedSkills>
+        <SelectedSkills
+          description="Skill(s)"
+          isView={true}
+          selectedSkills={["CSS", "HTML"]}
+        ></SelectedSkills>
       </div>
     </DivWrapper>
   );

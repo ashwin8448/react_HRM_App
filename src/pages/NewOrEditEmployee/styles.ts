@@ -50,6 +50,17 @@ const FormWrapper = styled.form`
   label {
     width: 45%;
   }
+
+  .custom-dropdown {
+    padding: 0;
+    background-color: var(--input);
+    margin-top: 7px;
+
+    input {
+      margin-top: 0;
+      flex-grow: 1;
+    }
+  }
 `;
 
 export default FormWrapper;

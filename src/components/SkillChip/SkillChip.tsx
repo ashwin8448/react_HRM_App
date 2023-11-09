@@ -2,11 +2,23 @@ import ChipWrapper from "./styles";
 import closeButton from "../../assets/images/close_button_icon.svg";
 import Button from "../Button/Button";
 
-const SkillChip = ({skill, isView}:{skill:string, isView:boolean}) => {
+const SkillChip = ({
+  skill,
+  isView,
+  handleDeleteFromSelectedSkills,
+}: {
+  skill?: string;
+  isView?: boolean;
+  handleDeleteFromSelectedSkills?: (currentSkill: string) => void;
+}) => {
   return (
     <ChipWrapper className="flex">
       <span>{skill}</span>
-      {!isView && <Button src={closeButton} alt="Close icon"></Button>}
+      {!isView && (
+        <Button onClick={() => handleDeleteFromSelectedSkills!(skill!)}>
+          <img src={closeButton} alt="Close icon" className="icon" />
+        </Button>
+      )}
     </ChipWrapper>
   );
 };
