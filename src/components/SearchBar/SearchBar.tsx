@@ -1,12 +1,7 @@
 import SearchBarWrapper from "./styles";
+import ISearchBarProps from "./types";
 
-interface searchBarProps {
-  placeholder?: string;
-  src?: string;
-  alt?: string;
-}
-
-const SearchBar = ({ placeholder, src, alt }: searchBarProps) => {
+const SearchBar = ({ placeholder, src, alt }: ISearchBarProps) => {
   return (
     <SearchBarWrapper className="flex">
       <form>

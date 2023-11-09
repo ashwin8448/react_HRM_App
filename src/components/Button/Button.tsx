@@ -3,7 +3,7 @@ import ButtonWrapper from "./styles";
 
 const Button = ({ className = "", onClick, children }: IButtonAttributes) => {
   return (
-    <ButtonWrapper className={`flex ${className}`} onClick={onClick}>
+    <ButtonWrapper className={`flex ${className}`} onClick={onClick} type="button">
       {children}
     </ButtonWrapper>
   );

@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
-import { ReactNode } from "react";
+import React, { useState } from "react";
 import CustomDropdownWrapper from "./styles";
 import { skills } from "../../core/config/constants";
+import ICustomDropdown from "./types";
 
 const CustomDropdown = ({
   handleAddToSelectedSkills,
@@ -10,16 +10,9 @@ const CustomDropdown = ({
   skillsToDisplay,
   children,
   placeholder,
-}: {
-  handleAddToSelectedSkills: (currentSkill: string) => void;
-  handleSkillsToDisplay: (filteredSkills: string[]) => void;
-  selectedSkills: string[];
-  skillsToDisplay: string[];
-  children: ReactNode;
-  placeholder: string;
-}) => {
+  inputTag,
+}: ICustomDropdown) => {
   const [showSkills, setShowSkills] = useState(false);
-  const inputTag = useRef<HTMLInputElement>(null);
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setTimeout(() => {
       if (!e.relatedTarget?.closest(".options")) {
@@ -29,8 +22,8 @@ const CustomDropdown = ({
       }
     }, 0);
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     handleSkillsToDisplay(
       skills.filter(
         (skill) =>

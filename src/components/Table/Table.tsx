@@ -6,15 +6,12 @@ import sortIcon from "../../assets/images/ascending_order_icon.svg";
 import TableWrapper from "./styles";
 import { Link } from "react-router-dom";
 import { employees, tableHeaders } from "../../core/config/constants";
-// import { IRowProps } from "./types";
+import { ITableHeader } from "./types";
 
 const TableHeader = ({
   tableHeader,
   isSortable,
-}: {
-  tableHeader?: string;
-  isSortable?: boolean;
-}) => {
+}: ITableHeader) => {
   const sortHandler = () => {
     alert("SORTED");
   };

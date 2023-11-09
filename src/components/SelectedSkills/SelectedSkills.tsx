@@ -1,17 +1,13 @@
 import SkillChip from "../SkillChip/SkillChip";
 import SelectedSkillsWrapper from "./styles";
+import ISelectedSkills from "./types";
 
 const SelectedSkills = ({
   description,
   isView,
   selectedSkills,
   handleDeleteFromSelectedSkills,
-}: {
-  description?: string;
-  isView?: boolean;
-  selectedSkills?: string[];
-  handleDeleteFromSelectedSkills?: (currentSkill: string) => void;
-}) => {
+}: ISelectedSkills) => {
   return (
     <SelectedSkillsWrapper className="flex selected-skills-container">
       <span className="">{description}:</span>

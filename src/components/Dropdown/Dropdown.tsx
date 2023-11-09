@@ -1,14 +1,13 @@
-const Dropdown = ({
-  options,
-  inputField,
-}: {
-  options: string[];
-  inputField: string;
-}) => {
+import IDropdown from "./types";
+
+const Dropdown = ({ options, description }: IDropdown) => {
   return (
-    <select autoComplete="off" defaultValue={`Select a ${inputField}`}>
-      <option value={`Select a ${inputField}`} disabled>
-        Select a {inputField}
+    <select
+      autoComplete="off"
+      defaultValue={`Select a ${description.toLowerCase()}`}
+    >
+      <option value={`Select a ${description.toLowerCase()}`} disabled>
+        Select a {description.toLowerCase()}
       </option>
       {options.map((element) => (
         <option key={element} value={element}>

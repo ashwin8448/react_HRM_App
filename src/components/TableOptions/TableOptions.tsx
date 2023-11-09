@@ -4,7 +4,7 @@ import clearFilterIcon from "../../assets/images/clear_filter_icon.svg";
 import TableOptionsWrapper from "./styles";
 import { useNavigate } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { skills } from "../../core/config/constants";
 
@@ -16,9 +16,11 @@ const TableOptions = () => {
 
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(skills);
-
+  const inputTag = useRef<HTMLInputElement>(null);
   const handleAddToSelectedSkills = (currentSkill: string) => {
-    setSkillsToDisplay(skillsToDisplay.filter(skill => skill !== currentSkill));
+    setSkillsToDisplay(
+      skillsToDisplay.filter((skill) => skill !== currentSkill)
+    );
     setSelectedSkills((prev) => [...prev, currentSkill]);
   };
 
@@ -29,6 +31,11 @@ const TableOptions = () => {
 
   const handleSkillsToDisplay = (filteredSkills: string[]) => {
     setSkillsToDisplay(filteredSkills);
+  };
+  const handleClearFilter = () => {
+    inputTag.current!.value = "";
+    setSkillsToDisplay(skills);
+    setSelectedSkills([]);
   };
 
   return (
@@ -44,8 +51,9 @@ const TableOptions = () => {
           handleSkillsToDisplay={handleSkillsToDisplay}
           skillsToDisplay={skillsToDisplay}
           placeholder="Filter by skills"
+          inputTag={inputTag}
         >
-          <Button>
+          <Button onClick={handleClearFilter}>
             <img
               src={clearFilterIcon}
               alt="Clear filter icon"

@@ -5,7 +5,6 @@ const CustomDropdownWrapper = styled.div`
   padding: 5px;
   border-radius: 5px;
   position: relative;
-  align-items: center;
 
   input {
     height: 35px;
@@ -32,6 +31,10 @@ const CustomDropdownWrapper = styled.div`
 
   .option:hover {
     background-color: var(--hover-bg);
+  }
+
+  button{
+    padding: 0;
   }
 `;
 

@@ -1,44 +1,40 @@
-import { useState } from "react";
+
 import { dropdownData } from "../../core/config/constants";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import Dropdown from "../Dropdown/Dropdown";
-import { skills } from "../../core/config/constants";
 import Button from "../Button/Button";
 import clearFilterIcon from "../../assets/images/clear_filter_icon.svg";
+import IInput from "./types";
 
 const InputField = ({
   description,
   isMandatory,
   inputType,
+  arrayName,
   selectedSkills,
   skillsToDisplay,
   handleAddToSelectedSkills,
   handleSkillsToDisplay,
-}: {
-  description: string;
-  isMandatory: boolean;
-  inputType: string;
-  selectedSkills: string[];
-  skillsToDisplay: string[];
-  handleAddToSelectedSkills: (currentSkill: string) => void;
-  handleSkillsToDisplay: (filteredSkills: string[]) => void;
-}) => {
+  inputTag,
+  handleClearFilter,
+}: IInput) => {
   return (
     <label className="flex flex-column">
       <div>
         {isMandatory && <span className="asterisk">*</span>}
         <span> {description}:</span>
       </div>
-      {inputType?.split(":")[0] == "custom" ? (
-        inputType?.split(":")[1] == "skill" ? (
+      {inputType == "custom" ? (
+        arrayName == "skills" ? (
           <CustomDropdown
             selectedSkills={selectedSkills}
             handleAddToSelectedSkills={handleAddToSelectedSkills}
             handleSkillsToDisplay={handleSkillsToDisplay}
             skillsToDisplay={skillsToDisplay}
-            placeholder="Filter by skills"
+            placeholder="Click to add skills"
+            inputTag={inputTag}
           >
-            <Button>
+            <Button onClick={handleClearFilter}>
               <img
                 src={clearFilterIcon}
                 alt="Clear filter icon"
@@ -48,12 +44,8 @@ const InputField = ({
           </CustomDropdown>
         ) : (
           <Dropdown
-            inputField={inputType?.split(":")[1]}
-            options={
-              dropdownData[
-                (inputType.split(":")[1] + "s") as keyof typeof dropdownData
-              ]
-            }
+            description={description}
+            options={dropdownData[arrayName as keyof typeof dropdownData]}
           ></Dropdown>
         )
       ) : (

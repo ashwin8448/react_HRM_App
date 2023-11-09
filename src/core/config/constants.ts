@@ -13,7 +13,7 @@ export const skills = [
   "Wordpress",
 ];
 
-export const department = [
+export const departments = [
   "BDG",
   "Accounts",
   "Human Resource",
@@ -103,8 +103,11 @@ export const tableHeaders = [
   },
 ];
 
-
-export const dropdownData: { skills: string[]; departments: string[]; roles: string[] } = {
+export const dropdownData: {
+  skills: string[];
+  departments: string[];
+  roles: string[];
+} = {
   skills: ["Git", "CSS", "HTML", "JavaScript", "React"],
   departments: ["BDG", "FEED", "Backend", "Accounts"],
   roles: ["Business Analyst", "Engineer", "Architect", "Intern"],
@@ -137,17 +140,20 @@ export const formData = [
       },
       {
         description: "Department",
-        inputType: "custom:department",
+        inputType: "custom",
+        arrayName: "departments",
         isMandatory: true,
       },
       {
         description: "Role",
-        inputType: "custom:role",
+        inputType: "custom",
+        arrayName: "roles",
         isMandatory: true,
       },
       {
         description: "Skills",
-        inputType: "custom:skill",
+        inputType: "custom",
+        arrayName: "skills",
         isMandatory: false,
       },
     ],

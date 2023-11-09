@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import InputField from "../../components/InputField/InputField";
 import SelectedSkills from "../../components/SelectedSkills/SelectedSkills";
 import { formData, skills } from "../../core/config/constants";
@@ -7,6 +7,7 @@ import FormWrapper from "./styles";
 const NewOrEditEmployee = () => {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(skills);
+  const inputTag = useRef<HTMLInputElement>(null);
 
   const handleAddToSelectedSkills = (currentSkill: string) => {
     setSkillsToDisplay(
@@ -22,6 +23,12 @@ const NewOrEditEmployee = () => {
 
   const handleSkillsToDisplay = (filteredSkills: string[]) => {
     setSkillsToDisplay(filteredSkills);
+  };
+
+  const handleClearFilter = () => {
+    inputTag.current!.value = "";
+    setSkillsToDisplay(skills);
+    setSelectedSkills([]);
   };
   return (
     <FormWrapper className="page-content employee-details-form">
@@ -41,6 +48,9 @@ const NewOrEditEmployee = () => {
                   skillsToDisplay={skillsToDisplay}
                   handleAddToSelectedSkills={handleAddToSelectedSkills}
                   handleSkillsToDisplay={handleSkillsToDisplay}
+                  handleClearFilter={handleClearFilter}
+                  inputTag={inputTag}
+                  arrayName={field.arrayName}
                 />
               );
             })}

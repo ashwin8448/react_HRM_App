@@ -1,16 +1,13 @@
 import ChipWrapper from "./styles";
 import closeButton from "../../assets/images/close_button_icon.svg";
 import Button from "../Button/Button";
+import ISkillChip from "./types";
 
 const SkillChip = ({
   skill,
   isView,
   handleDeleteFromSelectedSkills,
-}: {
-  skill?: string;
-  isView?: boolean;
-  handleDeleteFromSelectedSkills?: (currentSkill: string) => void;
-}) => {
+}: ISkillChip) => {
   return (
     <ChipWrapper className="flex">
       <span>{skill}</span>
