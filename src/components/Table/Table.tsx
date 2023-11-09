@@ -8,10 +8,7 @@ import { Link } from "react-router-dom";
 import { employees, tableHeaders } from "../../core/config/constants";
 import { ITableHeader } from "./types";
 
-const TableHeader = ({
-  tableHeader,
-  isSortable,
-}: ITableHeader) => {
+const TableHeader = ({ tableHeader, isSortable }: ITableHeader) => {
   const sortHandler = () => {
     alert("SORTED");
   };
@@ -41,12 +38,12 @@ const EmployeeRow = ({ employee }: any) => {
 
       <td>
         <div className="flex employee-actions">
-          <Link to="view_employee_page">
+          <Link to={`view_employee_page/${employee.id}`}>
             <Button className="primary-button">
               <img src={viewIcon} alt="View employee button" className="icon" />
             </Button>
           </Link>
-          <Link to="/form_page">
+          <Link to={`form_page/${employee.id}`}>
             <Button className="primary-button">
               <img src={editIcon} alt="Edit employee button" className="icon" />
             </Button>

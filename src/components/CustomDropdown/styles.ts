@@ -19,7 +19,7 @@ const CustomDropdownWrapper = styled.div`
     top: 42px;
     left: 0;
     max-height: 140px;
-    overflow: scroll;
+    overflow-y: scroll;
     border-radius: 0 0 5px 5px;
   }
 
