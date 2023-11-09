@@ -1,15 +1,12 @@
 import { dropdownData } from "../../core/config/constants";
 import Dropdown from "../Dropdown/Dropdown";
+import IInputAttributes from "./types";
 
 const InputField = ({
   description,
   isMandatory,
   inputType,
-}: {
-  description: string;
-  isMandatory: boolean;
-  inputType: string;
-}) => {
+}: IInputAttributes) => {
   return (
     <label className="flex flex-column">
       <div>
