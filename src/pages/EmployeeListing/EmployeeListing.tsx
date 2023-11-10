@@ -5,10 +5,6 @@ import TableOptions from "../../components/TableOptions/TableOptions";
 // import ConfirmBox from "../../components/ConfirmBox/ConfirmBox";
 
 const EmployeeListing = () => {
-  // const [tableStateObj, setTableStateObj] = useState({
-  //   sortBy: "",
-  //   filterBy: [],
-  // });
   return (
     <>
       <TableOptions />

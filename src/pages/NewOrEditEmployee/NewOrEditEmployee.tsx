@@ -95,15 +95,16 @@ const NewOrEditEmployee = () => {
                       label={field.description}
                       name={field.name}
                       type={field.inputType}
-                      isRequired={field.isRequired}
+                      isMandatory={field.isMandatory}
                     />
                   );
                 } else if (field.inputType == "select")
                   return (
                     <MySelect
+                      key={field.name}
                       label={field.description}
                       name={field.name}
-                      isRequired={field.isRequired}
+                      isMandatory={field.isMandatory}
                     >
                       <option value="">Select a {field.description}</option>
                       {field.data?.map((element) => (
@@ -115,7 +116,7 @@ const NewOrEditEmployee = () => {
                   );
                 else if (field.inputType == "custom") {
                   return (
-                    <div className="flex flex-column input-field">
+                    <div key={field.name} className="flex flex-column input-field">
                       <label>Skills</label>
                       <CustomDropdown
                         selectedSkills={selectedSkills}

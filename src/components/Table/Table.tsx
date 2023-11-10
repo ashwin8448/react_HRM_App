@@ -85,7 +85,7 @@ const Table = () => {
               key={employee.id}
               employee={{
                 ...employee,
-                name: `${employee.fname} ${employee.lname}`,
+                name: `${employee.firstName} ${employee.lastName}`,
               }}
             />
           ))}
