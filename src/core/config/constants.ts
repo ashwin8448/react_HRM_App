@@ -1,5 +1,3 @@
-// import { IRowProps } from "../../core/interface/interface";
-
 export const skills = [
   "HTML",
   "CSS",
@@ -11,22 +9,6 @@ export const skills = [
   "Adobe XD",
   "GIT",
   "Wordpress",
-];
-
-export const departments = [
-  "BDG",
-  "Accounts",
-  "Human Resource",
-  "Sales",
-  "Software Development",
-  "Research and Development",
-];
-export const roles = [
-  "Intern",
-  "Software Engineer",
-  "Lead Engineer",
-  "Business Analyst",
-  "Architect",
 ];
 
 export const employees = [
@@ -103,31 +85,51 @@ export const tableHeaders = [
   },
 ];
 
-export const dropdownData: {
-  skills: string[];
-  departments: string[];
-  roles: string[];
-} = {
-  skills: ["Git", "CSS", "HTML", "JavaScript", "React"],
-  departments: ["BDG", "FEED", "Backend", "Accounts"],
-  roles: ["Business Analyst", "Engineer", "Architect", "Intern"],
-};
-
 export const formData = [
   {
     legend: "Personal Details",
     fields: [
-      { description: "First name", inputType: "text", isMandatory: true },
-      { description: "Last name", inputType: "text", isMandatory: true },
-      { description: "Date of birth", inputType: "date", isMandatory: true },
+      {
+        description: "First name",
+        inputType: "text",
+        name: "firstName",
+        isRequired: true,
+      },
+      {
+        description: "Last name",
+        inputType: "text",
+        name: "lastName",
+        isRequired: true,
+      },
+      {
+        description: "Date of birth",
+        inputType: "date",
+        name: "dob",
+        isRequired: true,
+      },
     ],
   },
   {
     legend: "Contact Details",
     fields: [
-      { description: "Address", inputType: "text", isMandatory: true },
-      { description: "Phone", inputType: "tel", isMandatory: true },
-      { description: "Email", inputType: "text", isMandatory: true },
+      {
+        description: "Address",
+        inputType: "text",
+        name: "address",
+        isRequired: true,
+      },
+      {
+        description: "Phone",
+        inputType: "tel",
+        name: "phone",
+        isRequired: true,
+      },
+      {
+        description: "Email",
+        inputType: "text",
+        name: "email",
+        isRequired: true,
+      },
     ],
   },
   {
@@ -136,25 +138,28 @@ export const formData = [
       {
         description: "Date of joining",
         inputType: "date",
-        isMandatory: true,
+        name: "doj",
+        isRequired: true,
       },
       {
         description: "Department",
-        inputType: "custom",
-        arrayName: "departments",
-        isMandatory: true,
+        inputType: "select",
+        name: "department",
+        isRequired: true,
+        data: ["BDG", "FEED", "Backend", "Accounts"],
       },
       {
         description: "Role",
-        inputType: "custom",
-        arrayName: "roles",
-        isMandatory: true,
+        inputType: "select",
+        name: "role",
+        isRequired: true,
+        data: ["Business Analyst", "Engineer", "Architect", "Intern"],
       },
       {
         description: "Skills",
         inputType: "custom",
-        arrayName: "skills",
-        isMandatory: false,
+        name: "skill",
+        isRequired: false,
       },
     ],
   },

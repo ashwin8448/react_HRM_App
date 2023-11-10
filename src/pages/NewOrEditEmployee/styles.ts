@@ -5,20 +5,21 @@ const FormWrapper = styled.form`
     margin-top: 0;
   }
 
-  .asterisk {
+  .required {
     color: var(--asterisk);
   }
 
-  .error-placeholder {
+  .error {
     color: var(--validation-message);
-    /* visibility: hidden; */
     margin: 7px 0;
     font-size: 12px;
   }
-  /* 
-  .error-placeholder.open {
-    visibility: visible;
-  } */
+
+  .error-placeholder {
+    visibility: hidden;
+    margin: 7px 0;
+    font-size: 12px;
+  }
 
   input,
   select {
@@ -47,7 +48,7 @@ const FormWrapper = styled.form`
     }
   }
 
-  label {
+  .input-field {
     width: 45%;
   }
 

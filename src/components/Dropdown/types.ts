@@ -1,4 +1,5 @@
-export default interface IDropdown{
-    options: string[];
-    description: string;
-  }
+export default interface IDropdown {
+  options?: string[];
+  description?: string;
+  name?: string;
+}
