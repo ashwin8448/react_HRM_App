@@ -1,11 +1,18 @@
-export interface IEmployeeRow {
+export interface IEmployee {
   id: string;
-  employeeName: string;
+  firstName: string;
+  lastName: string;
+  dob: string;
+  address: string;
+  phone: string;
+  email: string;
+  doj: string;
   department: string;
   role: string;
+  skills: string[];
 }
 
-export interface ITableHeader{
+export interface ITableHeader {
   tableHeader?: string;
   isSortable?: boolean;
 }

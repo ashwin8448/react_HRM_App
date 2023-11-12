@@ -2,49 +2,62 @@ import Button from "../Button/Button";
 import addEmployeeIcon from "../../assets/images/add_user_icon.svg";
 import clearFilterIcon from "../../assets/images/clear_filter_icon.svg";
 import TableOptionsWrapper from "./styles";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
 import { useState, useRef } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { skills } from "../../core/config/constants";
+import { useEmployeeContext } from "../../contexts/EmployeeContext";
 
 const TableOptions = () => {
-  const navigate = useNavigate();
-  const handleBtnClick = () => {
-    navigate("/form_page");
-  };
-
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(skills);
   const inputTag = useRef<HTMLInputElement>(null);
+  const { filters, updateFilters } = useEmployeeContext();
+
   const handleAddToSelectedSkills = (currentSkill: string) => {
     setSkillsToDisplay(
       skillsToDisplay.filter((skill) => skill !== currentSkill)
     );
-    setSelectedSkills((prev) => [...prev, currentSkill]);
+    setSelectedSkills((prev) => {
+      return [...prev, currentSkill];
+    });
+    updateFilters([...selectedSkills, currentSkill]);
   };
 
   const handleDeleteFromSelectedSkills = (skillToDelete: string) => {
     setSkillsToDisplay((prev) => [...prev, skillToDelete]);
-    setSelectedSkills(selectedSkills.filter((skill) => skill != skillToDelete));
+    const currentlySelectedSkills = selectedSkills.filter(
+      (skill) => skill != skillToDelete
+    );
+    setSelectedSkills(currentlySelectedSkills);
+    updateFilters(currentlySelectedSkills);
   };
 
   const handleSkillsToDisplay = (filteredSkills: string[]) => {
     setSkillsToDisplay(filteredSkills);
   };
+
   const handleClearFilter = () => {
     inputTag.current!.value = "";
     setSkillsToDisplay(skills);
     setSelectedSkills([]);
+    updateFilters([]);
   };
 
   return (
     <TableOptionsWrapper>
       <div className="table-options flex">
-        <Button className="primary-button" onClick={handleBtnClick}>
-          <span>Add new employee</span>
-          <img src={addEmployeeIcon} alt="Add employee icon" className="icon" />
-        </Button>
+        <Link to="/form_page">
+          <Button className="primary-button">
+            <span>Add new employee</span>
+            <img
+              src={addEmployeeIcon}
+              alt="Add employee icon"
+              className="icon"
+            />
+          </Button>
+        </Link>
         <CustomDropdown
           selectedSkills={selectedSkills}
           handleAddToSelectedSkills={handleAddToSelectedSkills}

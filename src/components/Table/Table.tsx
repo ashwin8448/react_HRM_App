@@ -6,7 +6,9 @@ import sortIcon from "../../assets/images/ascending_order_icon.svg";
 import TableWrapper from "./styles";
 import { Link } from "react-router-dom";
 import { employees, tableHeaders } from "../../core/config/constants";
-import { ITableHeader } from "./types";
+import { IEmployee, ITableHeader } from "./types";
+import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { filterArray } from "../../utils/filterArray";
 
 const TableHeader = ({ tableHeader, isSortable }: ITableHeader) => {
   const sortHandler = () => {
@@ -62,6 +64,9 @@ const EmployeeRow = ({ employee }: any) => {
 };
 
 const Table = () => {
+  const { filters } = useEmployeeContext();
+  const filteredEmployees = filterArray(employees, { skills: filters });
+  console.log(filteredEmployees);
   return (
     <TableWrapper className=" table-section">
       <table>
@@ -80,7 +85,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee) => (
+          {filteredEmployees.map((employee: IEmployee) => (
             <EmployeeRow
               key={employee.id}
               employee={{
