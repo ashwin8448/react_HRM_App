@@ -13,7 +13,7 @@ const TableOptions = () => {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(skills);
   const inputTag = useRef<HTMLInputElement>(null);
-  const { filters, updateFilters } = useEmployeeContext();
+  const { updateFilters } = useEmployeeContext();
 
   const handleAddToSelectedSkills = (currentSkill: string) => {
     setSkillsToDisplay(
