@@ -12,7 +12,7 @@ import {
 import CustomDropdown from "../../components/CustomDropdown/CustomDropdown";
 import Button from "../../components/Button/Button";
 
-const NewOrEditEmployee = () => {
+const FormPage = () => {
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(skills);
   const inputTag = useRef<HTMLInputElement>(null);
@@ -72,10 +72,17 @@ const NewOrEditEmployee = () => {
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
-
           setSubmitting(false);
         }, 400);
       }}
+      // {(values, { setSubmitting }) => {
+      //   // const newEmployee = { ...values, id: "1000", skills: [] };
+      //   // employees.push(newEmployee);
+      //   // setSubmitting(false);
+      //   setTimeout(() => {
+      //     setSubmitting(false);
+      //   }, 1000);
+      // }}
     >
       <FormWrapper className="page-content employee-details-form">
         <h2>Add New Employee</h2>
@@ -116,7 +123,10 @@ const NewOrEditEmployee = () => {
                   );
                 else if (field.inputType == "custom") {
                   return (
-                    <div key={field.name} className="flex flex-column input-field">
+                    <div
+                      key={field.name}
+                      className="flex flex-column input-field"
+                    >
                       <label>Skills</label>
                       <CustomDropdown
                         selectedSkills={selectedSkills}
@@ -165,12 +175,12 @@ const NewOrEditEmployee = () => {
           <input className="primary-button" type="reset" />
           <input className="primary-button" type="submit" value="Submit" />
         </div>
-        <div className="buttons-container flex">
+        {/* <div className="buttons-container flex">
           <input className="primary-button" type="submit" value="Save" />
-        </div>
+        </div> */}
       </FormWrapper>
     </Formik>
   );
 };
 
-export default NewOrEditEmployee;
+export default FormPage;

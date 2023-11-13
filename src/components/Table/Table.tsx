@@ -66,7 +66,6 @@ const EmployeeRow = ({ employee }: any) => {
 const Table = () => {
   const { filters } = useEmployeeContext();
   const filteredEmployees = filterArray(employees, { skills: filters });
-  console.log(filteredEmployees);
   return (
     <TableWrapper className=" table-section">
       <table>
