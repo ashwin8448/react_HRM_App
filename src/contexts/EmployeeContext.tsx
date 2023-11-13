@@ -4,7 +4,7 @@ import { IEmployeeContextProps } from "./types";
 const initialContextValues: IEmployeeContextProps = {
   sortConfig: { sortColumn: "id", sortOrder: "asc" },
   updateSortConfig: () => {},
-  filters: [],
+  filters: { skills: [], search: [] },
   updateFilters: () => {},
 };
 
@@ -12,18 +12,25 @@ const EmployeeContext = createContext(initialContextValues);
 
 export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const [sortConfig, setSortConfig] = useState(initialContextValues.sortConfig);
-  const [filters, setFilters] = useState<string[]>(
-    initialContextValues.filters
-  );
+  const [filters, setFilters] = useState(initialContextValues.filters);
   const updateSortConfig = (sortColumn: string) => {
     setSortConfig((prevConfig) => ({
       sortColumn,
-      sortOrder: prevConfig.sortColumn === sortColumn ? "desc" : "asc",
+      sortOrder:
+        prevConfig.sortColumn === sortColumn
+          ? prevConfig.sortOrder === "desc"
+            ? "asc"
+            : "desc"
+          : "asc",
     }));
   };
-  const updateFilters = (filters: string[]) => {
-    setFilters(filters);
+
+  const updateFilters = (newFilters: { skills?: string[]; search?: [] }) => {
+    if (newFilters) {
+      setFilters((prev) => ({ ...prev, ...newFilters }));
+    }
   };
+
   const value: IEmployeeContextProps = {
     sortConfig,
     updateSortConfig,

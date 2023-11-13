@@ -13,6 +13,19 @@ export const skills = [
 
 export const employees = [
   {
+    id: "10000",
+    firstName: "JacobD",
+    lastName: "RoyD",
+    dob: "1111-01-07",
+    address: "ABC4",
+    phone: "0123456784",
+    email: "a4@y.com",
+    doj: "1111-01-08",
+    department: "BDG",
+    role: "Intern",
+    skills: ["React", "Node"],
+  },
+  {
     id: "1000",
     firstName: "JacobA",
     lastName: "RoyA",
@@ -53,6 +66,19 @@ export const employees = [
   },
   {
     id: "1003",
+    firstName: "JacobD",
+    lastName: "RoyD",
+    dob: "1111-01-07",
+    address: "ABC4",
+    phone: "0123456784",
+    email: "a4@y.com",
+    doj: "1111-01-08",
+    department: "BDG",
+    role: "Intern",
+    skills: ["React", "Node"],
+  },
+  {
+    id: "999",
     firstName: "JacobD",
     lastName: "RoyD",
     dob: "1111-01-07",

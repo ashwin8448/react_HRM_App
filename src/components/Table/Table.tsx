@@ -9,20 +9,28 @@ import { employees, tableHeaders } from "../../core/config/constants";
 import { IEmployee, ITableHeader } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { filterArray } from "../../utils/filterArray";
+import { sortEmployees } from "../../utils/sort";
 
 const TableHeader = ({ tableHeader, isSortable }: ITableHeader) => {
-  const sortHandler = () => {
-    alert("SORTED");
-  };
+  const { sortConfig, updateSortConfig } = useEmployeeContext();
   return (
     <th>
       {isSortable ? (
-        <Button onClick={sortHandler} className="primary-button">
-          <span>{tableHeader}</span>
-          <img src={sortIcon} alt="Sort icon" className="icon" />
+        <Button
+          onClick={() => updateSortConfig(tableHeader.id)}
+          className="primary-button"
+        >
+          <span>{tableHeader?.headerName}</span>
+          {tableHeader.id === sortConfig.sortColumn ? (
+            sortConfig.sortOrder === "asc" ? (
+              <img src={sortIcon} alt="Sort icon" className="icon" />
+            ) : (
+              <img src={sortIcon} alt="Sort icon" className="icon invert" />
+            )
+          ) : null}
         </Button>
       ) : (
-        <span>{tableHeader}</span>
+        <span>{tableHeader?.headerName}</span>
       )}
     </th>
   );
@@ -35,7 +43,7 @@ const EmployeeRow = ({ employee }: any) => {
   return (
     <tr>
       {tableHeaders.map((tableHeader) => {
-        return <td key={tableHeader.headerName}>{employee[tableHeader.id]}</td>;
+        return <td key={tableHeader.id}>{employee[tableHeader.id]}</td>;
       })}
 
       <td>
@@ -64,8 +72,11 @@ const EmployeeRow = ({ employee }: any) => {
 };
 
 const Table = () => {
-  const { filters } = useEmployeeContext();
-  const filteredEmployees = filterArray(employees, { skills: filters });
+  const { filters, sortConfig } = useEmployeeContext();
+  const filteredEmployees = sortEmployees(
+    filterArray(employees, filters),
+    sortConfig
+  );
   return (
     <TableWrapper className=" table-section">
       <table>
@@ -75,24 +86,35 @@ const Table = () => {
               return (
                 <TableHeader
                   key={tableHeader.id}
-                  tableHeader={tableHeader.headerName}
+                  tableHeader={tableHeader}
                   isSortable={true}
                 ></TableHeader>
               );
             })}
-            <TableHeader tableHeader="Actions" isSortable={false}></TableHeader>
+            <TableHeader
+              tableHeader={{ headerName: "Actions", id: "" }}
+              isSortable={false}
+            ></TableHeader>
           </tr>
         </thead>
         <tbody>
-          {filteredEmployees.map((employee: IEmployee) => (
-            <EmployeeRow
-              key={employee.id}
-              employee={{
-                ...employee,
-                name: `${employee.firstName} ${employee.lastName}`,
-              }}
-            />
-          ))}
+          {filteredEmployees.length ? (
+            filteredEmployees.map((employee: IEmployee) => (
+              <EmployeeRow
+                key={employee.id}
+                employee={{
+                  ...employee,
+                  name: `${employee.firstName} ${employee.lastName}`,
+                }}
+              />
+            ))
+          ) : (
+            <tr>
+              <td className="table-no-data" colSpan={tableHeaders.length + 1}>
+                No data available
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </TableWrapper>

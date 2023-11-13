@@ -22,7 +22,7 @@ const TableOptions = () => {
     setSelectedSkills((prev) => {
       return [...prev, currentSkill];
     });
-    updateFilters([...selectedSkills, currentSkill]);
+    updateFilters({ skills: [...selectedSkills, currentSkill] });
   };
 
   const handleDeleteFromSelectedSkills = (skillToDelete: string) => {
@@ -31,7 +31,7 @@ const TableOptions = () => {
       (skill) => skill != skillToDelete
     );
     setSelectedSkills(currentlySelectedSkills);
-    updateFilters(currentlySelectedSkills);
+    updateFilters({ skills: currentlySelectedSkills });
   };
 
   const handleSkillsToDisplay = (filteredSkills: string[]) => {
@@ -42,7 +42,7 @@ const TableOptions = () => {
     inputTag.current!.value = "";
     setSkillsToDisplay(skills);
     setSelectedSkills([]);
-    updateFilters([]);
+    updateFilters({skills:[]});
   };
 
   return (

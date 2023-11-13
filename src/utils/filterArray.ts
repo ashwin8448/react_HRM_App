@@ -6,7 +6,7 @@ export const filterArray = (wholeArray: any, filterBy: any) => {
     for (let criteria in filterBy) {
       if (criteria == "search") {
         result *= filterBy[criteria].every((criteriaElement: any) => {
-          return `${employee.fname.toLowerCase()} ${employee.lname.toLowerCase()}`.includes(
+          return `${employee.firstName.toLowerCase()} ${employee.lastName.toLowerCase()}`.includes(
             criteriaElement.toLowerCase()
           );
         });

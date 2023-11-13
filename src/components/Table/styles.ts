@@ -22,6 +22,7 @@ const TableWrapper = styled.section`
         width: 100%;
         background-color: var(--table);
         margin: 5px 0;
+        min-height: 42px;
       }
     }
     td {
@@ -30,6 +31,15 @@ const TableWrapper = styled.section`
     .employee-actions {
       gap: 15px;
       align-items: center;
+    }
+    th .icon {
+      transition: all 0.5s;
+    }
+    .invert {
+      transform: rotateX(180deg);
+    }
+    .table-no-data {
+      text-align: center;
     }
   }
 `;

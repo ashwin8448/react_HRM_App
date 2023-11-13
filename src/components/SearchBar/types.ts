@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 export default interface ISearchBarProps {
-    placeholder?: string;
-    src?: string;
-    alt?: string;
-  }
+  placeholder?: string;
+  children?: ReactNode;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}

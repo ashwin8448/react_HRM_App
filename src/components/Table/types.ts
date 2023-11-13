@@ -13,6 +13,6 @@ export interface IEmployee {
 }
 
 export interface ITableHeader {
-  tableHeader?: string;
+  tableHeader: { id: string; headerName: string };
   isSortable?: boolean;
 }

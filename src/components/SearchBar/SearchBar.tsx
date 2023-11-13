@@ -1,13 +1,17 @@
 import SearchBarWrapper from "./styles";
 import ISearchBarProps from "./types";
 
-const SearchBar = ({ placeholder, src, alt }: ISearchBarProps) => {
+const SearchBar = ({ placeholder, children, onChange }: ISearchBarProps) => {
   return (
     <SearchBarWrapper className="flex">
-      <form>
-        <input type="text" placeholder={placeholder} />
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <input type="text" placeholder={placeholder} onChange={onChange} />
       </form>
-      <img src={src} alt={alt} />
+      {children}
     </SearchBarWrapper>
   );
 };
