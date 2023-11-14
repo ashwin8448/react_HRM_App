@@ -35,7 +35,7 @@ export const employees = [
     email: "a1@y.com",
     doj: "1111-01-02",
     department: "BDG",
-    role: "Intern",
+    role: "Engineer",
     skills: ["HTML", "CSS"],
   },
   {
