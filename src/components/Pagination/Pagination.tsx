@@ -5,7 +5,7 @@ import PaginationWrapper from "./styles";
 
 const Pagination = () => {
   return (
-    <PaginationWrapper className="flex">
+    <PaginationWrapper>
       <Button
         className="mirror primary-button"
         src={endIcon}

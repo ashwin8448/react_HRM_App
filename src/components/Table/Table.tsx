@@ -75,7 +75,7 @@ const EmployeeRow = ({ employee }: any) => {
 
 const Table = () => {
   return (
-    <TableWrapper className=" table-section">
+    <TableWrapper>
       <table>
         <thead>
           <tr>

@@ -4,6 +4,7 @@ const PaginationWrapper = styled.section`
   align-items: center;
   justify-content: center;
   gap: 20px;
+  display: flex;
 
   input {
     width: 55px;

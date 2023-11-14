@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const ChipWrapper = styled.div`
+display: flex;
   background-color: var(--selected-skill);
   justify-content: space-between;
   align-items: center;

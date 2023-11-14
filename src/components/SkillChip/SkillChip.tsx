@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 
 const SkillChip = ({skill, isView}:{skill:string, isView:boolean}) => {
   return (
-    <ChipWrapper className="flex">
+    <ChipWrapper>
       <span>{skill}</span>
       {!isView && <Button src={closeButton} alt="Close icon"></Button>}
     </ChipWrapper>

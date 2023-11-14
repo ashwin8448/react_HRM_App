@@ -8,7 +8,7 @@ interface searchBarProps {
 
 const SearchBar = ({ placeholder, src, alt }: searchBarProps) => {
   return (
-    <SearchBarWrapper className="flex">
+    <SearchBarWrapper>
       <form>
         <input type="text" placeholder={placeholder} />
       </form>

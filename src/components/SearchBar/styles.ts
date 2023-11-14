@@ -4,6 +4,7 @@ const SearchBarWrapper = styled.div`
   background-color: var(--search-bar);
   border-radius: 5px;
   padding: 5px;
+  display: flex;
   input {
     border: none;
     height: 35px;

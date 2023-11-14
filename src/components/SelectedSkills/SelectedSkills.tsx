@@ -9,7 +9,7 @@ const SelectedSkills = ({
   isView: boolean;
 }) => {
   return (
-    <SelectedSkillsWrapper className="flex selected-skills-container">
+    <SelectedSkillsWrapper>
       <span className="">{description}:</span>
       <div className="flex selected-skills">
         <SkillChip skill="HTML" isView={isView} />

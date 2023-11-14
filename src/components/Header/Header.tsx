@@ -5,7 +5,7 @@ import HeaderWrapper from "./styles";
 
 const Header = () => {
   return (
-    <HeaderWrapper className="flex">
+    <HeaderWrapper>
       <h1>
         <img className="logo" src={logo} alt="logo" />
       </h1>
