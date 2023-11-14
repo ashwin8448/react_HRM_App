@@ -1,13 +1,8 @@
 import SkillChip from "../SkillChip/SkillChip";
 import SelectedSkillsWrapper from "./styles";
+import ISelectedSkills from "./types";
 
-const SelectedSkills = ({
-  description,
-  isView,
-}: {
-  description: string;
-  isView: boolean;
-}) => {
+const SelectedSkills = ({ description, isView }: ISelectedSkills) => {
   return (
     <SelectedSkillsWrapper>
       <span className="">{description}:</span>
