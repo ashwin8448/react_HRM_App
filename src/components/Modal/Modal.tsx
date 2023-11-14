@@ -6,9 +6,11 @@ import IModal from "./types";
 const Modal = ({ children }: IModal) => {
   return (
     <ModalWrapper>
-      <Button className="icon close-button">
-        <img src={closeButton} alt="Close icon" className="icon"/>
-      </Button>
+      <Button
+        buttonType="close-button"
+        src={closeButton}
+        alt="Close icon"
+      ></Button>
       {children}
     </ModalWrapper>
   );

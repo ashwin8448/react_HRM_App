@@ -1,6 +1,7 @@
 import SkillChip from "../SkillChip/SkillChip";
 import SelectedSkillsWrapper from "./styles";
 import ISelectedSkills from "./types";
+import ISelectedSkills from "./types";
 
 const SelectedSkills = ({
   description,
@@ -9,7 +10,7 @@ const SelectedSkills = ({
   handleDeleteFromSelectedSkills,
 }: ISelectedSkills) => {
   return (
-    <SelectedSkillsWrapper className="flex selected-skills-container">
+    <SelectedSkillsWrapper>
       <span className="">{description}:</span>
       <div className="flex selected-skills">
         {selectedSkills!.map((skill) => (

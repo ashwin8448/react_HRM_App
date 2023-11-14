@@ -9,7 +9,7 @@ const SkillChip = ({
   handleDeleteFromSelectedSkills,
 }: ISkillChip) => {
   return (
-    <ChipWrapper className="flex">
+    <ChipWrapper>
       <span>{skill}</span>
       {!isView && (
         <Button onClick={() => handleDeleteFromSelectedSkills!(skill!)}>
