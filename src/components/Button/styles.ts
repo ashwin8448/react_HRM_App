@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const ButtonWrapper = styled.button`
+  display: flex;
   &.close-button {
     float: right;
     justify-content: center;
@@ -11,7 +12,6 @@ const ButtonWrapper = styled.button`
 
   &.mirror > img {
     transform: rotate(180deg);
-    
   }
 `;
 

@@ -9,9 +9,9 @@ const Button = ({
   onClick,
 }: IButtonAttributes) => {
   return (
-    <ButtonWrapper className={`flex ${className}`} onClick={onClick}>
+    <ButtonWrapper className={className} onClick={onClick}>
       {description && <span>{description}</span>}
-      {src && <img src={src} alt={alt} className={`icon`} />}
+      {src && <img src={src} alt={alt} className="icon" />}
     </ButtonWrapper>
   );
 };
