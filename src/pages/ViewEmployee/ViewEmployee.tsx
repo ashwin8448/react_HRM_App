@@ -6,7 +6,7 @@ import { filterArray } from "../../utils/filterArray";
 
 const ViewEmployee = () => {
   const { employeeId } = useParams();
-  const [employee] = filterArray(employees, { id: [employeeId] });
+  const [employee] = filterArray(employees, { id: [Number(employeeId)] });
   return (
     <DivWrapper className="page-content">
       <div>

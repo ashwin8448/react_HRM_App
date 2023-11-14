@@ -13,7 +13,7 @@ export const skills = [
 
 export const employees = [
   {
-    id: "10000",
+    id: 10000,
     firstName: "JacobD",
     lastName: "RoyD",
     dob: "1111-01-07",
@@ -26,7 +26,7 @@ export const employees = [
     skills: ["React", "Node"],
   },
   {
-    id: "1000",
+    id: 1000,
     firstName: "JacobA",
     lastName: "RoyA",
     dob: "1111-01-01",
@@ -39,7 +39,7 @@ export const employees = [
     skills: ["HTML", "CSS"],
   },
   {
-    id: "1001",
+    id: 1001,
     firstName: "JacobB",
     lastName: "RoyB",
     dob: "1111-01-03",
@@ -52,7 +52,7 @@ export const employees = [
     skills: ["CSS"],
   },
   {
-    id: "1002",
+    id: 1002,
     firstName: "JacobC",
     lastName: "RoyC",
     dob: "1111-01-05",
@@ -65,7 +65,7 @@ export const employees = [
     skills: ["HTML", "CSS", "React"],
   },
   {
-    id: "1003",
+    id: 1003,
     firstName: "JacobD",
     lastName: "RoyD",
     dob: "1111-01-07",
@@ -78,7 +78,7 @@ export const employees = [
     skills: ["React", "Node"],
   },
   {
-    id: "999",
+    id: 999,
     firstName: "JacobD",
     lastName: "RoyD",
     dob: "1111-01-07",

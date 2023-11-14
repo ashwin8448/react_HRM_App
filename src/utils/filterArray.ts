@@ -11,10 +11,14 @@ export const filterArray = (wholeArray: any, filterBy: any) => {
           );
         });
       } else {
-        result *= filterBy[criteria].every((criteriaElement: any) => {
-          if (employee[criteria])
-            return employee[criteria].includes(criteriaElement);
-        });
+        if (typeof employee[criteria] === "number") {
+          result *= filterBy[criteria][0] === employee[criteria] ? 1 : 0;
+        } else {
+          result *= filterBy[criteria].every((criteriaElement: any) => {
+            if (employee[criteria])
+              return employee[criteria].includes(criteriaElement);
+          });
+        }
       }
       if (!result) {
         return result;

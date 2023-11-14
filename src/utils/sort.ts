@@ -5,13 +5,13 @@ export const sortEmployees = (
   employees: IEmployee[],
   sortConfig: { sortColumn: string; sortOrder: string }
 ) => {
-  let sortFlag: number;
+  let sortFlag: number = 1;
   sortConfig.sortOrder === "asc" ? (sortFlag = 1) : (sortFlag = -1);
   //Sorting numbers)
   if (employees.length != 0) {
     if (sortConfig.sortColumn === "id") {
       employees.sort((a: IEmployee, b: IEmployee) => {
-        return (Number(a.id) - Number(b.id)) * sortFlag;
+        return (a.id - b.id) * sortFlag;
       });
     }
     //Sorting Strings
