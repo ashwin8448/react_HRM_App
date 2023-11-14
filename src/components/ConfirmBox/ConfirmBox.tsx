@@ -13,8 +13,8 @@ const ConfirmBox = () => {
           <span className="negative">"Employee Name"</span>?
         </p>
         <div className="flex confirm-box-buttons">
-          <Button description="Yes" className="primary-button negative" />
-          <Button className="primary-button" description="No" />
+          <Button description="Yes" buttonType="primary-button" />
+          <Button buttonType="primary-button" description="No" />
         </div>
       </ConfirmBoxWrapper>
     </Modal>
