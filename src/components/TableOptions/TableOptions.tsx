@@ -49,7 +49,7 @@ const TableOptions = () => {
     <TableOptionsWrapper>
       <div className="table-options flex">
         <Link to="/form_page">
-          <Button className="primary-button">
+          <Button buttonType="primary-button">
             <span>Add new employee</span>
             <img
               src={addEmployeeIcon}

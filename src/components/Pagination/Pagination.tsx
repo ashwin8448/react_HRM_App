@@ -6,10 +6,10 @@ import PaginationWrapper from "./styles";
 const Pagination = () => {
   return (
     <PaginationWrapper>
-      <Button className="primary-button">
+      <Button buttonType="primary-button">
         <img src={endIcon} alt="Show first page icon" className="icon mirror" />
       </Button>
-      <Button className="primary-button">
+      <Button buttonType="primary-button">
         <img
           src={nextIcon}
           alt="Show previous page icon"
@@ -22,10 +22,10 @@ const Pagination = () => {
         <span> of 2 pages</span>
       </form>
 
-      <Button className="primary-button">
+      <Button buttonType="primary-button">
         <img src={nextIcon} alt="Show next page icon" className="icon" />
       </Button>
-      <Button className="primary-button">
+      <Button buttonType="primary-button">
         <img src={endIcon} alt="Show last page icon" className="icon" />
       </Button>
     </PaginationWrapper>

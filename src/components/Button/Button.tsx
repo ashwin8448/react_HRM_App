@@ -3,15 +3,13 @@ import ButtonWrapper from "./styles";
 
 const Button = ({
   buttonType = "",
-  description,
-  src,
-  alt,
   onClick,
+  children,
+  isNegative = false,
 }: IButtonAttributes) => {
   return (
-    <ButtonWrapper $buttonType={buttonType} onClick={onClick}>
-      {description && <span>{description}</span>}
-      {src && <img src={src} alt={alt} className="icon" />}
+    <ButtonWrapper $buttonType={buttonType} $isNegative={isNegative} onClick={onClick}>
+      {children}
     </ButtonWrapper>
   );
 };

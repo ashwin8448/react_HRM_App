@@ -13,10 +13,10 @@ const ConfirmBox = () => {
           <span className="negative">"Employee Name"</span>?
         </p>
         <div className="flex confirm-box-buttons">
-          <Button className="primary-button negative">
+          <Button buttonType="secondary-button" isNegative={true}>
             <span>Yes</span>
           </Button>
-          <Button className="primary-button">
+          <Button buttonType="secondary-button">
             <span>No</span>
           </Button>
         </div>

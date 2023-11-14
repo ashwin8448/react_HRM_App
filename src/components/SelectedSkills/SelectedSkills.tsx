@@ -1,7 +1,6 @@
 import SkillChip from "../SkillChip/SkillChip";
 import SelectedSkillsWrapper from "./styles";
 import ISelectedSkills from "./types";
-import ISelectedSkills from "./types";
 
 const SelectedSkills = ({
   description,

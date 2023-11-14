@@ -18,7 +18,7 @@ const TableHeader = ({ tableHeader, isSortable }: ITableHeader) => {
       {isSortable ? (
         <Button
           onClick={() => updateSortConfig(tableHeader.id)}
-          className="primary-button"
+          buttonType="primary-button"
         >
           <span>{tableHeader?.headerName}</span>
           {tableHeader.id === sortConfig.sortColumn ? (
@@ -49,16 +49,16 @@ const EmployeeRow = ({ employee }: any) => {
       <td>
         <div className="flex employee-actions">
           <Link to={`view_employee_page/${employee.id}`}>
-            <Button className="primary-button">
+            <Button buttonType="primary-button">
               <img src={viewIcon} alt="View employee button" className="icon" />
             </Button>
           </Link>
           <Link to={`form_page/${employee.id}`}>
-            <Button className="primary-button">
+            <Button buttonType="primary-button">
               <img src={editIcon} alt="Edit employee button" className="icon" />
             </Button>
           </Link>
-          <Button className="primary-button" onClick={deleteButtonHandler}>
+          <Button buttonType="primary-button" onClick={deleteButtonHandler}>
             <img
               src={deleteIcon}
               alt="Delete employee button"

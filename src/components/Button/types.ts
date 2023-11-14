@@ -2,13 +2,12 @@ import { ReactNode } from "react";
 
 export interface IButtonAttributes {
   buttonType?: string;
-  description?: string;
-  src?: string;
-  alt?: string;
-  action?: string;
   onClick?: () => void;
+  children: ReactNode;
+  isNegative?: boolean;
 }
 
 export interface IButtonStyleProps {
   $buttonType?: string;
+  $isNegative?: boolean;
 }

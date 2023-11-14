@@ -61,8 +61,7 @@ select{
 [type="reset"]:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
-select:focus-visible
-.primary-button:focus-visible {
+select:focus-visible {
   outline: 2px solid blue;
 }
 
@@ -93,10 +92,6 @@ main{
   padding: 5px;
   border: none;
   justify-content: space-between;
-}
-
-.primary-button:hover{
-  background-color: var(--button-hover);
 }
 
 .page-content{

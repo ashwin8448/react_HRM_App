@@ -26,6 +26,26 @@ const ButtonWrapper = styled.button<IButtonStyleProps>`
           &:hover {
             background-color: var(--button-hover);
           }
+          &:focus-visible {
+            outline: 2px solid blue;
+          }
+        `;
+      case "secondary-button":
+        return css`
+          width: 60px;
+          justify-content: center;
+          height: 40px;
+          align-items: center;
+          background-color: var(--button);
+          border-radius: 5px;
+          gap: 5px;
+          padding: 5px;
+          border: none;
+          ${props.$isNegative &&
+          css`
+            background-color: red;
+            color: white;
+          `}
         `;
     }
   }}
