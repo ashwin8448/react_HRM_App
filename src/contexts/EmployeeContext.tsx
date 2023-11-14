@@ -25,8 +25,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     }));
   };
 
-  const updateFilters = (newFilters: { skills?: string[]; search?: [] }) => {
-    if (newFilters) {
+  const updateFilters = (newFilters: { skills?: string[]; search?: string[] }) => {
+    if (newFilters.skills||newFilters.search) {
       setFilters((prev) => ({ ...prev, ...newFilters }));
     }
   };
