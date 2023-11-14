@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
 const TableWrapper = styled.section`
-  &.table-section {
-    background-color: var(--table);
-    margin: 20px auto 20px auto;
-    padding: 0 10px 10px 10px;
-    box-sizing: border-box;
-    border-radius: 10px;
-  }
+  background-color: var(--table);
+  margin: 20px auto 20px auto;
+  padding: 0 10px 10px 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+
   table {
     width: 100%;
     border-collapse: collapse;

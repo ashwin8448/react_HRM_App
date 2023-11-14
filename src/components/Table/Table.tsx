@@ -78,7 +78,7 @@ const Table = () => {
     sortConfig
   );
   return (
-    <TableWrapper className=" table-section">
+    <TableWrapper>
       <table>
         <thead>
           <tr>

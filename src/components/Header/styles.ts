@@ -7,6 +7,7 @@ const HeaderWrapper = styled.header`
   margin-bottom: 20px;
   margin-top: 20px;
   align-items: center;
+  display: flex;
 
   .logo {
     width: 150px;

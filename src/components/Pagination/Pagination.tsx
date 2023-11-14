@@ -5,12 +5,16 @@ import PaginationWrapper from "./styles";
 
 const Pagination = () => {
   return (
-    <PaginationWrapper className="flex">
-      <Button className="mirror primary-button">
-        <img src={endIcon} alt="Show first page icon" className="icon" />
+    <PaginationWrapper>
+      <Button className="primary-button">
+        <img src={endIcon} alt="Show first page icon" className="icon mirror" />
       </Button>
-      <Button className="mirror primary-button">
-        <img src={nextIcon} alt="Show previous page icon" className="icon" />
+      <Button className="primary-button">
+        <img
+          src={nextIcon}
+          alt="Show previous page icon"
+          className="icon mirror"
+        />
       </Button>
 
       <form>

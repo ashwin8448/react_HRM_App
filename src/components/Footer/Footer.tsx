@@ -2,7 +2,7 @@ import FooterWrapper from "./styles";
 
 const Footer = () => {
   return (
-    <FooterWrapper className="flex">
+    <FooterWrapper>
       HRM React Application
     </FooterWrapper>
   );

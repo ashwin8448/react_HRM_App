@@ -33,7 +33,7 @@ const CustomDropdown = ({
     );
   };
   return (
-    <CustomDropdownWrapper className="custom-dropdown">
+    <CustomDropdownWrapper>
       <div className="flex">
         <input
           type="text"

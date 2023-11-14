@@ -7,7 +7,7 @@ import { useEmployeeContext } from "../../contexts/EmployeeContext";
 const Header = () => {
   const { updateFilters } = useEmployeeContext();
   return (
-    <HeaderWrapper className="flex">
+    <HeaderWrapper>
       <h1>
         <img className="logo" src={logo} alt="logo" />
       </h1>
