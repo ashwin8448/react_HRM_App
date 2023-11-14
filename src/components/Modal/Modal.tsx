@@ -7,7 +7,7 @@ const Modal = ({ children }: IModal) => {
   return (
     <ModalWrapper>
       <Button
-        className="icon close-button"
+        buttonType="close-button"
         src={closeButton}
         alt="Close icon"
       ></Button>

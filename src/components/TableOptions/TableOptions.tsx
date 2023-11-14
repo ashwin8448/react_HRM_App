@@ -16,7 +16,7 @@ const TableOptions = () => {
     <TableOptionsWapper>
       <div className="table-options flex">
         <Button
-          className="primary-button"
+          buttonType="primary-button"
           onClick={handleBtnClick}
           description="Add new employee"
           src={addEmployeeIcon}

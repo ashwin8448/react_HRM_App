@@ -7,12 +7,12 @@ const Pagination = () => {
   return (
     <PaginationWrapper>
       <Button
-        className="mirror primary-button"
+        buttonType="primary-button"
         src={endIcon}
         alt="Show first page icon"
       />
       <Button
-        className="mirror primary-button"
+        buttonType="primary-button"
         src={nextIcon}
         alt="Show previous page icon"
       />
@@ -23,12 +23,12 @@ const Pagination = () => {
       </form>
 
       <Button
-        className="primary-button"
+        buttonType="primary-button"
         src={nextIcon}
         alt="Show next page icon"
       />
       <Button
-        className="primary-button"
+        buttonType="primary-button"
         src={endIcon}
         alt="Show last page icon"
       />

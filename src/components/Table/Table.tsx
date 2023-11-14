@@ -26,7 +26,7 @@ const TableHeader = ({
           src={sortIcon}
           alt="Sort icon"
           onClick={sortHandler}
-          className="primary-button"
+          buttonType="primary-button"
         ></Button>
       ) : (
         <span>{tableHeader}</span>
@@ -49,20 +49,20 @@ const EmployeeRow = ({ employee }: any) => {
         <div className="flex employee-actions">
           <Link to="view_employee_page">
             <Button
-              className="primary-button"
+              buttonType="primary-button"
               src={viewIcon}
               alt="View employee button"
             ></Button>
           </Link>
           <Link to="/form_page">
             <Button
-              className="primary-button"
+              buttonType="primary-button"
               src={editIcon}
               alt="Edit employee button"
             ></Button>
           </Link>
           <Button
-            className="primary-button"
+            buttonType="primary-button"
             src={deleteIcon}
             alt="Delete employee button"
             onClick={deleteButtonHandler}
