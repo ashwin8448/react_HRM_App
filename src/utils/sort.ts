@@ -5,7 +5,7 @@ export const sortEmployees = (
   employees: IEmployee[],
   sortConfig: { sortColumn: string; sortOrder: string }
 ) => {
-  let sortFlag: number = 1;
+  let sortFlag: number;
   sortConfig.sortOrder === "asc" ? (sortFlag = 1) : (sortFlag = -1);
   //Sorting numbers)
   if (employees.length != 0) {
