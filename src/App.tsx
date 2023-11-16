@@ -4,6 +4,7 @@ import router from "./core/routing/routing";
 import EmployeeProvider from "./contexts/EmployeeContext";
 
 function App() {
+
   return (
     <EmployeeProvider>
       <Layout>
