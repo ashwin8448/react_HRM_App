@@ -4,13 +4,12 @@ import editIcon from "../../assets/images/edit_icon.svg";
 import deleteIcon from "../../assets/images/delete_icon.svg";
 import sortIcon from "../../assets/images/ascending_order_icon.svg";
 import TableWrapper from "./styles";
-import { Link, useNavigate } from "react-router-dom";
-import { employees, tableHeaders } from "../../core/config/constants";
+import { useNavigate } from "react-router-dom";
+import { tableHeaders } from "../../core/config/constants";
 import { IEmployee, ITableHeader } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { filterArray } from "../../utils/filterArray";
 import { sortEmployees } from "../../utils/sort";
-import { useContext } from "react";
 
 const TableHeader = ({ tableHeader, isSortable }: ITableHeader) => {
   const { sortConfig, updateSortConfig } = useEmployeeContext();
