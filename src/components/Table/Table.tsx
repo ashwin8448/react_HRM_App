@@ -10,6 +10,7 @@ import { IEmployee, ITableHeader } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { filterArray } from "../../utils/filterArray";
 import { sortEmployees } from "../../utils/sort";
+import { useContext } from "react";
 
 const TableHeader = ({ tableHeader, isSortable }: ITableHeader) => {
   const { sortConfig, updateSortConfig } = useEmployeeContext();
@@ -72,9 +73,10 @@ const EmployeeRow = ({ employee }: any) => {
 };
 
 const Table = () => {
-  const { filters, sortConfig } = useEmployeeContext();
+  const { filters, sortConfig, employeesData } = useEmployeeContext();
+  console.log(employeesData);
   const filteredEmployees = sortEmployees(
-    filterArray(employees, filters),
+    filterArray(employeesData, filters),
     sortConfig
   );
   return (

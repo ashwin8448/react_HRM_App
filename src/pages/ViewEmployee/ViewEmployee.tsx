@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
 import SelectedSkills from "../../components/SelectedSkills/SelectedSkills";
 import DivWrapper from "./styles";
-import { employees } from "../../core/config/constants";
 import { filterArray } from "../../utils/filterArray";
+import { useEmployeeContext } from "../../contexts/EmployeeContext";
 
 const ViewEmployee = () => {
   const { employeeId } = useParams();
-  const [employee] = filterArray(employees, { id: [Number(employeeId)] });
+  const {employeesData} = useEmployeeContext();
+  const [employee] = filterArray(employeesData, { id: [Number(employeeId)] });
   return (
     <DivWrapper className="page-content">
       <div>

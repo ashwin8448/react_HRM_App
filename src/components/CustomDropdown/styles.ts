@@ -1,13 +1,19 @@
 import styled from "styled-components";
+import { ICustomDropdownStyleProps } from "./types";
 
-const CustomDropdownWrapper = styled.div`
-  background-color: var(--search-bar);
-  padding: 5px;
+const CustomDropdownWrapper = styled.div<ICustomDropdownStyleProps>`
   border-radius: 5px;
   position: relative;
 
+  ${(props) =>
+    props.$dropdownLocation === "homepage"
+      ? `background-color: var(--search-bar);`
+      : `background-color: var(--input);`}
+  ${(props) => (props.$dropdownLocation === "homepage" ? `padding:5px;` : null)}
+
   input {
-    height: 35px;
+    height: 40px;
+    flex-grow: 1;
   }
 
   .options {
@@ -33,7 +39,7 @@ const CustomDropdownWrapper = styled.div`
     background-color: var(--hover-bg);
   }
 
-  button{
+  button {
     padding: 0;
   }
 `;

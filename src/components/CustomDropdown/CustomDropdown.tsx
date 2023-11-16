@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CustomDropdownWrapper from "./styles";
 import { skills } from "../../core/config/constants";
-import ICustomDropdown from "./types";
+import { ICustomDropdown } from "./types";
 
 const CustomDropdown = ({
   handleAddToSelectedSkills,
@@ -11,6 +11,7 @@ const CustomDropdown = ({
   children,
   placeholder,
   inputTag,
+  dropdownLocation
 }: ICustomDropdown) => {
   const [showSkills, setShowSkills] = useState(false);
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -33,7 +34,7 @@ const CustomDropdown = ({
     );
   };
   return (
-    <CustomDropdownWrapper>
+    <CustomDropdownWrapper $dropdownLocation={dropdownLocation}>
       <div className="flex">
         <input
           type="text"

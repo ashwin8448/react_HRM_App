@@ -1,7 +1,17 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { IEmployeeContextProps } from "./types";
+import { IEmployee } from "../components/Table/types";
+import { employees } from "../core/config/constants";
 
 const initialContextValues: IEmployeeContextProps = {
+  employeesData: employees,
+  updateEmployeesData: () => {},
   sortConfig: { sortColumn: "id", sortOrder: "asc" },
   updateSortConfig: () => {},
   filters: { skills: [], search: [] },
@@ -13,6 +23,12 @@ const EmployeeContext = createContext(initialContextValues);
 export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const [sortConfig, setSortConfig] = useState(initialContextValues.sortConfig);
   const [filters, setFilters] = useState(initialContextValues.filters);
+  const [employeesData, setEmployeesData] = useState(
+    initialContextValues.employeesData
+  );
+  useEffect(() => {
+    setEmployeesData(employees);
+  }, []);
   const updateSortConfig = (sortColumn: string) => {
     setSortConfig((prevConfig) => ({
       sortColumn,
@@ -25,10 +41,17 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     }));
   };
 
-  const updateFilters = (newFilters: { skills?: string[]; search?: string[] }) => {
-    if (newFilters.skills||newFilters.search) {
+  const updateFilters = (newFilters: {
+    skills?: string[];
+    search?: string[];
+  }) => {
+    if (newFilters.skills || newFilters.search) {
       setFilters((prev) => ({ ...prev, ...newFilters }));
     }
+  };
+
+  const updateEmployeesData = (newData: IEmployee[]) => {
+    setEmployeesData(newData);
   };
 
   const value: IEmployeeContextProps = {
@@ -36,6 +59,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     updateSortConfig,
     filters,
     updateFilters,
+    employeesData,
+    updateEmployeesData,
   };
   return (
     <EmployeeContext.Provider value={value}>

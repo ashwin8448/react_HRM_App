@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const FormWrapper = styled.form`
+const FormWrapper = styled.div`
   h2 {
     margin-top: 0;
   }
@@ -23,7 +23,6 @@ const FormWrapper = styled.form`
 
   input,
   select {
-    margin: 7px 0 0 0;
     height: 40px;
   }
 
@@ -52,6 +51,9 @@ const FormWrapper = styled.form`
     width: 45%;
   }
 
+  label {
+    margin-bottom: 7px;
+  }
   .custom-dropdown {
     padding: 0;
     background-color: var(--input);

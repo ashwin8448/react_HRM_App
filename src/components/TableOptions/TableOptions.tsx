@@ -42,7 +42,7 @@ const TableOptions = () => {
     inputTag.current!.value = "";
     setSkillsToDisplay(skills);
     setSelectedSkills([]);
-    updateFilters({skills:[]});
+    updateFilters({ skills: [] });
   };
 
   return (
@@ -59,6 +59,7 @@ const TableOptions = () => {
           </Button>
         </Link>
         <CustomDropdown
+          dropdownLocation="homepage"
           selectedSkills={selectedSkills}
           handleAddToSelectedSkills={handleAddToSelectedSkills}
           handleSkillsToDisplay={handleSkillsToDisplay}
