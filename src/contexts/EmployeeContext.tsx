@@ -16,6 +16,8 @@ const initialContextValues: IEmployeeContextProps = {
   updateSortConfig: () => {},
   filters: { skills: [], search: [] },
   updateFilters: () => {},
+  idToDelete: 0,
+  updateIdToDelete: () => {},
 };
 
 const EmployeeContext = createContext(initialContextValues);
@@ -26,6 +28,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const [employeesData, setEmployeesData] = useState(
     initialContextValues.employeesData
   );
+  const [idToDelete, setIdToDelete] = useState(initialContextValues.idToDelete);
   useEffect(() => {
     setEmployeesData(employees);
   }, []);
@@ -54,6 +57,9 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     setEmployeesData(newData);
   };
 
+  const updateIdToDelete = (id: number) => {
+    setIdToDelete(id);
+  };
   const value: IEmployeeContextProps = {
     sortConfig,
     updateSortConfig,
@@ -61,6 +67,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     updateFilters,
     employeesData,
     updateEmployeesData,
+    idToDelete,
+    updateIdToDelete,
   };
   return (
     <EmployeeContext.Provider value={value}>

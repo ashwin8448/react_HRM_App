@@ -3,10 +3,10 @@ import Button from "../Button/Button";
 import ModalWrapper from "./styles";
 import IModal from "./types";
 
-const Modal = ({ children }: IModal) => {
+const Modal = ({ children, updateIdToDelete }: IModal) => {
   return (
     <ModalWrapper>
-      <Button buttonType="close-button">
+      <Button buttonType="close-button" onClick={() => updateIdToDelete(0)}>
         <img src={closeButton} alt="Close icon" />
       </Button>
       {children}

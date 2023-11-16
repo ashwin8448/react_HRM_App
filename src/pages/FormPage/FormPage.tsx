@@ -16,22 +16,25 @@ import { IFormValues } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { filterArray } from "../../utils/filterArray";
+import { IEmployee } from "../../components/Table/types";
 
 const FormPage = () => {
   const { employeesData, updateEmployeesData } = useEmployeeContext();
   const { employeeId } = useParams();
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(skills);
-  const inputTag = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
-
-  let currentEmployee;
+  let currentEmployee: IEmployee | undefined;
   if (employeeId) {
     [currentEmployee] = filterArray(employeesData, {
       id: [Number(employeeId)],
     });
-    // setSelectedSkills(currentEmployee.skills);
   }
+  const [selectedSkills, setSelectedSkills] = useState<string[]>(
+    employeeId ? currentEmployee!.skills : []
+  );
+  const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(
+    skills.filter((skill) => !selectedSkills.includes(skill))
+  );
+  const inputTag = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const handleAddToSelectedSkills = (currentSkill: string) => {
     setSkillsToDisplay(
@@ -57,22 +60,29 @@ const FormPage = () => {
 
   const handleFormSubmit = (values: IFormValues) => {
     //Random id assigned. remove this
-    const newData = { ...values, skills: selectedSkills, id: 1005 };
-    updateEmployeesData([...employeesData, newData]);
+    let newData: IEmployee;
+    let updatedData = employeesData;
+    if (employeeId) {
+      updatedData = employeesData.filter(
+        (employee) => employee.id != currentEmployee!.id
+      );
+      newData = { ...values, skills: selectedSkills, id: currentEmployee!.id };
+    } else newData = { ...values, skills: selectedSkills, id: 1005 };
+    updateEmployeesData([...updatedData, newData]);
     navigate("/");
   };
 
   const initialValues = employeeId
     ? {
-        firstName: currentEmployee.firstName,
-        lastName: currentEmployee.lastName,
-        dob: currentEmployee.dob,
-        address: currentEmployee.address,
-        phone: currentEmployee.phone,
-        email: currentEmployee.email,
-        doj: currentEmployee.dob,
-        department: currentEmployee.department,
-        role: currentEmployee.role,
+        firstName: currentEmployee!.firstName,
+        lastName: currentEmployee!.lastName,
+        dob: currentEmployee!.dob,
+        address: currentEmployee!.address,
+        phone: currentEmployee!.phone,
+        email: currentEmployee!.email,
+        doj: currentEmployee!.dob,
+        department: currentEmployee!.department,
+        role: currentEmployee!.role,
       }
     : {
         firstName: "",

@@ -4,7 +4,7 @@ import editIcon from "../../assets/images/edit_icon.svg";
 import deleteIcon from "../../assets/images/delete_icon.svg";
 import sortIcon from "../../assets/images/ascending_order_icon.svg";
 import TableWrapper from "./styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { employees, tableHeaders } from "../../core/config/constants";
 import { IEmployee, ITableHeader } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
@@ -38,9 +38,9 @@ const TableHeader = ({ tableHeader, isSortable }: ITableHeader) => {
 };
 
 const EmployeeRow = ({ employee }: any) => {
-  const deleteButtonHandler = () => {
-    alert("DELETED");
-  };
+  const { updateIdToDelete } = useEmployeeContext();
+  const navigate = useNavigate();
+
   return (
     <tr>
       {tableHeaders.map((tableHeader) => {
@@ -49,17 +49,24 @@ const EmployeeRow = ({ employee }: any) => {
 
       <td>
         <div className="flex employee-actions">
-          <Link to={`view_employee_page/${employee.id}`}>
-            <Button buttonType="primary-button">
-              <img src={viewIcon} alt="View employee button" className="icon" />
-            </Button>
-          </Link>
-          <Link to={`form_page/${employee.id}`}>
-            <Button buttonType="primary-button">
-              <img src={editIcon} alt="Edit employee button" className="icon" />
-            </Button>
-          </Link>
-          <Button buttonType="primary-button" onClick={deleteButtonHandler}>
+          <Button
+            buttonType="primary-button"
+            onClick={() => navigate(`view_employee_page/${employee.id}`)}
+          >
+            <img src={viewIcon} alt="View employee button" className="icon" />
+          </Button>
+
+          <Button
+            buttonType="primary-button"
+            onClick={() => navigate(`form_page/${employee.id}`)}
+          >
+            <img src={editIcon} alt="Edit employee button" className="icon" />
+          </Button>
+
+          <Button
+            buttonType="primary-button"
+            onClick={() => updateIdToDelete(employee.id)}
+          >
             <img
               src={deleteIcon}
               alt="Delete employee button"
@@ -74,7 +81,6 @@ const EmployeeRow = ({ employee }: any) => {
 
 const Table = () => {
   const { filters, sortConfig, employeesData } = useEmployeeContext();
-  console.log(employeesData);
   const filteredEmployees = sortEmployees(
     filterArray(employeesData, filters),
     sortConfig

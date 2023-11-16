@@ -13,4 +13,6 @@ export interface IEmployeeContextProps {
   }) => void;
   employeesData: IEmployee[];
   updateEmployeesData: ([]: IEmployee[]) => void;
+  idToDelete: number;
+  updateIdToDelete: (id:number)=>void
 }
