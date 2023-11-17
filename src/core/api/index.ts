@@ -1,6 +1,6 @@
-// import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-// import { onRequest, onRequestError } from './requestInterceptor';
-// import { onResponse, onResponseError } from './responseInterceptor';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { onRequest, onRequestError } from './requestInterceptor';
+import { onResponse, onResponseError } from './responseInterceptor';
 
 // const API: AxiosInstance = axios.create({
 //     baseURL: import.meta.env.VITE_API_ENDPOINT,
