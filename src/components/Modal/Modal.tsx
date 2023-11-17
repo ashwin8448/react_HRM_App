@@ -6,10 +6,12 @@ import IModal from "./types";
 const Modal = ({ children, updateIdToDelete }: IModal) => {
   return (
     <ModalWrapper>
-      <Button buttonType="close-button" onClick={() => updateIdToDelete(0)}>
-        <img src={closeButton} alt="Close icon" />
-      </Button>
-      {children}
+      <div className="modal">
+        <Button buttonType="close-button" onClick={() => updateIdToDelete(0)}>
+          <img src={closeButton} alt="Close icon" />
+        </Button>
+        {children}
+      </div>
     </ModalWrapper>
   );
 };
