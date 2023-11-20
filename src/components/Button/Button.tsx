@@ -1,8 +1,17 @@
+import { IButtonAttributes } from "./types";
+import ButtonWrapper from "./styles";
 
-const Button = () => {
+const Button = ({
+  buttonType = "",
+  onClick,
+  children,
+  isNegative = false,
+}: IButtonAttributes) => {
   return (
-    <button>Click</button>
-  )
-}
+    <ButtonWrapper $buttonType={buttonType} $isNegative={isNegative} onClick={onClick}>
+      {children}
+    </ButtonWrapper>
+  );
+};
 
-export default Button
+export default Button;

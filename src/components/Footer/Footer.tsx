@@ -1,7 +1,11 @@
+import FooterWrapper from "./styles";
+
 const Footer = () => {
   return (
-    <footer>HRM React Application</footer>
-  )
-}
+    <FooterWrapper>
+      HRM React Application
+    </FooterWrapper>
+  );
+};
 
-export default Footer
+export default Footer;

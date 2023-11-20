@@ -1,22 +1,16 @@
-import Footer from "./components/Footer/Footer";
-import Header from "./components/Header/Header";
-import Pagination from "./components/Pagination/Pagination";
-import Table from "./components/Table/Table";
-import TableOptions from "./components/TableOptions/TableOptions";
+import Layout from "./Layout/Layout";
+import { RouterProvider } from "react-router-dom";
+import router from "./core/routing/routing";
+import EmployeeProvider from "./contexts/EmployeeContext";
 
 function App() {
+
   return (
-    <>
-      <Header />
-      <br />
-      <TableOptions />
-      <br />
-      <Table />
-      <br />
-      <Pagination />
-      <br />
-      <Footer />
-    </>
+    <EmployeeProvider>
+      <Layout>
+        <RouterProvider router={router}></RouterProvider>
+      </Layout>
+    </EmployeeProvider>
   );
 }
 
