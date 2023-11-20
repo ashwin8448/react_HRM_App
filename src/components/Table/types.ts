@@ -6,9 +6,13 @@ export interface IEmployee {
   address: string;
   phone: string;
   email: string;
-  doj: string;
-  department: string;
+  isActive: boolean;
+  designation: string;
+  salary: string;
+  dateOfJoining: string;
+  moreDetails: string|null;
   role: string;
+  department: string;
   skills: string[];
 }
 

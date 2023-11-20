@@ -22,6 +22,7 @@ const FormPage = () => {
   const { employeesData, updateEmployeesData } = useEmployeeContext();
   const { employeeId } = useParams();
   let currentEmployee: IEmployee | undefined;
+  console.log("Hi", employeesData);
   if (employeeId) {
     [currentEmployee] = filterArray(employeesData, {
       id: [Number(employeeId)],
@@ -84,6 +85,7 @@ const FormPage = () => {
         department: currentEmployee!.department,
         role: currentEmployee!.role,
       }
+      
     : {
         firstName: "",
         lastName: "",
@@ -167,18 +169,6 @@ const FormPage = () => {
                       </div>
                     );
                   }
-                  // return (
-                  //   <InputField
-                  //     key={field.description}
-                  //     field={field}
-                  //     selectedSkills={selectedSkills}
-                  //     skillsToDisplay={skillsToDisplay}
-                  //     handleAddToSelectedSkills={handleAddToSelectedSkills}
-                  //     handleSkillsToDisplay={handleSkillsToDisplay}
-                  //     handleClearFilter={handleClearFilter}
-                  //     inputTag={inputTag}
-                  //   />
-                  // );
                 })}
               </fieldset>
             );
