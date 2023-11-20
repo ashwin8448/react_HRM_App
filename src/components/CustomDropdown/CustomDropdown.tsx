@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CustomDropdownWrapper from "./styles";
-import { skills } from "../../core/config/constants";
 import { ICustomDropdown } from "./types";
+import { useEmployeeContext } from "../../contexts/EmployeeContext";
 
 const CustomDropdown = ({
   handleAddToSelectedSkills,
@@ -11,8 +11,9 @@ const CustomDropdown = ({
   children,
   placeholder,
   inputTag,
-  dropdownLocation
+  dropdownLocation,
 }: ICustomDropdown) => {
+  const { skills } = useEmployeeContext();
   const [showSkills, setShowSkills] = useState(false);
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setTimeout(() => {

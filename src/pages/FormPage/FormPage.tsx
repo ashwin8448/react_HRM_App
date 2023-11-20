@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import clearFilterIcon from "../../assets/images/clear_filter_icon.svg";
 import SelectedSkills from "../../components/SelectedSkills/SelectedSkills";
-import { formData, skills } from "../../core/config/constants";
+import { formData } from "../../core/config/constants";
 import FormWrapper from "./styles";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -19,10 +19,10 @@ import { filterArray } from "../../utils/filterArray";
 import { IEmployee } from "../../components/Table/types";
 
 const FormPage = () => {
-  const { employeesData, updateEmployeesData } = useEmployeeContext();
+  const { employeesData, updateEmployeesData, skills, roles, departments } =
+    useEmployeeContext();
   const { employeeId } = useParams();
   let currentEmployee: IEmployee | undefined;
-  console.log("Hi", employeesData);
   if (employeeId) {
     [currentEmployee] = filterArray(employeesData, {
       id: [Number(employeeId)],
@@ -85,7 +85,6 @@ const FormPage = () => {
         department: currentEmployee!.department,
         role: currentEmployee!.role,
       }
-      
     : {
         firstName: "",
         lastName: "",
@@ -135,11 +134,17 @@ const FormPage = () => {
                         isMandatory={field.isMandatory}
                       >
                         <option value="">Select a {field.description}</option>
-                        {field.data?.map((element) => (
-                          <option key={element} value={element}>
-                            {element}
-                          </option>
-                        ))}
+                        {field.name === "Role"
+                          ? roles.map((element) => (
+                              <option key={element} value={element}>
+                                {element}
+                              </option>
+                            ))
+                          : departments.map((element) => (
+                              <option key={element} value={element}>
+                                {element}
+                              </option>
+                            ))}
                       </MySelect>
                     );
                   else if (field.inputType == "custom") {

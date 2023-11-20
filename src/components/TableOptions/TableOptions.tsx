@@ -6,14 +6,13 @@ import { Link } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
 import { useState, useRef } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
-import { skills } from "../../core/config/constants";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 
 const TableOptions = () => {
+  const { updateFilters, skills } = useEmployeeContext();
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(skills);
   const inputTag = useRef<HTMLInputElement>(null);
-  const { updateFilters } = useEmployeeContext();
 
   const handleAddToSelectedSkills = (currentSkill: string) => {
     setSkillsToDisplay(

@@ -18,18 +18,37 @@ const initialContextValues: IEmployeeContextProps = {
   updateFilters: () => {},
   idToDelete: 0,
   updateIdToDelete: () => {},
+  skills: [],
+  updateSkills: () => {},
+  departments: [],
+  updateDepartments: () => {},
+  roles: [],
+  updateRoles: () => {},
 };
 
 const EmployeeContext = createContext(initialContextValues);
 
 export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
-  console.log("Hi from provider");
   const [sortConfig, setSortConfig] = useState(initialContextValues.sortConfig);
   const [filters, setFilters] = useState(initialContextValues.filters);
   const [employeesData, setEmployeesData] = useState(
     initialContextValues.employeesData
   );
+  const [skills, setSkills] = useState(initialContextValues.skills);
+  const [departments, setDepartments] = useState(
+    initialContextValues.departments
+  );
   const [idToDelete, setIdToDelete] = useState(initialContextValues.idToDelete);
+  const [roles, setRoles] = useState(initialContextValues.roles);
+  const updateRoles = (newRoles: string[]) => {
+    setRoles(newRoles);
+  };
+  const updateSkills = (newSkills: string[]) => {
+    setSkills(newSkills);
+  };
+  const updateDepartments = (newDepartments: string[]) => {
+    setDepartments(newDepartments);
+  };
   const updateSortConfig = (sortColumn: string) => {
     setSortConfig((prevConfig) => ({
       sortColumn,
@@ -58,24 +77,14 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const updateIdToDelete = (id: number) => {
     setIdToDelete(id);
   };
-  const value: IEmployeeContextProps = {
-    sortConfig,
-    updateSortConfig,
-    filters,
-    updateFilters,
-    employeesData,
-    updateEmployeesData,
-    idToDelete,
-    updateIdToDelete,
-  };
+
   useEffect(() => {
-    console.log("Hi from useEffect hook");
     const fetchEmployeesData = async () => {
       try {
-        const result = await getData(
+        const response = await getData(
           "/employee?limit=200&offset=0&sortBy=id&sortDir=asc"
         );
-        let employeesData = result.data.data.employees.map(
+        let employeesData = response.data.data.employees.map(
           (employeeData: any) => {
             return {
               ...employeeData,
@@ -95,16 +104,56 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       }
     };
     fetchEmployeesData();
-    // const fetchSkillsData = async () => {
-    //   try {
-    //     const result = await getData("/skills")
-    //     let skills = skills
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-    // fetchSkillsData();
+
+    const fetchSkills = async () => {
+      try {
+        let response = await getData("/skills");
+        let skills = response.data.data.map((skill: any) => skill.skill);
+        updateSkills(skills);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSkills();
+    const fetchDepartments = async () => {
+      try {
+        let response = await getData("/departments");
+        let departments = response.data.map(
+          (department: any) => department.department
+        );
+        updateDepartments(departments);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDepartments();
+    const fetchRoles = async () => {
+      try {
+        let response = await getData("/roles");
+        let roles = response.data.map((role: any) => role.role);
+        updateRoles(roles);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchRoles();
   }, []);
+  const value: IEmployeeContextProps = {
+    sortConfig,
+    updateSortConfig,
+    filters,
+    updateFilters,
+    employeesData,
+    updateEmployeesData,
+    idToDelete,
+    updateIdToDelete,
+    skills,
+    updateSkills,
+    departments,
+    updateDepartments,
+    roles,
+    updateRoles,
+  };
   return (
     <EmployeeContext.Provider value={value}>
       {children}
