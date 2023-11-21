@@ -21,4 +21,13 @@ export interface IEmployeeContextProps {
   updateDepartments: ([]: string[]) => void;
   roles: string[];
   updateRoles: ([]: string[]) => void;
+  fetchedData: {
+    fetchedSkills: { id: string; skill: string }[];
+    fetchedRoles: { id: string; role: string }[];
+    fetchedDepartments: { id: string; department: string }[];
+  };
+  updateFetchedData: (dataType:string,[]:
+    | { id: string; skill: string }[]
+    | { id: string; role: string }[]
+    | { id: string; department: string }[]) => void;
 }

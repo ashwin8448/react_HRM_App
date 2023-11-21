@@ -8,7 +8,12 @@ const Button = ({
   isNegative = false,
 }: IButtonAttributes) => {
   return (
-    <ButtonWrapper $buttonType={buttonType} $isNegative={isNegative} onClick={onClick}>
+    <ButtonWrapper
+      $buttonType={buttonType}
+      $isNegative={isNegative}
+      onClick={onClick}
+      type="button"
+    >
       {children}
     </ButtonWrapper>
   );

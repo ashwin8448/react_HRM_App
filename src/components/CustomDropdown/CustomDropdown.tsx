@@ -34,7 +34,7 @@ const CustomDropdown = ({
       )
     );
   };
-  return (
+  return skills.length ? (
     <CustomDropdownWrapper $dropdownLocation={dropdownLocation}>
       <div className="flex">
         <input
@@ -64,7 +64,7 @@ const CustomDropdown = ({
         </ul>
       ) : null}
     </CustomDropdownWrapper>
-  );
+  ) : null;
 };
 
 export default CustomDropdown;

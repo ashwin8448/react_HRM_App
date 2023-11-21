@@ -1,4 +1,5 @@
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { deleteData } from "../../core/api";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
 
@@ -8,10 +9,11 @@ const ConfirmBox = () => {
   const { updateIdToDelete, idToDelete, employeesData, updateEmployeesData } =
     useEmployeeContext();
   const deleteHandler = () => {
-    const updatedEmployees = employeesData.filter(
-      (employee) => employee.id != idToDelete
-    );
-    updateEmployeesData(updatedEmployees);
+    deleteData(`/employee/${idToDelete}`);
+    // const updatedEmployees = employeesData.filter(
+    //   (employee) => employee.id != idToDelete
+    // );
+    // updateEmployeesData(updatedEmployees);
     updateIdToDelete(0);
   };
   return (

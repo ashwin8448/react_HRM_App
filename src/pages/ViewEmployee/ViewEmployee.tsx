@@ -29,7 +29,7 @@ const ViewEmployee = () => {
         Email: <span>{employee.email}</span>
       </p>
       <p>
-        Date of joining: <span>{employee.doj}</span>
+        Date of joining: <span>{employee.dateOfJoining}</span>
       </p>
       <p>
         Department: <span>{employee.department}</span>

@@ -24,6 +24,8 @@ const initialContextValues: IEmployeeContextProps = {
   updateDepartments: () => {},
   roles: [],
   updateRoles: () => {},
+  fetchedData: { fetchedSkills: [], fetchedRoles: [], fetchedDepartments: [] },
+  updateFetchedData: () => {},
 };
 
 const EmployeeContext = createContext(initialContextValues);
@@ -40,6 +42,18 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   );
   const [idToDelete, setIdToDelete] = useState(initialContextValues.idToDelete);
   const [roles, setRoles] = useState(initialContextValues.roles);
+  const [fetchedData, setFetchedData] = useState(
+    initialContextValues.fetchedData
+  );
+  const updateFetchedData = (
+    dataType: string,
+    newData:
+      | { id: string; skill: string }[]
+      | { id: string; role: string }[]
+      | { id: string; department: string }[]
+  ) => {
+    setFetchedData((prev) => ({ ...prev, [dataType]: newData }));
+  };
   const updateRoles = (newRoles: string[]) => {
     setRoles(newRoles);
   };
@@ -108,16 +122,19 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     const fetchSkills = async () => {
       try {
         let response = await getData("/skills");
+        updateFetchedData("fetchedSkills", response.data.data);
         let skills = response.data.data.map((skill: any) => skill.skill);
         updateSkills(skills);
       } catch (error) {
         console.log(error);
       }
     };
+
     fetchSkills();
     const fetchDepartments = async () => {
       try {
         let response = await getData("/departments");
+        updateFetchedData("fetchedDepartments", response.data);
         let departments = response.data.map(
           (department: any) => department.department
         );
@@ -130,6 +147,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     const fetchRoles = async () => {
       try {
         let response = await getData("/roles");
+        updateFetchedData("fetchedRoles", response.data);
         let roles = response.data.map((role: any) => role.role);
         updateRoles(roles);
       } catch (error) {
@@ -153,6 +171,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     updateDepartments,
     roles,
     updateRoles,
+    fetchedData,
+    updateFetchedData,
   };
   return (
     <EmployeeContext.Provider value={value}>

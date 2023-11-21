@@ -17,7 +17,7 @@ const validationSchema = {
     })
     .required("Required"),
   email: Yup.string().email("Invalid email address").required("Required"),
-  doj: Yup.string().required("Required"),
+  dateOfJoining: Yup.string().required("Required"),
   department: Yup.string().required("Required"),
   role: Yup.string().required("Required"),
 };

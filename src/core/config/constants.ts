@@ -203,7 +203,7 @@ export const formData = [
       {
         description: "Date of joining",
         inputType: "date",
-        name: "doj",
+        name: "dateOfJoining",
         isMandatory: true,
       },
       {

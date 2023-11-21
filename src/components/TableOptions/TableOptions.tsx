@@ -4,7 +4,7 @@ import clearFilterIcon from "../../assets/images/clear_filter_icon.svg";
 import TableOptionsWrapper from "./styles";
 import { Link } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 
@@ -43,8 +43,11 @@ const TableOptions = () => {
     setSelectedSkills([]);
     updateFilters({ skills: [] });
   };
+  useEffect(() => {
+    setSkillsToDisplay(skills);
+  }, [skills]);
 
-  return (
+  return skillsToDisplay.length ? (
     <TableOptionsWrapper>
       <div className="table-options flex">
         <Link to="/form_page">
@@ -84,7 +87,7 @@ const TableOptions = () => {
         />
       ) : null}
     </TableOptionsWrapper>
-  );
+  ) : null;
 };
 
 export default TableOptions;
