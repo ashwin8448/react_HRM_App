@@ -94,17 +94,9 @@ const FormPage = () => {
       };
       if (employeeId) {
         await updateData(`/employee/${employeeId}`, payload);
-        //patch request
-        // updatedData = employeesData.filter(
-        //   (employee) => employee.id != currentEmployee!.id
-        // );
-        // newData = { ...values, skills: selectedSkills, id: currentEmployee!.id };
       } else {
-        const response = await postData("/employee", payload);
-        console.log(response);
-      } //post request
-      // newData = { ...values, skills: selectedSkills, id: 1005 };
-      // updateEmployeesData([...updatedData, newData]);
+        await postData("/employee", payload);
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -189,12 +181,12 @@ const FormPage = () => {
                               Select a {field.description}
                             </option>
                             {field.name === "role"
-                              ? roles.map((element) => (
+                              ? roles.sort().map((element) => (
                                   <option key={element} value={element}>
                                     {element}
                                   </option>
                                 ))
-                              : departments.map((element) => (
+                              : departments.sort().map((element) => (
                                   <option key={element} value={element}>
                                     {element}
                                   </option>
@@ -245,16 +237,23 @@ const FormPage = () => {
                 />
               </div>
               <div className="buttons-container flex">
-                <input className="primary-button" type="reset" />
-                <input
-                  className="primary-button"
-                  type="submit"
-                  value="Submit"
-                />
+                {employeeId === "" ? (
+                  <input
+                    className="primary-button"
+                    type="submit"
+                    value="Save"
+                  />
+                ) : (
+                  <>
+                    <input className="primary-button" type="reset" />
+                    <input
+                      className="primary-button"
+                      type="submit"
+                      value="Submit"
+                    />
+                  </>
+                )}
               </div>
-              {/* <div className="buttons-container flex">
-          <input className="primary-button" type="submit" value="Save" />
-        </div> */}
             </FormWrapper>
           </Form>
         </Formik>

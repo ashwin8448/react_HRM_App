@@ -93,11 +93,10 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const fetchEmployeesData = async () => {
     try {
       const response = await getData(
-        `/employee?limit=${currentPage * rowsPerPage}&offset=${
+        `/employee?limit=${rowsPerPage}&offset=${
           (currentPage - 1) * rowsPerPage + 1
-        }&sortBy=id&sortDir=asc`
+        }&sortBy=${sortConfig.sortColumn}&sortDir=${sortConfig.sortOrder}`
       );
-      console.log(response, "response");
       let employeesData = response.data.data.employees.map(
         (employeeData: any) => {
           return {
@@ -112,7 +111,6 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
           };
         }
       );
-      console.log(employeesData);
       updateEmployeesData(employeesData);
       setTotalPages(Math.ceil(response.data.data.count / rowsPerPage));
     } catch (error) {

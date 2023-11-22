@@ -50,7 +50,7 @@ const CustomDropdown = ({
       </div>
       {showSkills && skillsToDisplay.length != 0 ? (
         <ul className="options" tabIndex={0}>
-          {skillsToDisplay.map((skill) => (
+          {skillsToDisplay.sort().map((skill) => (
             <li
               key={skill}
               className="option flex"

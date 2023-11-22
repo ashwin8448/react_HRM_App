@@ -131,22 +131,27 @@ export const tableHeaders = [
   {
     id: "id",
     headerName: "Employee Number",
+    isApiSortable: true,
   },
   {
     id: "firstName",
     headerName: "First Name",
+    isApiSortable: true,
   },
   {
     id: "lastName",
     headerName: "Last Name",
+    isApiSortable: true,
   },
   {
     id: "department",
     headerName: "Department",
+    isApiSortable: false,
   },
   {
     id: "role",
     headerName: "Role",
+    isApiSortable: false,
   },
 ];
 
