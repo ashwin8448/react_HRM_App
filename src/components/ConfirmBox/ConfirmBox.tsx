@@ -6,14 +6,15 @@ import Modal from "../Modal/Modal";
 import ConfirmBoxWrapper from "./styles";
 
 const ConfirmBox = () => {
-  const { updateIdToDelete, idToDelete, employeesData, updateEmployeesData } =
+  const { updateIdToDelete, idToDelete, employeesData, fetchEmployeesData } =
     useEmployeeContext();
-  const deleteHandler = () => {
-    deleteData(`/employee/${idToDelete}`);
+  const deleteHandler = async () => {
+    await deleteData(`/employee/${idToDelete}`);
     // const updatedEmployees = employeesData.filter(
     //   (employee) => employee.id != idToDelete
     // );
     // updateEmployeesData(updatedEmployees);
+    fetchEmployeesData();
     updateIdToDelete(0);
   };
   return (

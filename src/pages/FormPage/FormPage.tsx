@@ -20,8 +20,14 @@ import { IEmployee } from "../../components/Table/types";
 import { postData, updateData } from "../../core/api";
 
 const FormPage = () => {
-  const { employeesData, fetchedData, skills, roles, departments } =
-    useEmployeeContext();
+  const {
+    employeesData,
+    fetchEmployeesData,
+    fetchedData,
+    skills,
+    roles,
+    departments,
+  } = useEmployeeContext();
   const { employeeId } = useParams();
   let currentEmployee: IEmployee | undefined;
   if (employeeId && employeesData.length) {
@@ -51,13 +57,9 @@ const FormPage = () => {
   const handleSkillsToDisplay = (filteredSkills: string[]) => {
     setSkillsToDisplay(filteredSkills);
   };
-  console.log(skillsToDisplay);
   if (currentEmployee)
     if (selectedSkills != currentEmployee!.skills) {
       setSelectedSkills(currentEmployee!.skills);
-      console.log(
-        skills.filter((skill) => !currentEmployee!.skills.includes(skill))
-      );
       handleSkillsToDisplay(
         skills.filter((skill) => !currentEmployee!.skills.includes(skill))
       );
@@ -90,7 +92,6 @@ const FormPage = () => {
           return department.department === values.department;
         })[0].id,
       };
-
       if (employeeId) {
         await updateData(`/employee/${employeeId}`, payload);
         //patch request
@@ -99,13 +100,16 @@ const FormPage = () => {
         // );
         // newData = { ...values, skills: selectedSkills, id: currentEmployee!.id };
       } else {
-        await postData("/employee", payload);
+        const response = await postData("/employee", payload);
+        console.log(response);
       } //post request
       // newData = { ...values, skills: selectedSkills, id: 1005 };
       // updateEmployeesData([...updatedData, newData]);
-      navigate("/");
     } catch (error) {
       console.log(error);
+    } finally {
+      navigate("/");
+      fetchEmployeesData();
     }
   };
 
