@@ -5,14 +5,15 @@ import deleteIcon from "../../assets/images/delete_icon.svg";
 import sortIcon from "../../assets/images/ascending_order_icon.svg";
 import TableWrapper from "./styles";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { tableHeaders } from "../../core/config/constants";
+import { rowsPerPage, tableHeaders } from "../../core/config/constants";
 import { IEmployee, ITableHeader } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { filterArray } from "../../utils/filterArray";
 
 const TableHeader = ({ tableHeader }: ITableHeader) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { sortConfig, updateSortConfig } = useEmployeeContext();
+  const { currentPage } = useEmployeeContext();
+  console.log(tableHeader.id, searchParams.get("sortBy"), searchParams.get("sortDir"))
   return (
     <th>
       {tableHeader.isSortable ? (
@@ -20,16 +21,23 @@ const TableHeader = ({ tableHeader }: ITableHeader) => {
           onClick={
             () =>
               setSearchParams({
-                sortBy: `${tableHeader.id}`,
-                sortDir: "asc",
+                sortBy: tableHeader.id,
+                sortDir: 
+                      searchParams.get("sortBy") === tableHeader.id
+                        ? searchParams.get("sortDir") === "desc"
+                          ? "asc"
+                          : "desc"
+                        : "asc",
+                limit: String(rowsPerPage),
+                offset: String(rowsPerPage * (currentPage - 1)),
               })
             // updateSortConfig(tableHeader.id)
           }
           buttonType="primary-button"
         >
           <span>{tableHeader?.headerName}</span>
-          {tableHeader.id === sortConfig.sortColumn ? (
-            sortConfig.sortOrder === "asc" ? (
+          {tableHeader.id === searchParams.get("sortBy") ? (
+            searchParams.get("sortDir") === "asc" ? (
               <img src={sortIcon} alt="Sort icon" className="icon" />
             ) : (
               <img src={sortIcon} alt="Sort icon" className="icon invert" />

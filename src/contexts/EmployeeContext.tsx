@@ -14,8 +14,8 @@ import { useSearchParams } from "react-router-dom";
 const initialContextValues: IEmployeeContextProps = {
   employeesData: [],
   updateEmployeesData: () => {},
-  sortConfig: { sortColumn: "id", sortOrder: "asc" },
-  updateSortConfig: () => {},
+  // sortConfig: { sortColumn: "id", sortOrder: "asc" },
+  // updateSortConfig: () => {},
   filters: { skills: [], search: [] },
   updateFilters: () => {},
   idToDelete: 0,
@@ -33,9 +33,9 @@ const initialContextValues: IEmployeeContextProps = {
 const EmployeeContext = createContext(initialContextValues);
 
 export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
-  const [searchParams, setSeachParams]=useSearchParams();
-
-  const [sortConfig, setSortConfig] = useState(initialContextValues.sortConfig);
+  const [searchParams]=useSearchParams();
+  console.log(searchParams)
+  // const [sortConfig, setSortConfig] = useState(initialContextValues.sortConfig);
   const [filters, setFilters] = useState(initialContextValues.filters);
   const [employeesData, setEmployeesData] = useState(
     initialContextValues.employeesData
@@ -65,17 +65,17 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     setFetchedData((prev) => ({ ...prev, [dataType]: newData }));
   };
-  const updateSortConfig = (sortColumn: string) => {
-    setSortConfig((prevConfig) => ({
-      sortColumn,
-      sortOrder:
-        prevConfig.sortColumn === sortColumn
-          ? prevConfig.sortOrder === "desc"
-            ? "asc"
-            : "desc"
-          : "asc",
-    }));
-  };
+  // const updateSortConfig = (sortColumn: string) => {
+  //   setSortConfig((prevConfig) => ({
+  //     sortColumn,
+  //     sortOrder:
+  //       prevConfig.sortColumn === sortColumn
+  //         ? prevConfig.sortOrder === "desc"
+  //           ? "asc"
+  //           : "desc"
+  //         : "asc",
+  //   }));
+  // };
 
   const updateFilters = (newFilters: {
     skills?: string[];
@@ -103,8 +103,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         params: {
           limit: searchLimit?searchLimit:rowsPerPage,
           offset: searchOffset?searchOffset:currentPage * (rowsPerPage - 1),
-          sortBy: searchSortBy?searchSortBy:sortConfig.sortColumn,
-          sortDir: searchSortDir?searchSortDir:sortConfig.sortColumn,
+          sortBy: searchSortBy?searchSortBy:"id",
+          sortDir: searchSortDir?searchSortDir:"asc",
         },
       });
       let employeesData = response.data.data.employees.map(
@@ -130,7 +130,10 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   };
   useEffect(() => {
     fetchEmployeesData();
-  }, [currentPage, sortConfig]);
+  }, [currentPage, 
+    // sortConfig
+    searchParams
+  ]);
   useEffect(() => {
     const fetchSkills = async () => {
       try {
@@ -170,8 +173,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     fetchRoles();
   }, []);
   const value: IEmployeeContextProps = {
-    sortConfig,
-    updateSortConfig,
+    // sortConfig,
+    // updateSortConfig,
     filters,
     updateFilters,
     employeesData,

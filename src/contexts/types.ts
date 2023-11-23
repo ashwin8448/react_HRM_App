@@ -1,8 +1,8 @@
 import { IEmployee } from "../components/Table/types";
 
 export interface IEmployeeContextProps {
-  sortConfig: { sortColumn: string; sortOrder: string };
-  updateSortConfig: (sortColumn: string) => void;
+  // sortConfig: { sortColumn: string; sortOrder: string };
+  // updateSortConfig: (sortColumn: string) => void;
   filters: { skills?: string[]; search?: string[] };
   updateFilters: ({
     skills,

@@ -1,16 +1,20 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import EmployeeListing from "../../pages/EmployeeListing/EmployeeListing";
 import FormPage from "../../pages/FormPage/FormPage";
 import ViewEmployee from "../../pages/ViewEmployee/ViewEmployee";
 
-const router = createBrowserRouter(
-  [
-    { path: "/", element: <EmployeeListing /> },
-    { path: "/form_page/", element: <FormPage /> },
-    { path: "/form_page/:employeeId", element: <FormPage /> },
-    { path: "/view_employee_page/:employeeId", element: <ViewEmployee /> },
-  ],
-  { basename: import.meta.env.DEV ? "/" : "/react_HRM_App/" }
-);
+const AppRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<EmployeeListing />} />
+      <Route path="/form_page/" element={<FormPage />} />
 
-export default router;
+      <Route path="/form_page/:employeeId" element={<FormPage />} />
+      <Route
+        path="/view_employee_page/:employeeId"
+        element={<ViewEmployee />}
+      />
+    </Routes>
+  );
+};
+export default AppRoutes;

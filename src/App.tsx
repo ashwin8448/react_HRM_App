@@ -1,16 +1,17 @@
 import Layout from "./Layout/Layout";
-import { RouterProvider } from "react-router-dom";
-import router from "./core/routing/routing";
+import { BrowserRouter as Router } from "react-router-dom";
 import EmployeeProvider from "./contexts/EmployeeContext";
+import AppRoutes from "./core/routing/routing";
 
 function App() {
-
   return (
-    <EmployeeProvider>
-      <Layout>
-        <RouterProvider router={router}></RouterProvider>
-      </Layout>
-    </EmployeeProvider>
+    <Router>
+      <EmployeeProvider>
+        <Layout>
+          <AppRoutes />
+        </Layout>
+      </EmployeeProvider>
+    </Router>
   );
 }
 
