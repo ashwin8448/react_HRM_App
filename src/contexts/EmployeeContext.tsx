@@ -33,6 +33,8 @@ const initialContextValues: IEmployeeContextProps = {
 const EmployeeContext = createContext(initialContextValues);
 
 export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
+  const [searchParams, setSeachParams]=useSearchParams();
+
   const [sortConfig, setSortConfig] = useState(initialContextValues.sortConfig);
   const [filters, setFilters] = useState(initialContextValues.filters);
   const [employeesData, setEmployeesData] = useState(
@@ -93,12 +95,16 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   };
   const fetchEmployeesData = async () => {
     try {
+      const searchSortBy=searchParams.get("sortBy")
+      const searchSortDir=searchParams.get("sortDir")
+      const searchLimit=searchParams.get("limit")
+      const searchOffset=searchParams.get("offset")
       const response = await getData(`/employee`, {
         params: {
-          limit: rowsPerPage,
-          offset: currentPage * (rowsPerPage - 1),
-          sortBy: sortConfig.sortColumn,
-          sortDir: sortConfig.sortColumn,
+          limit: searchLimit?searchLimit:rowsPerPage,
+          offset: searchOffset?searchOffset:currentPage * (rowsPerPage - 1),
+          sortBy: searchSortBy?searchSortBy:sortConfig.sortColumn,
+          sortDir: searchSortDir?searchSortDir:sortConfig.sortColumn,
         },
       });
       let employeesData = response.data.data.employees.map(
