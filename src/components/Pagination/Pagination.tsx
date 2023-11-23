@@ -7,8 +7,11 @@ import { useEmployeeContext } from "../../contexts/EmployeeContext";
 
 const Pagination = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { totalPages, updateCurrentPage } = useEmployeeContext();
-  return totalPages > 1 ? (
+  const { totalPages, updateCurrentPage, filters } = useEmployeeContext();
+  return totalPages > 1 &&
+    (filters.search![0]
+      ? filters.search![0] === ""
+      : false || filters.skills!.length === 0) ? (
     <PaginationWrapper>
       <Button
         buttonType="primary-button"
@@ -54,7 +57,6 @@ const Pagination = () => {
           ref={inputRef}
           max={totalPages}
           min={1}
-          
         />
         <span> of {totalPages} pages</span>
       </form>

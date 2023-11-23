@@ -131,28 +131,29 @@ export const tableHeaders = [
   {
     id: "id",
     headerName: "Employee Number",
-    isApiSortable: true,
+    isSortable: true,
   },
   {
     id: "firstName",
     headerName: "First Name",
-    isApiSortable: true,
+    isSortable: true,
   },
   {
     id: "lastName",
     headerName: "Last Name",
-    isApiSortable: true,
+    isSortable: true,
   },
   {
     id: "department",
     headerName: "Department",
-    isApiSortable: false,
+    isSortable: false,
   },
   {
     id: "role",
     headerName: "Role",
-    isApiSortable: false,
+    isSortable: false,
   },
+  { id: "actions", headerName: "Actions", isSortable: false },
 ];
 
 export const formData = [
@@ -232,4 +233,4 @@ export const formData = [
     ],
   },
 ];
-export const rowsPerPage=5;
+export const rowsPerPage = 5;

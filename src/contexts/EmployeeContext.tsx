@@ -9,6 +9,7 @@ import { IEmployeeContextProps } from "./types";
 import { IEmployee } from "../components/Table/types";
 import { getData } from "../core/api";
 import { rowsPerPage } from "../core/config/constants";
+import { useSearchParams } from "react-router-dom";
 
 const initialContextValues: IEmployeeContextProps = {
   employeesData: [],
@@ -87,16 +88,19 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     setEmployeesData(newData);
   };
 
-  const updateIdToDelete = (id: number) => {
+  const updateIdToDelete = (id: number) => {      
     setIdToDelete(id);
   };
   const fetchEmployeesData = async () => {
     try {
-      const response = await getData(
-        `/employee?limit=${rowsPerPage}&offset=${
-          (currentPage - 1) * rowsPerPage + 1
-        }&sortBy=${sortConfig.sortColumn}&sortDir=${sortConfig.sortOrder}`
-      );
+      const response = await getData(`/employee`, {
+        params: {
+          limit: rowsPerPage,
+          offset: currentPage * (rowsPerPage - 1),
+          sortBy: sortConfig.sortColumn,
+          sortDir: sortConfig.sortColumn,
+        },
+      });
       let employeesData = response.data.data.employees.map(
         (employeeData: any) => {
           return {
@@ -105,6 +109,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
             department: employeeData.department
               ? employeeData.department.department
               : "",
+            lastName: employeeData.lastName ? employeeData.lastName : "",
             skills: employeeData.skills
               ? employeeData.skills.map((skill: any) => skill.skill)
               : [1],
@@ -119,7 +124,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   };
   useEffect(() => {
     fetchEmployeesData();
-  }, [currentPage]);
+  }, [currentPage, sortConfig]);
   useEffect(() => {
     const fetchSkills = async () => {
       try {

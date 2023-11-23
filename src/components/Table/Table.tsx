@@ -4,20 +4,27 @@ import editIcon from "../../assets/images/edit_icon.svg";
 import deleteIcon from "../../assets/images/delete_icon.svg";
 import sortIcon from "../../assets/images/ascending_order_icon.svg";
 import TableWrapper from "./styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { tableHeaders } from "../../core/config/constants";
 import { IEmployee, ITableHeader } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { filterArray } from "../../utils/filterArray";
-import { sortEmployees } from "../../utils/sort";
 
-const TableHeader = ({ tableHeader, isSortable }: ITableHeader) => {
+const TableHeader = ({ tableHeader }: ITableHeader) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { sortConfig, updateSortConfig } = useEmployeeContext();
   return (
     <th>
-      {isSortable ? (
+      {tableHeader.isSortable ? (
         <Button
-          onClick={() => updateSortConfig(tableHeader.id)}
+          onClick={
+            () =>
+              setSearchParams({
+                sortBy: `${tableHeader.id}`,
+                sortDir: "asc",
+              })
+            // updateSortConfig(tableHeader.id)
+          }
           buttonType="primary-button"
         >
           <span>{tableHeader?.headerName}</span>
@@ -39,51 +46,46 @@ const TableHeader = ({ tableHeader, isSortable }: ITableHeader) => {
 const EmployeeRow = ({ employee }: any) => {
   const { updateIdToDelete } = useEmployeeContext();
   const navigate = useNavigate();
+  employee = {
+    ...employee,
+    actions: (
+      <div className="flex employee-actions">
+        <Button
+          buttonType="primary-button"
+          onClick={() => navigate(`view_employee_page/${employee.id}`)}
+        >
+          <img src={viewIcon} alt="View employee button" className="icon" />
+        </Button>
+
+        <Button
+          buttonType="primary-button"
+          onClick={() => navigate(`form_page/${employee.id}`)}
+        >
+          <img src={editIcon} alt="Edit employee button" className="icon" />
+        </Button>
+
+        <Button
+          buttonType="primary-button"
+          onClick={() => updateIdToDelete(employee.id)}
+        >
+          <img src={deleteIcon} alt="Delete employee button" className="icon" />
+        </Button>
+      </div>
+    ),
+  };
 
   return (
     <tr>
       {tableHeaders.map((tableHeader) => {
         return <td key={tableHeader.id}>{employee[tableHeader.id]}</td>;
       })}
-
-      <td>
-        <div className="flex employee-actions">
-          <Button
-            buttonType="primary-button"
-            onClick={() => navigate(`view_employee_page/${employee.id}`)}
-          >
-            <img src={viewIcon} alt="View employee button" className="icon" />
-          </Button>
-
-          <Button
-            buttonType="primary-button"
-            onClick={() => navigate(`form_page/${employee.id}`)}
-          >
-            <img src={editIcon} alt="Edit employee button" className="icon" />
-          </Button>
-
-          <Button
-            buttonType="primary-button"
-            onClick={() => updateIdToDelete(employee.id)}
-          >
-            <img
-              src={deleteIcon}
-              alt="Delete employee button"
-              className="icon"
-            />
-          </Button>
-        </div>
-      </td>
     </tr>
   );
 };
 
 const Table = () => {
-  const { filters, sortConfig, employeesData } = useEmployeeContext();
-  const filteredEmployees = sortEmployees(
-    filterArray(employeesData, filters),
-    sortConfig
-  );
+  const { filters, employeesData } = useEmployeeContext();
+  const filteredEmployees = filterArray(employeesData, filters);
   return (
     <TableWrapper>
       <table>
@@ -94,26 +96,15 @@ const Table = () => {
                 <TableHeader
                   key={tableHeader.id}
                   tableHeader={tableHeader}
-                  isSortable={true}
                 ></TableHeader>
               );
             })}
-            <TableHeader
-              tableHeader={{ headerName: "Actions", id: "" }}
-              isSortable={false}
-            ></TableHeader>
           </tr>
         </thead>
         <tbody>
           {filteredEmployees.length ? (
             filteredEmployees.map((employee: IEmployee) => (
-              <EmployeeRow
-                key={employee.id}
-                employee={{
-                  ...employee,
-                  name: `${employee.firstName} ${employee.lastName}`,
-                }}
-              />
+              <EmployeeRow key={employee.id} employee={employee} />
             ))
           ) : (
             <tr>

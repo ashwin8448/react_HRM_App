@@ -17,6 +17,5 @@ export interface IEmployee {
 }
 
 export interface ITableHeader {
-  tableHeader: { id: string; headerName: string };
-  isSortable?: boolean;
+  tableHeader: { id: string; headerName: string; isSortable?: boolean };
 }
