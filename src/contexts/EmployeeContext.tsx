@@ -33,8 +33,7 @@ const initialContextValues: IEmployeeContextProps = {
 const EmployeeContext = createContext(initialContextValues);
 
 export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
-  const [searchParams]=useSearchParams();
-  console.log(searchParams)
+  const [searchParams] = useSearchParams();
   // const [sortConfig, setSortConfig] = useState(initialContextValues.sortConfig);
   const [filters, setFilters] = useState(initialContextValues.filters);
   const [employeesData, setEmployeesData] = useState(
@@ -90,21 +89,21 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     setEmployeesData(newData);
   };
 
-  const updateIdToDelete = (id: number) => {      
+  const updateIdToDelete = (id: number) => {
     setIdToDelete(id);
   };
   const fetchEmployeesData = async () => {
     try {
-      const searchSortBy=searchParams.get("sortBy")
-      const searchSortDir=searchParams.get("sortDir")
-      const searchLimit=searchParams.get("limit")
-      const searchOffset=searchParams.get("offset")
+      const searchSortBy = searchParams.get("sortBy");
+      const searchSortDir = searchParams.get("sortDir");
+      const searchLimit = searchParams.get("limit");
+      const searchOffset = searchParams.get("offset");
       const response = await getData(`/employee`, {
         params: {
-          limit: searchLimit?searchLimit:rowsPerPage,
-          offset: searchOffset?searchOffset:currentPage * (rowsPerPage - 1),
-          sortBy: searchSortBy?searchSortBy:"id",
-          sortDir: searchSortDir?searchSortDir:"asc",
+          limit: searchLimit ? searchLimit : rowsPerPage,
+          offset: searchOffset ? searchOffset : currentPage * (rowsPerPage - 1),
+          sortBy: searchSortBy ? searchSortBy : "id",
+          sortDir: searchSortDir ? searchSortDir : "asc",
         },
       });
       let employeesData = response.data.data.employees.map(
@@ -121,18 +120,27 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
               : [1],
           };
         }
-      );
+      );rowsPerPage
       updateEmployeesData(employeesData);
-      setTotalPages(Math.ceil(response.data.data.count / rowsPerPage));
+      setTotalPages(
+        Math.ceil(
+          response.data.data.count /
+            (
+              // searchParams.get("limit")
+              // ? Number(searchParams.get("limit")):
+               rowsPerPage)
+        )
+      );
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     fetchEmployeesData();
-  }, [currentPage, 
+  }, [
+    currentPage,
     // sortConfig
-    searchParams
+    searchParams,
   ]);
   useEffect(() => {
     const fetchSkills = async () => {

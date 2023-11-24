@@ -13,7 +13,6 @@ import { filterArray } from "../../utils/filterArray";
 const TableHeader = ({ tableHeader }: ITableHeader) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { currentPage } = useEmployeeContext();
-  console.log(tableHeader.id, searchParams.get("sortBy"), searchParams.get("sortDir"))
   return (
     <th>
       {tableHeader.isSortable ? (
@@ -22,13 +21,13 @@ const TableHeader = ({ tableHeader }: ITableHeader) => {
             () =>
               setSearchParams({
                 sortBy: tableHeader.id,
-                sortDir: 
-                      searchParams.get("sortBy") === tableHeader.id
-                        ? searchParams.get("sortDir") === "desc"
-                          ? "asc"
-                          : "desc"
-                        : "asc",
-                limit: String(rowsPerPage),
+                sortDir:
+                  searchParams.get("sortBy") === tableHeader.id
+                    ? searchParams.get("sortDir") === "desc"
+                      ? "asc"
+                      : "desc"
+                    : "asc",
+                // limit: String(rowsPerPage),
                 offset: String(rowsPerPage * (currentPage - 1)),
               })
             // updateSortConfig(tableHeader.id)

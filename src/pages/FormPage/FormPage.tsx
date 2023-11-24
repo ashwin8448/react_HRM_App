@@ -149,7 +149,11 @@ const FormPage = () => {
         >
           <Form autoComplete="off">
             <FormWrapper className="page-content employee-details-form">
-              <h2>Add New Employee</h2>
+              {employeeId ? (
+                <h2>Edit Employee Details</h2>
+              ) : (
+                <h2>Add New Employee</h2>
+              )}
               {formData.map((fieldsetObj) => {
                 return (
                   <fieldset key={fieldsetObj.legend} className="flex">
