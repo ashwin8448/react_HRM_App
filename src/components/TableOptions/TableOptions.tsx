@@ -2,7 +2,7 @@ import Button from "../Button/Button";
 import addEmployeeIcon from "../../assets/images/add_user_icon.svg";
 import clearFilterIcon from "../../assets/images/clear_filter_icon.svg";
 import TableOptionsWrapper from "./styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
 import { useState, useRef, useEffect } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
@@ -10,6 +10,7 @@ import { useEmployeeContext } from "../../contexts/EmployeeContext";
 
 const TableOptions = () => {
   const { updateFilters, skills } = useEmployeeContext();
+  const navigate = useNavigate();
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(skills);
   const inputTag = useRef<HTMLInputElement>(null);
@@ -50,16 +51,15 @@ const TableOptions = () => {
   return skillsToDisplay.length ? (
     <TableOptionsWrapper>
       <div className="table-options flex">
-        <Link to="/form_page">
-          <Button buttonType="primary-button">
-            <span>Add new employee</span>
-            <img
-              src={addEmployeeIcon}
-              alt="Add employee icon"
-              className="icon"
-            />
-          </Button>
-        </Link>
+        <Button
+          buttonType="primary-button"
+          onClick={() => {
+            navigate("/form_page");
+          }}
+        >
+          <span>Add new employee</span>
+          <img src={addEmployeeIcon} alt="Add employee icon" className="icon" />
+        </Button>
         <CustomDropdown
           dropdownLocation="homepage"
           selectedSkills={selectedSkills}

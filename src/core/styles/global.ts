@@ -65,6 +65,11 @@ select:focus-visible {
   outline: 2px solid blue;
 }
 
+.form-container{
+  height: 100%;
+  box-sizing: border-box;
+}
+
 button,
 input[type="submit"],
 input[type="reset"] {

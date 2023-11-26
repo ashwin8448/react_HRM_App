@@ -4,34 +4,30 @@ import editIcon from "../../assets/images/edit_icon.svg";
 import deleteIcon from "../../assets/images/delete_icon.svg";
 import sortIcon from "../../assets/images/ascending_order_icon.svg";
 import TableWrapper from "./styles";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { rowsPerPage, tableHeaders } from "../../core/config/constants";
+import { useNavigate } from "react-router-dom";
+import { tableHeaders } from "../../core/config/constants";
 import { IEmployee, ITableHeader } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { filterArray } from "../../utils/filterArray";
+import { CircularProgress } from "@mui/material";
 
 const TableHeader = ({ tableHeader }: ITableHeader) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { currentPage } = useEmployeeContext();
+  const { searchParams, updateSearchParams } = useEmployeeContext();
   return (
     <th>
       {tableHeader.isSortable ? (
         <Button
-          onClick={
-            () =>
-              setSearchParams({
-                sortBy: tableHeader.id,
-                sortDir:
-                  searchParams.get("sortBy") === tableHeader.id
-                    ? searchParams.get("sortDir") === "desc"
-                      ? "asc"
-                      : "desc"
-                    : "asc",
-                // limit: String(rowsPerPage),
-                offset: String(rowsPerPage * (currentPage - 1)),
-              })
-            // updateSortConfig(tableHeader.id)
-          }
+          onClick={() => {
+            updateSearchParams({
+              sortBy: tableHeader.id,
+              sortDir:
+                searchParams!.get("sortBy") === tableHeader.id
+                  ? searchParams!.get("sortDir") === "desc"
+                    ? "asc"
+                    : "desc"
+                  : "asc",
+            });
+          }}
           buttonType="primary-button"
         >
           <span>{tableHeader?.headerName}</span>
@@ -91,7 +87,7 @@ const EmployeeRow = ({ employee }: any) => {
 };
 
 const Table = () => {
-  const { filters, employeesData } = useEmployeeContext();
+  const { filters, employeesData, loading } = useEmployeeContext();
   const filteredEmployees = filterArray(employeesData, filters);
   return (
     <TableWrapper>
@@ -109,7 +105,13 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredEmployees.length ? (
+          {loading.isTableLoading ? (
+            <tr>
+              <td className="table-no-data" colSpan={tableHeaders.length + 1}>
+                <CircularProgress />
+              </td>
+            </tr>
+          ) : filteredEmployees.length ? (
             filteredEmployees.map((employee: IEmployee) => (
               <EmployeeRow key={employee.id} employee={employee} />
             ))

@@ -9,13 +9,11 @@ import { IEmployeeContextProps } from "./types";
 import { IEmployee } from "../components/Table/types";
 import { getData } from "../core/api";
 import { rowsPerPage } from "../core/config/constants";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const initialContextValues: IEmployeeContextProps = {
   employeesData: [],
   updateEmployeesData: () => {},
-  // sortConfig: { sortColumn: "id", sortOrder: "asc" },
-  // updateSortConfig: () => {},
   filters: { skills: [], search: [] },
   updateFilters: () => {},
   idToDelete: 0,
@@ -25,16 +23,28 @@ const initialContextValues: IEmployeeContextProps = {
   roles: [],
   fetchedData: { fetchedSkills: [], fetchedRoles: [], fetchedDepartments: [] },
   fetchEmployeesData: () => {},
-  totalPages: 0,
-  currentPage: 1,
-  updateCurrentPage: () => {},
+  totalPages: 1,
+  searchParams: new URLSearchParams(),
+  updateSearchParams: () => {},
+  loading: {
+    isTableLoading: true,
+    isSkillsLoading: true,
+    isDepartmentsLoading: true,
+    isRoleLoading: true,
+  },
+  updateLoading: () => {},
 };
 
 const EmployeeContext = createContext(initialContextValues);
 
 export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
-  const [searchParams] = useSearchParams();
-  // const [sortConfig, setSortConfig] = useState(initialContextValues.sortConfig);
+  const [loading, setLoading] = useState(initialContextValues.loading);
+  const updateLoading = (loader: string, value: boolean) => {
+    setLoading((prev) => {
+      return { ...prev, [loader]: value };
+    });
+  };
+  const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState(initialContextValues.filters);
   const [employeesData, setEmployeesData] = useState(
     initialContextValues.employeesData
@@ -49,11 +59,16 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     initialContextValues.fetchedData
   );
   const [totalPages, setTotalPages] = useState(initialContextValues.totalPages);
-  const [currentPage, setCurrentPage] = useState(
-    initialContextValues.currentPage
-  );
-  const updateCurrentPage = (newPage: number) => {
-    setCurrentPage(newPage);
+  const { employeeId } = useParams();
+  const updateSearchParams = (params: {
+    page?: string;
+    sortBy?: string;
+    sortDir?: string;
+  }) => {
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      ...params,
+    });
   };
   const updateFetchedData = (
     dataType: string,
@@ -64,17 +79,6 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     setFetchedData((prev) => ({ ...prev, [dataType]: newData }));
   };
-  // const updateSortConfig = (sortColumn: string) => {
-  //   setSortConfig((prevConfig) => ({
-  //     sortColumn,
-  //     sortOrder:
-  //       prevConfig.sortColumn === sortColumn
-  //         ? prevConfig.sortOrder === "desc"
-  //           ? "asc"
-  //           : "desc"
-  //         : "asc",
-  //   }));
-  // };
 
   const updateFilters = (newFilters: {
     skills?: string[];
@@ -94,14 +98,14 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   };
   const fetchEmployeesData = async () => {
     try {
-      const searchSortBy = searchParams.get("sortBy");
-      const searchSortDir = searchParams.get("sortDir");
-      const searchLimit = searchParams.get("limit");
-      const searchOffset = searchParams.get("offset");
+      updateLoading("isTableLoading", true);
+      const searchSortBy = searchParams.get("sortBy") || "id";
+      const searchSortDir = searchParams.get("sortDir") || "asc";
+      const searchPage = searchParams.get("page") || "1";
       const response = await getData(`/employee`, {
         params: {
-          limit: searchLimit ? searchLimit : rowsPerPage,
-          offset: searchOffset ? searchOffset : currentPage * (rowsPerPage - 1),
+          limit: rowsPerPage,
+          offset: (Number(searchPage) - 1) * rowsPerPage,
           sortBy: searchSortBy ? searchSortBy : "id",
           sortDir: searchSortDir ? searchSortDir : "asc",
         },
@@ -120,29 +124,20 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
               : [1],
           };
         }
-      );rowsPerPage
-      updateEmployeesData(employeesData);
-      setTotalPages(
-        Math.ceil(
-          response.data.data.count /
-            (
-              // searchParams.get("limit")
-              // ? Number(searchParams.get("limit")):
-               rowsPerPage)
-        )
       );
+      updateEmployeesData(employeesData);
+      setTotalPages(Math.ceil(response.data.data.count / rowsPerPage));
     } catch (error) {
       console.log(error);
+    } finally {
+      updateLoading("isTableLoading", false);
     }
   };
   useEffect(() => {
-    fetchEmployeesData();
-  }, [
-    currentPage,
-    // sortConfig
-    searchParams,
-  ]);
+    if (!employeeId) fetchEmployeesData();
+  }, [searchParams]);
   useEffect(() => {
+    // updateSearchParams({ page: "1", sortBy: "id", sortDir: "asc" });
     const fetchSkills = async () => {
       try {
         let response = await getData("/skills");
@@ -151,6 +146,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         setSkills(skills);
       } catch (error) {
         console.log(error);
+      } finally {
+        updateLoading("isSkillsLoading", false);
       }
     };
 
@@ -165,6 +162,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         setDepartments(departments);
       } catch (error) {
         console.log(error);
+      } finally {
+        updateLoading("isDepartmentsLoading", false);
       }
     };
     fetchDepartments();
@@ -176,13 +175,13 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         setRoles(roles);
       } catch (error) {
         console.log(error);
+      } finally {
+        updateLoading("isRoleLoading", false);
       }
     };
     fetchRoles();
   }, []);
   const value: IEmployeeContextProps = {
-    // sortConfig,
-    // updateSortConfig,
     filters,
     updateFilters,
     employeesData,
@@ -195,8 +194,10 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     fetchedData,
     fetchEmployeesData,
     totalPages,
-    currentPage,
-    updateCurrentPage,
+    searchParams,
+    updateSearchParams,
+    loading,
+    updateLoading,
   };
   return (
     <EmployeeContext.Provider value={value}>

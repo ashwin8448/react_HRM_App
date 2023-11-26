@@ -10,10 +10,6 @@ const ConfirmBox = () => {
     useEmployeeContext();
   const deleteHandler = async () => {
     await deleteData(`/employee/${idToDelete}`);
-    // const updatedEmployees = employeesData.filter(
-    //   (employee) => employee.id != idToDelete
-    // );
-    // updateEmployeesData(updatedEmployees);
     fetchEmployeesData();
     updateIdToDelete(0);
   };

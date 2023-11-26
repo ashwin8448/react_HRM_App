@@ -2,25 +2,34 @@ import Button from "../Button/Button";
 import nextIcon from "../../assets/images/next_icon.svg";
 import endIcon from "../../assets/images/end_icon.svg";
 import PaginationWrapper from "./styles";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
-import { useSearchParams } from "react-router-dom";
 
 const Pagination = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [inputPage, setInputPage] = useState("1");
-  useEffect(() => setSearchParams({ page: inputPage }), [inputPage]);
-
-  const { totalPages, updateCurrentPage, filters } = useEmployeeContext();
-  return totalPages > 1 &&
-    (filters.search![0]
-      ? filters.search![0] === ""
-      : false || filters.skills!.length === 0) ? (
+  const { totalPages, searchParams, updateSearchParams } = useEmployeeContext();
+  const [pageInput, setPageInput] = useState("1");
+  let pageNumber = Number(searchParams.get("page"));
+  const checkPage = (newPage: number) => {
+    return newPage > totalPages ? totalPages : newPage < 1 ? 1 : newPage;
+  };
+  const updateParams = (update: number, mode?: string) => {
+    pageNumber =
+      mode === "step" ? checkPage(pageNumber + update) : checkPage(update);
+      updateSearchParams({ page: String(pageNumber) });
+  };
+  useEffect(() => {
+    if (!searchParams.get("page"))
+    updateSearchParams({ page: searchParams.get("page") || "1" });
+  }, []);
+  useEffect(() => {
+    setPageInput(searchParams.get("page") || "1");
+  }, [searchParams]);
+  return totalPages > 1 ? (
     <PaginationWrapper>
       <Button
         buttonType="primary-button"
         onClick={() => {
-          setInputPage("1");
+          updateParams(1);
         }}
       >
         <img src={endIcon} alt="Show first page icon" className="icon mirror" />
@@ -28,9 +37,7 @@ const Pagination = () => {
       <Button
         buttonType="primary-button"
         onClick={() => {
-          let pageNumber = Number(searchParams.get("page"));
-          let currentPage = pageNumber - 1 < 1 ? 1 : pageNumber - 1;
-          setInputPage(String(currentPage));
+          updateParams(-1, "step");
         }}
       >
         <img
@@ -41,17 +48,21 @@ const Pagination = () => {
       </Button>
 
       <form
-        onSubmit={(e: FormEvent<HTMLFormElement>) => {
+        onSubmit={(e) => {
           e.preventDefault();
+          if (isNaN(Number(pageInput))) {
+            setPageInput("1");
+            updateParams(1);
+          } else updateParams(Number(pageInput));
         }}
         noValidate
       >
         <input
           type="text"
           name="page-input"
-          value={inputPage}
-          onInput={(e) => {
-            setInputPage(e.currentTarget.value);
+          value={pageInput}
+          onChange={(e) => {
+            setPageInput(e.target.value);
           }}
         />
         <span> of {totalPages} pages</span>
@@ -60,10 +71,7 @@ const Pagination = () => {
       <Button
         buttonType="primary-button"
         onClick={() => {
-          let pageNumber = Number(searchParams.get("page"));
-          let currentPage =
-            pageNumber + 1 > totalPages ? totalPages : pageNumber + 1;
-          setInputPage(`${currentPage}`);
+          updateParams(1, "step");
         }}
       >
         <img src={nextIcon} alt="Show next page icon" className="icon" />
@@ -71,7 +79,7 @@ const Pagination = () => {
       <Button
         buttonType="primary-button"
         onClick={() => {
-          setInputPage(`${totalPages}`);
+          updateParams(totalPages);
         }}
       >
         <img src={endIcon} alt="Show last page icon" className="icon" />

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const FormWrapper = styled.div`
+  height: 100%;
+  box-sizing: border-box;
   h2 {
     margin-top: 0;
   }
@@ -63,6 +65,14 @@ const FormWrapper = styled.div`
       margin-top: 0;
       flex-grow: 1;
     }
+  }
+
+  .loader {
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 

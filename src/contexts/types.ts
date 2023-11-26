@@ -1,8 +1,6 @@
 import { IEmployee } from "../components/Table/types";
 
 export interface IEmployeeContextProps {
-  // sortConfig: { sortColumn: string; sortOrder: string };
-  // updateSortConfig: (sortColumn: string) => void;
   filters: { skills?: string[]; search?: string[] };
   updateFilters: ({
     skills,
@@ -24,7 +22,24 @@ export interface IEmployeeContextProps {
     fetchedDepartments: { id: string; department: string }[];
   };
   fetchEmployeesData: () => void;
-  totalPages:number;
-  currentPage:number,
-  updateCurrentPage: (newPage:number)=>void
+  totalPages: number;
+  searchParams: URLSearchParams;
+  updateSearchParams: ({
+    page,
+    sortBy,
+    sortDir,
+  }: {
+    page?: string;
+    sortBy?: string;
+    sortDir?: string;
+  }) => void;
+  loading: {
+    [key: string]: boolean;
+
+    isTableLoading: boolean;
+    isSkillsLoading: boolean;
+    isDepartmentsLoading: boolean;
+    isRoleLoading: boolean,
+  };
+  updateLoading:(loader:string, value:boolean)=>void
 }

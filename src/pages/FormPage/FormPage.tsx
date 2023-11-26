@@ -15,62 +15,90 @@ import validationSchema from "./validationSchema";
 import { IFormValues } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { filterArray } from "../../utils/filterArray";
 import { IEmployee } from "../../components/Table/types";
-import { postData, updateData } from "../../core/api";
+import { getData, postData, updateData } from "../../core/api";
+import { CircularProgress } from "@mui/material";
 
 const FormPage = () => {
   const {
-    employeesData,
     fetchEmployeesData,
     fetchedData,
     skills,
     roles,
     departments,
+    loading,
   } = useEmployeeContext();
+  const [loadingForm, setLoadingForm] = useState(true);
   const { employeeId } = useParams();
-  let currentEmployee: IEmployee | undefined;
-  if (employeeId && employeesData.length) {
-    [currentEmployee] = filterArray(employeesData, {
-      id: [Number(employeeId)],
-    });
-  }
+  const [currentEmployeeData, setCurrentEmployeeData] = useState<IEmployee>();
+
+  const fetchCurrentEmployeeData = async () => {
+    setLoadingForm(true);
+    try {
+      const response = (await getData(`employee/${employeeId}`)).data.data;
+      setCurrentEmployeeData({
+        ...response,
+        department: response.department.department,
+        role: response.role.role,
+        skills: response.skills
+          ? response.skills.map((skill: any) => skill.skill)
+          : [1],
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingForm(false);
+    }
+  };
+
+  useEffect(() => {
+    if (employeeId) fetchCurrentEmployeeData();
+  }, []);
+
   const [selectedSkills, setSelectedSkills] = useState<string[]>(
-    currentEmployee ? currentEmployee!.skills : []
+    currentEmployeeData ? currentEmployeeData.skills : []
   );
   const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(
     skills.filter((skill) => !selectedSkills.includes(skill))
   );
   const inputTag = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+
   const handleAddToSelectedSkills = (currentSkill: string) => {
     setSkillsToDisplay(
       skillsToDisplay.filter((skill) => skill !== currentSkill)
     );
     setSelectedSkills((prev) => [...prev, currentSkill]);
   };
+
   const handleDeleteFromSelectedSkills = (skillToDelete: string) => {
     setSkillsToDisplay((prev) => [...prev, skillToDelete]);
-    setSelectedSkills(selectedSkills.filter((skill) => skill != skillToDelete));
+    setSelectedSkills(
+      selectedSkills.filter((skill) => skill !== skillToDelete)
+    );
   };
 
   const handleSkillsToDisplay = (filteredSkills: string[]) => {
     setSkillsToDisplay(filteredSkills);
   };
-  if (currentEmployee)
-    if (selectedSkills != currentEmployee!.skills) {
-      setSelectedSkills(currentEmployee!.skills);
-      handleSkillsToDisplay(
-        skills.filter((skill) => !currentEmployee!.skills.includes(skill))
-      );
-    }
+
+  if (currentEmployeeData && selectedSkills !== currentEmployeeData.skills) {
+    setSelectedSkills(currentEmployeeData.skills);
+    handleSkillsToDisplay(
+      skills.filter(
+        (skill) => !(currentEmployeeData.skills as string[]).includes(skill)
+      )
+    );
+  }
 
   const handleClearFilter = () => {
     inputTag.current!.value = "";
     setSkillsToDisplay(skills);
     setSelectedSkills([]);
   };
+
   const handleFormSubmit = async (values: IFormValues) => {
+    let response;
     try {
       const payload = {
         ...values,
@@ -92,34 +120,39 @@ const FormPage = () => {
           return department.department === values.department;
         })[0].id,
       };
+
       if (employeeId) {
-        await updateData(`/employee/${employeeId}`, payload);
+        response = await updateData(`/employee/${employeeId}`, payload);
       } else {
-        await postData("/employee", payload);
+        response = await postData("/employee", payload);
       }
     } catch (error) {
       console.log(error);
     } finally {
-      navigate("/");
-      fetchEmployeesData();
+      if (response?.request.status === 200) {
+        navigate(`/view_employee_page/${response?.data.data.id}`, {
+          replace: true,
+        });
+        fetchEmployeesData();
+      }
     }
   };
 
-  const initialValues = currentEmployee
+  const initialValues = currentEmployeeData
     ? {
-        firstName: currentEmployee!.firstName,
-        lastName: currentEmployee!.lastName,
-        dob: currentEmployee!.dob,
-        address: currentEmployee!.address,
-        phone: currentEmployee!.phone,
-        email: currentEmployee!.email,
-        isActive: currentEmployee!.isActive,
-        designation: currentEmployee!.designation,
-        salary: currentEmployee!.salary,
-        moreDetails: currentEmployee!.moreDetails,
-        dateOfJoining: currentEmployee!.dateOfJoining,
-        department: currentEmployee!.department,
-        role: currentEmployee!.role,
+        firstName: currentEmployeeData!.firstName,
+        lastName: currentEmployeeData!.lastName,
+        dob: currentEmployeeData!.dob,
+        address: currentEmployeeData!.address,
+        phone: currentEmployeeData!.phone,
+        email: currentEmployeeData!.email,
+        isActive: currentEmployeeData!.isActive,
+        designation: currentEmployeeData!.designation,
+        salary: currentEmployeeData!.salary,
+        moreDetails: currentEmployeeData!.moreDetails,
+        dateOfJoining: currentEmployeeData!.dateOfJoining,
+        department: currentEmployeeData!.department,
+        role: currentEmployeeData!.role,
       }
     : {
         isActive: true,
@@ -136,33 +169,42 @@ const FormPage = () => {
         phone: "",
         email: "",
       };
+
   useEffect(() => {
     setSkillsToDisplay(skills);
   }, [skills, departments, roles, fetchedData]);
   return (
     <>
-      {skills.length && departments.length && roles.length ? (
-        <Formik
-          initialValues={initialValues}
-          validationSchema={Yup.object(validationSchema)}
-          onSubmit={handleFormSubmit}
-        >
-          <Form autoComplete="off">
-            <FormWrapper className="page-content employee-details-form">
-              {employeeId ? (
-                <h2>Edit Employee Details</h2>
-              ) : (
-                <h2>Add New Employee</h2>
-              )}
-              {formData.map((fieldsetObj) => {
-                return (
+      <Formik
+        initialValues={initialValues}
+        enableReinitialize
+        validationSchema={Yup.object(validationSchema)}
+        onSubmit={handleFormSubmit}
+      >
+        <Form autoComplete="off" className="form-container">
+          <FormWrapper className="page-content employee-details-form">
+            {loadingForm ||
+            loading.isDepartmentsLoading ||
+            loading.isRoleLoading ||
+            loading.isSkillsLoading ? (
+              <div className="loader">
+                <CircularProgress />
+              </div>
+            ) : (
+              <>
+                {employeeId ? (
+                  <h2>Edit Employee Details</h2>
+                ) : (
+                  <h2>Add New Employee</h2>
+                )}
+                {formData.map((fieldsetObj) => (
                   <fieldset key={fieldsetObj.legend} className="flex">
                     <legend>{fieldsetObj.legend}</legend>
                     {fieldsetObj.fields.map((field) => {
                       if (
-                        field.inputType == "text" ||
-                        field.inputType == "date" ||
-                        field.inputType == "tel"
+                        field.inputType === "text" ||
+                        field.inputType === "date" ||
+                        field.inputType === "tel"
                       ) {
                         return (
                           <MyTextInput
@@ -173,7 +215,7 @@ const FormPage = () => {
                             isMandatory={field.isMandatory}
                           />
                         );
-                      } else if (field.inputType == "select")
+                      } else if (field.inputType === "select") {
                         return (
                           <MySelect
                             key={field.name}
@@ -197,7 +239,7 @@ const FormPage = () => {
                                 ))}
                           </MySelect>
                         );
-                      else if (field.inputType == "custom") {
+                      } else if (field.inputType === "custom") {
                         return (
                           <div
                             key={field.name}
@@ -228,42 +270,40 @@ const FormPage = () => {
                       }
                     })}
                   </fieldset>
-                );
-              })}
-              <div>
-                <SelectedSkills
-                  description="Selected skill(s)"
-                  isView={false}
-                  selectedSkills={selectedSkills}
-                  handleDeleteFromSelectedSkills={
-                    handleDeleteFromSelectedSkills
-                  }
-                />
-              </div>
-              <div className="buttons-container flex">
-                {employeeId === "" ? (
-                  <input
-                    className="primary-button"
-                    type="submit"
-                    value="Save"
+                ))}
+                <div>
+                  <SelectedSkills
+                    description="Selected skill(s)"
+                    isView={false}
+                    selectedSkills={selectedSkills}
+                    handleDeleteFromSelectedSkills={
+                      handleDeleteFromSelectedSkills
+                    }
                   />
-                ) : (
-                  <>
-                    <input className="primary-button" type="reset" />
+                </div>
+                <div className="buttons-container flex">
+                  {employeeId === "" ? (
                     <input
                       className="primary-button"
                       type="submit"
-                      value="Submit"
+                      value="Save"
                     />
-                  </>
-                )}
-              </div>
-            </FormWrapper>
-          </Form>
-        </Formik>
-      ) : (
-        <p>Loading...</p>
-      )}
+                  ) : (
+                    <>
+                      <input className="primary-button" type="reset" />
+                      <input
+                        className="primary-button"
+                        type="submit"
+                        value="Submit"
+                      />
+                    </>
+                  )}
+                </div>
+              </>
+            )}
+          </FormWrapper>
+        </Form>
+      </Formik>
     </>
   );
 };
