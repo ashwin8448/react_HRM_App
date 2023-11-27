@@ -74,7 +74,6 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     skills?: ISkill[];
     search?: string[];
   }) => {
-    console.log("updating");
     if (newFilters.skills || newFilters.search) {
       setFilters((prev) => ({ ...prev, ...newFilters }));
     }
@@ -122,7 +121,6 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   };
   useEffect(() => {
     if (!employeeId) {
-      console.log("fetching");
       fetchEmployeesData();
     }
   }, [searchParams]);

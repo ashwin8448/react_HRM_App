@@ -19,7 +19,6 @@ const ConfirmBox = () => {
     let response;
     try {
       response = await deleteData(`/employee/${idToDelete}`);
-      console.log(response);
     } catch {
       toast.update(toastDel, {
         render: "Employee details could not be deleted.",

@@ -44,7 +44,6 @@ const TableOptions = ({icon}:{icon:string}) => {
   const handleSkillsToDisplay = (filteredSkills: ISkill[]) => {
     setSkillsToDisplay(filteredSkills);
   };
-  console.log(selectedSkills);
   const handleClearFilter = () => {
     inputTag.current!.value = "";
     setSkillsToDisplay(skills);
