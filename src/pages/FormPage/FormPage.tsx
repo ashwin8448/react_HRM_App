@@ -18,16 +18,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IEmployee } from "../../components/Table/types";
 import { getData, postData, updateData } from "../../core/api";
 import { CircularProgress } from "@mui/material";
+import { toast } from "react-toastify";
 
 const FormPage = () => {
-  const {
-    fetchEmployeesData,
-    fetchedData,
-    skills,
-    roles,
-    departments,
-    loading,
-  } = useEmployeeContext();
+  const { fetchEmployeesData, skills, roles, departments, loading } =
+    useEmployeeContext();
   const [loadingForm, setLoadingForm] = useState(false);
   const { employeeId } = useParams();
   const [currentEmployeeData, setCurrentEmployeeData] = useState<IEmployee>();
@@ -59,7 +54,9 @@ const FormPage = () => {
     currentEmployeeData ? currentEmployeeData.skills : []
   );
   const [skillsToDisplay, setSkillsToDisplay] = useState<ISkill[]>(
-    skills.filter((skill) => !selectedSkills.includes(skill))
+    skills.filter(
+      (skill) => !JSON.stringify(selectedSkills).includes(JSON.stringify(skill))
+    )
   );
   const handleAddToSelectedSkills = (currentSkill: ISkill) => {
     setSkillsToDisplay(
@@ -92,7 +89,7 @@ const FormPage = () => {
 
   const handleFormSubmit = async (values: IFormValues) => {
     let response;
-    setLoadingForm(true)
+    setLoadingForm(true);
     try {
       const payload = {
         ...values,
@@ -111,13 +108,38 @@ const FormPage = () => {
         response = await postData("/employee", payload);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(
+        `Employee details could not be ${employeeId ? "updated" : "added"}.`,
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        }
+      );
     } finally {
+      setLoadingForm(false);
       if (response?.request.status === 200) {
-        setLoadingForm(false)
         navigate(`/view_employee_page/${response?.data.data.id}`, {
           replace: true,
         });
+        toast.success(
+          `Employee details ${employeeId ? "updated" : "added"} successfully.`,
+          {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }
+        );
         fetchEmployeesData();
       }
     }
@@ -157,7 +179,7 @@ const FormPage = () => {
 
   useEffect(() => {
     setSkillsToDisplay(skills);
-  }, [skills, departments, roles, fetchedData]);
+  }, [skills, departments, roles]);
   return (
     <>
       <Formik

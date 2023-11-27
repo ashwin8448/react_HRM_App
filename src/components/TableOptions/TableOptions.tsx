@@ -10,10 +10,16 @@ import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { ISkill } from "../../pages/FormPage/types";
 
 const TableOptions = () => {
-  const { updateFilters, skills } = useEmployeeContext();
+  const { filters, updateFilters, skills } = useEmployeeContext();
   const navigate = useNavigate();
-  const [selectedSkills, setSelectedSkills] = useState<ISkill[]>([]);
-  const [skillsToDisplay, setSkillsToDisplay] = useState<ISkill[]>(skills);
+  const [selectedSkills, setSelectedSkills] = useState<ISkill[]>(
+    filters.skills || []
+  );
+  const [skillsToDisplay, setSkillsToDisplay] = useState<ISkill[]>(
+    skills.filter(
+      (skill) => !JSON.stringify(selectedSkills).includes(JSON.stringify(skill))
+    )
+  );
   const inputTag = useRef<HTMLInputElement>(null);
 
   const handleAddToSelectedSkills = (currentSkill: ISkill) => {
@@ -38,7 +44,7 @@ const TableOptions = () => {
   const handleSkillsToDisplay = (filteredSkills: ISkill[]) => {
     setSkillsToDisplay(filteredSkills);
   };
-
+  console.log(selectedSkills);
   const handleClearFilter = () => {
     inputTag.current!.value = "";
     setSkillsToDisplay(skills);

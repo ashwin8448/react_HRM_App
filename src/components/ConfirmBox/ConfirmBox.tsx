@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { deleteData } from "../../core/api";
 import Button from "../Button/Button";
@@ -9,9 +10,31 @@ const ConfirmBox = () => {
   const { updateIdToDelete, idToDelete, employeesData, fetchEmployeesData } =
     useEmployeeContext();
   const deleteHandler = async () => {
-    await deleteData(`/employee/${idToDelete}`);
-    fetchEmployeesData();
-    updateIdToDelete(0);
+    const toastDel = toast.info(`Deleting employee details...`, {
+      position: "top-center",
+      hideProgressBar: false,
+      progress: undefined,
+      theme: "colored",
+    });
+    let response;
+    try {
+      response = await deleteData(`/employee/${idToDelete}`);
+      console.log(response);
+    } catch {
+      toast.update(toastDel, {
+        render: "Employee details could not be deleted.",
+        type: toast.TYPE.ERROR,
+      });
+    } finally {
+      fetchEmployeesData();
+      updateIdToDelete(0);
+      if (response?.request.status === 200) {
+        toast.update(toastDel, {
+          render: "Employee details deleted successfully.",
+          type: toast.TYPE.SUCCESS,
+        });
+      }
+    }
   };
   return (
     <Modal updateIdToDelete={updateIdToDelete}>

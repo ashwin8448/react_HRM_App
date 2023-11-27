@@ -22,7 +22,6 @@ const initialContextValues: IEmployeeContextProps = {
   skills: [],
   departments: [],
   roles: [],
-  fetchedData: { fetchedSkills: [], fetchedRoles: [], fetchedDepartments: [] },
   fetchEmployeesData: () => {},
   totalPages: 1,
   searchParams: new URLSearchParams(),
@@ -58,14 +57,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   );
   const [idToDelete, setIdToDelete] = useState(initialContextValues.idToDelete);
   const [roles, setRoles] = useState(initialContextValues.roles);
-  const [fetchedData, setFetchedData] = useState(
-    initialContextValues.fetchedData
-  );
   const [totalPages, setTotalPages] = useState(initialContextValues.totalPages);
-  // const [employee, setEmployee] = useState(initialContextValues.employee);
-  // const updateEmployee = (id: string) => {
-  //   setEmployee(id);
-  // };
   const { employeeId } = useParams();
   const updateSearchParams = (params: {
     page?: string;
@@ -76,15 +68,6 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       ...Object.fromEntries(searchParams.entries()),
       ...params,
     });
-  };
-  const updateFetchedData = (
-    dataType: string,
-    newData:
-      | { id: string; skill: string }[]
-      | { id: string; role: string }[]
-      | { id: string; department: string }[]
-  ) => {
-    setFetchedData((prev) => ({ ...prev, [dataType]: newData }));
   };
 
   const updateFilters = (newFilters: {
@@ -119,13 +102,13 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         },
       });
       let employeesData = response.data.data.employees.map(
-        (employeeData:any) => {
+        (employeeData: any) => {
           return {
             ...employeeData,
             lastName: employeeData.lastName ? employeeData.lastName : "",
             skills: employeeData.skills ? employeeData.skills : [],
-            role: employeeData.role?.role||"N/A",
-            department: employeeData.department?.department||"N/A",
+            role: employeeData.role?.role || "N/A",
+            department: employeeData.department?.department || "N/A",
           };
         }
       );
@@ -144,13 +127,9 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [searchParams]);
   useEffect(() => {
-    // if (!employee) {
-    // }
-    // updateSearchParams({ page: "1", sortBy: "id", sortDir: "asc" });
     const fetchSkills = async () => {
       try {
         let response = await getData("/skills");
-        updateFetchedData("fetchedSkills", response.data.data);
         setSkills(response.data.data);
       } catch (error) {
         console.log(error);
@@ -163,7 +142,6 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     const fetchDepartments = async () => {
       try {
         let response = await getData("/departments");
-        updateFetchedData("fetchedDepartments", response.data);
         setDepartments(response.data);
       } catch (error) {
         console.log(error);
@@ -175,7 +153,6 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     const fetchRoles = async () => {
       try {
         let response = await getData("/roles");
-        updateFetchedData("fetchedRoles", response.data);
         setRoles(response.data);
       } catch (error) {
         console.log(error);
@@ -195,14 +172,12 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     skills,
     departments,
     roles,
-    fetchedData,
     fetchEmployeesData,
     totalPages,
     searchParams,
     updateSearchParams,
     loading,
     updateLoading,
-    // updateEmployee,
   };
   return (
     <EmployeeContext.Provider value={value}>

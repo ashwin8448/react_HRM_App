@@ -17,11 +17,6 @@ export interface IEmployeeContextProps {
   skills: { id: number; skill: string }[];
   departments: { id: number; department: string }[];
   roles: { id: number; role: string }[];
-  fetchedData: {
-    fetchedSkills: { id: string; skill: string }[];
-    fetchedRoles: { id: string; role: string }[];
-    fetchedDepartments: { id: string; department: string }[];
-  };
   fetchEmployeesData: () => void;
   totalPages: number;
   searchParams: URLSearchParams;
