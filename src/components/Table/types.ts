@@ -13,7 +13,7 @@ export interface IEmployee {
   moreDetails?: string | null;
   role?: string;
   department?: string;
-  skills: string[]|[];
+  skills: {id:number, skill:string}[];
 }
 
 export interface ITableHeader {

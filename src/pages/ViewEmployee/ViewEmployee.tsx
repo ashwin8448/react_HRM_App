@@ -16,11 +16,10 @@ const ViewEmployee = () => {
       const response = (await getData(`employee/${employeeId}`)).data.data;
       setEmployee({
         ...response,
-        department: response.department?response.department.department:"N/A",
-        role: response.role?response.role.role:"N/A",
-        skills: response.skills
-          ? response.skills.map((skill: any) => skill.skill)
-          : [1],
+        department: response.department
+          ? response.department.department
+          : "N/A",
+        role: response.role ? response.role.role : "N/A",
       });
     } catch (error) {
       console.log(error);
@@ -45,22 +44,23 @@ const ViewEmployee = () => {
             <h2>Employee Details</h2>
           </div>
           <p>
-            Name: <span>{employee.firstName + " " + employee.lastName||"N/A"}</span>
+            Name:{" "}
+            <span>{employee.firstName + " " + employee.lastName || "N/A"}</span>
           </p>
           <p>
-            Date of Birth: <span>{employee.dob||"N/A"}</span>
+            Date of Birth: <span>{employee.dob || "N/A"}</span>
           </p>
           <p>
-            Address: <span>{employee.address||"N/A"}</span>
+            Address: <span>{employee.address || "N/A"}</span>
           </p>
           <p>
-            Phone: <span>{employee.phone||"N/A"}</span>
+            Phone: <span>{employee.phone || "N/A"}</span>
           </p>
           <p>
-            Email: <span>{employee.email||"N/A"}</span>
+            Email: <span>{employee.email || "N/A"}</span>
           </p>
           <p>
-            Date of joining: <span>{employee.dateOfJoining||"N/A"}</span>
+            Date of joining: <span>{employee.dateOfJoining || "N/A"}</span>
           </p>
           <p>
             Department: <span>{employee.department}</span>

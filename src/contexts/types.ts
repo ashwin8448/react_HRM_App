@@ -1,21 +1,22 @@
 import { IEmployee } from "../components/Table/types";
+import { ISkill } from "../pages/FormPage/types";
 
 export interface IEmployeeContextProps {
-  filters: { skills?: string[]; search?: string[] };
+  filters: { skills?: ISkill[]; search?: string[] };
   updateFilters: ({
     skills,
     search,
   }: {
-    skills?: string[];
+    skills?: ISkill[];
     search?: string[];
   }) => void;
   employeesData: IEmployee[];
   updateEmployeesData: ([]: IEmployee[]) => void;
   idToDelete: number;
   updateIdToDelete: (id: number) => void;
-  skills: string[];
-  departments: string[];
-  roles: string[];
+  skills: { id: number; skill: string }[];
+  departments: { id: number; department: string }[];
+  roles: { id: number; role: string }[];
   fetchedData: {
     fetchedSkills: { id: string; skill: string }[];
     fetchedRoles: { id: string; role: string }[];
@@ -39,7 +40,9 @@ export interface IEmployeeContextProps {
     isTableLoading: boolean;
     isSkillsLoading: boolean;
     isDepartmentsLoading: boolean;
-    isRoleLoading: boolean,
+    isRoleLoading: boolean;
   };
-  updateLoading:(loader:string, value:boolean)=>void
+  updateLoading?: (loader: string, value: boolean) => void;
+  employee?: null | string;
+  updateEmployee?: (id: string) => void;
 }

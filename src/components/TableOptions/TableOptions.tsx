@@ -7,15 +7,16 @@ import SelectedSkills from "../SelectedSkills/SelectedSkills";
 import { useState, useRef, useEffect } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { ISkill } from "../../pages/FormPage/types";
 
 const TableOptions = () => {
   const { updateFilters, skills } = useEmployeeContext();
   const navigate = useNavigate();
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(skills);
+  const [selectedSkills, setSelectedSkills] = useState<ISkill[]>([]);
+  const [skillsToDisplay, setSkillsToDisplay] = useState<ISkill[]>(skills);
   const inputTag = useRef<HTMLInputElement>(null);
 
-  const handleAddToSelectedSkills = (currentSkill: string) => {
+  const handleAddToSelectedSkills = (currentSkill: ISkill) => {
     setSkillsToDisplay(
       skillsToDisplay.filter((skill) => skill !== currentSkill)
     );
@@ -25,7 +26,7 @@ const TableOptions = () => {
     updateFilters({ skills: [...selectedSkills, currentSkill] });
   };
 
-  const handleDeleteFromSelectedSkills = (skillToDelete: string) => {
+  const handleDeleteFromSelectedSkills = (skillToDelete: ISkill) => {
     setSkillsToDisplay((prev) => [...prev, skillToDelete]);
     const currentlySelectedSkills = selectedSkills.filter(
       (skill) => skill != skillToDelete
@@ -34,7 +35,7 @@ const TableOptions = () => {
     updateFilters({ skills: currentlySelectedSkills });
   };
 
-  const handleSkillsToDisplay = (filteredSkills: string[]) => {
+  const handleSkillsToDisplay = (filteredSkills: ISkill[]) => {
     setSkillsToDisplay(filteredSkills);
   };
 

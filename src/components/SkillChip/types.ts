@@ -1,5 +1,7 @@
+import { ISkill } from "../../pages/FormPage/types";
+
 export default interface ISkillChip{
-    skill?: string;
+    skill?: ISkill;
     isView?: boolean;
-    handleDeleteFromSelectedSkills?: (currentSkill: string) => void;
+    handleDeleteFromSelectedSkills?: (currentSkill: ISkill) => void;
   }

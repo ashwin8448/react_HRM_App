@@ -10,6 +10,7 @@ import { IEmployee } from "../components/Table/types";
 import { getData } from "../core/api";
 import { rowsPerPage } from "../core/config/constants";
 import { useParams, useSearchParams } from "react-router-dom";
+import { ISkill } from "../pages/FormPage/types";
 
 const initialContextValues: IEmployeeContextProps = {
   employeesData: [],
@@ -33,6 +34,8 @@ const initialContextValues: IEmployeeContextProps = {
     isRoleLoading: true,
   },
   updateLoading: () => {},
+  employee: null,
+  updateEmployee: () => {},
 };
 
 const EmployeeContext = createContext(initialContextValues);
@@ -59,6 +62,10 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     initialContextValues.fetchedData
   );
   const [totalPages, setTotalPages] = useState(initialContextValues.totalPages);
+  // const [employee, setEmployee] = useState(initialContextValues.employee);
+  // const updateEmployee = (id: string) => {
+  //   setEmployee(id);
+  // };
   const { employeeId } = useParams();
   const updateSearchParams = (params: {
     page?: string;
@@ -81,7 +88,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateFilters = (newFilters: {
-    skills?: string[];
+    skills?: ISkill[];
     search?: string[];
   }) => {
     if (newFilters.skills || newFilters.search) {
@@ -111,17 +118,13 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         },
       });
       let employeesData = response.data.data.employees.map(
-        (employeeData: any) => {
+        (employeeData:any) => {
           return {
             ...employeeData,
-            role: employeeData.role ? employeeData.role.role : "",
-            department: employeeData.department
-              ? employeeData.department.department
-              : "",
             lastName: employeeData.lastName ? employeeData.lastName : "",
-            skills: employeeData.skills
-              ? employeeData.skills.map((skill: any) => skill.skill)
-              : [1],
+            skills: employeeData.skills ? employeeData.skills : [],
+            role: employeeData.role?.role||"N/A",
+            department: employeeData.department?.department||"N/A",
           };
         }
       );
@@ -134,16 +137,20 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     }
   };
   useEffect(() => {
-    if (!employeeId) fetchEmployeesData();
+    if (!employeeId) {
+      console.log("fetching");
+      fetchEmployeesData();
+    }
   }, [searchParams]);
   useEffect(() => {
+    // if (!employee) {
+    // }
     // updateSearchParams({ page: "1", sortBy: "id", sortDir: "asc" });
     const fetchSkills = async () => {
       try {
         let response = await getData("/skills");
         updateFetchedData("fetchedSkills", response.data.data);
-        let skills = response.data.data.map((skill: any) => skill.skill);
-        setSkills(skills);
+        setSkills(response.data.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -156,10 +163,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       try {
         let response = await getData("/departments");
         updateFetchedData("fetchedDepartments", response.data);
-        let departments = response.data.map(
-          (department: any) => department.department
-        );
-        setDepartments(departments);
+        setDepartments(response.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -171,8 +175,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       try {
         let response = await getData("/roles");
         updateFetchedData("fetchedRoles", response.data);
-        let roles = response.data.map((role: any) => role.role);
-        setRoles(roles);
+        setRoles(response.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -198,6 +201,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     updateSearchParams,
     loading,
     updateLoading,
+    // updateEmployee,
   };
   return (
     <EmployeeContext.Provider value={value}>

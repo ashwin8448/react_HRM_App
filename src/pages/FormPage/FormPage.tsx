@@ -12,7 +12,7 @@ import {
 import CustomDropdown from "../../components/CustomDropdown/CustomDropdown";
 import Button from "../../components/Button/Button";
 import validationSchema from "./validationSchema";
-import { IFormValues } from "./types";
+import { IFormValues, ISkill } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { IEmployee } from "../../components/Table/types";
@@ -40,9 +40,6 @@ const FormPage = () => {
         ...response,
         department: response.department.department,
         role: response.role.role,
-        skills: response.skills
-          ? response.skills.map((skill: any) => skill.skill)
-          : [1],
       });
     } catch (error) {
       console.log(error);
@@ -55,39 +52,35 @@ const FormPage = () => {
     if (employeeId) fetchCurrentEmployeeData();
   }, []);
 
-  const [selectedSkills, setSelectedSkills] = useState<string[]>(
-    currentEmployeeData ? currentEmployeeData.skills : []
-  );
-  const [skillsToDisplay, setSkillsToDisplay] = useState<string[]>(
-    skills.filter((skill) => !selectedSkills.includes(skill))
-  );
   const inputTag = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  const handleAddToSelectedSkills = (currentSkill: string) => {
+  const [selectedSkills, setSelectedSkills] = useState<ISkill[]>(
+    currentEmployeeData ? currentEmployeeData.skills : []
+  );
+  const [skillsToDisplay, setSkillsToDisplay] = useState<ISkill[]>(
+    skills.filter((skill) => !selectedSkills.includes(skill))
+  );
+  const handleAddToSelectedSkills = (currentSkill: ISkill) => {
     setSkillsToDisplay(
       skillsToDisplay.filter((skill) => skill !== currentSkill)
     );
     setSelectedSkills((prev) => [...prev, currentSkill]);
   };
-
-  const handleDeleteFromSelectedSkills = (skillToDelete: string) => {
+  const handleDeleteFromSelectedSkills = (skillToDelete: ISkill) => {
     setSkillsToDisplay((prev) => [...prev, skillToDelete]);
     setSelectedSkills(
       selectedSkills.filter((skill) => skill !== skillToDelete)
     );
   };
-
-  const handleSkillsToDisplay = (filteredSkills: string[]) => {
+  const handleSkillsToDisplay = (filteredSkills: ISkill[]) => {
     setSkillsToDisplay(filteredSkills);
   };
 
   if (currentEmployeeData && selectedSkills !== currentEmployeeData.skills) {
     setSelectedSkills(currentEmployeeData.skills);
     handleSkillsToDisplay(
-      skills.filter(
-        (skill) => !(currentEmployeeData.skills as string[]).includes(skill)
-      )
+      skills.filter((skill) => !currentEmployeeData.skills.includes(skill))
     );
   }
 
@@ -102,21 +95,11 @@ const FormPage = () => {
     try {
       const payload = {
         ...values,
-        skills: selectedSkills.map((skill) => {
-          let id;
-          fetchedData.fetchedSkills.forEach(
-            (skillsObj: { id: string; skill: string }) => {
-              if (skillsObj.skill === skill) {
-                id = skillsObj.id;
-              }
-            }
-          );
-          return id;
-        }),
-        role: fetchedData.fetchedRoles.filter((role) => {
+        skills: selectedSkills.map((skill) => skill.id),
+        role: roles.filter((role) => {
           return role.role === values.role;
         })[0].id,
-        department: fetchedData.fetchedDepartments.filter((department) => {
+        department: departments.filter((department) => {
           return department.department === values.department;
         })[0].id,
       };
@@ -227,16 +210,41 @@ const FormPage = () => {
                               Select a {field.description}
                             </option>
                             {field.name === "role"
-                              ? roles.sort().map((element) => (
-                                  <option key={element} value={element}>
-                                    {element}
-                                  </option>
-                                ))
-                              : departments.sort().map((element) => (
-                                  <option key={element} value={element}>
-                                    {element}
-                                  </option>
-                                ))}
+                              ? roles
+                                  .sort((a, b) =>
+                                    a.role.toLowerCase() > b.role.toLowerCase()
+                                      ? 1
+                                      : a.role.toLowerCase() <
+                                        b.role.toLowerCase()
+                                      ? -1
+                                      : 0
+                                  )
+                                  .map((element) => (
+                                    <option
+                                      key={element.id}
+                                      value={element.role}
+                                    >
+                                      {element.role}
+                                    </option>
+                                  ))
+                              : departments
+                                  .sort((a, b) =>
+                                    a.department.toLowerCase() >
+                                    b.department.toLowerCase()
+                                      ? 1
+                                      : a.department.toLowerCase() <
+                                        b.department.toLowerCase()
+                                      ? -1
+                                      : 0
+                                  )
+                                  .map((element) => (
+                                    <option
+                                      key={element.id}
+                                      value={element.department}
+                                    >
+                                      {element.department}
+                                    </option>
+                                  ))}
                           </MySelect>
                         );
                       } else if (field.inputType === "custom") {

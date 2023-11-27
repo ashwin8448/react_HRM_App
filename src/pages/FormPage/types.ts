@@ -11,5 +11,10 @@ export interface IFormValues {
   designation?: string;
   salary?: string;
   dateOfJoining?: string;
-  moreDetails?: string|null;
+  moreDetails?: string | null;
+}
+
+export interface ISkill {
+  id: number;
+  skill: string;
 }
