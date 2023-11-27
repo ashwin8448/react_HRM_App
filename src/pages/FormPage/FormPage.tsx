@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import clearFilterIcon from "../../assets/images/clear_filter_icon.svg";
+import closeIcon from "../../assets/images/close_button_icon.svg";
 import SelectedSkills from "../../components/SelectedSkills/SelectedSkills";
 import { formData } from "../../core/config/constants";
 import FormWrapper from "./styles";
@@ -180,6 +180,12 @@ const FormPage = () => {
   useEffect(() => {
     setSkillsToDisplay(skills);
   }, [skills, departments, roles]);
+
+  const handleFormReset = (resetForm: () => void) => {
+    resetForm();
+    setSkillsToDisplay(skills);
+    setSelectedSkills([]);
+  };
   return (
     <>
       <Formik
@@ -291,7 +297,7 @@ const FormPage = () => {
                             >
                               <Button onClick={handleClearFilter}>
                                 <img
-                                  src={clearFilterIcon}
+                                  src={closeIcon}
                                   alt="Clear filter icon"
                                   className="icon"
                                 />

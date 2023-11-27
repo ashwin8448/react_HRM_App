@@ -1,6 +1,6 @@
 import Button from "../Button/Button";
 import addEmployeeIcon from "../../assets/images/add_user_icon.svg";
-import clearFilterIcon from "../../assets/images/clear_filter_icon.svg";
+
 import TableOptionsWrapper from "./styles";
 import { useNavigate } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
@@ -9,7 +9,7 @@ import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { ISkill } from "../../pages/FormPage/types";
 
-const TableOptions = () => {
+const TableOptions = ({icon}:{icon:string}) => {
   const { filters, updateFilters, skills } = useEmployeeContext();
   const navigate = useNavigate();
   const [selectedSkills, setSelectedSkills] = useState<ISkill[]>(
@@ -77,7 +77,7 @@ const TableOptions = () => {
         >
           <Button onClick={handleClearFilter}>
             <img
-              src={clearFilterIcon}
+              src={icon}
               alt="Clear filter icon"
               className="icon"
             />

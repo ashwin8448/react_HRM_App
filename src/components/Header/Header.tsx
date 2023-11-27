@@ -3,14 +3,18 @@ import logo from "../../assets/images/logo.png";
 import searchIcon from "../../assets/images/search_icon.svg";
 import HeaderWrapper from "./styles";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { updateFilters } = useEmployeeContext();
   return (
     <HeaderWrapper>
-      <h1>
-        <img className="logo" src={logo} alt="logo" />
-      </h1>
+      <Link to="/">
+        <h1>
+          <img className="logo" src={logo} alt="logo" />
+        </h1>
+      </Link>
+      {location.pathname==="/" &&
       <SearchBar
         placeholder="Search by name"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +22,7 @@ const Header = () => {
         }}
       >
         <img src={searchIcon} alt="logo" />
-      </SearchBar>
+      </SearchBar>}
     </HeaderWrapper>
   );
 };
