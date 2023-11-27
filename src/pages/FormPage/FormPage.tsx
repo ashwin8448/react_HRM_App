@@ -180,12 +180,6 @@ const FormPage = () => {
   useEffect(() => {
     setSkillsToDisplay(skills);
   }, [skills, departments, roles]);
-
-  const handleFormReset = (resetForm: () => void) => {
-    resetForm();
-    setSkillsToDisplay(skills);
-    setSelectedSkills([]);
-  };
   return (
     <>
       <Formik
