@@ -28,7 +28,7 @@ const FormPage = () => {
     departments,
     loading,
   } = useEmployeeContext();
-  const [loadingForm, setLoadingForm] = useState(true);
+  const [loadingForm, setLoadingForm] = useState(false);
   const { employeeId } = useParams();
   const [currentEmployeeData, setCurrentEmployeeData] = useState<IEmployee>();
 
@@ -76,14 +76,14 @@ const FormPage = () => {
   const handleSkillsToDisplay = (filteredSkills: ISkill[]) => {
     setSkillsToDisplay(filteredSkills);
   };
-
-  if (currentEmployeeData && selectedSkills !== currentEmployeeData.skills) {
-    setSelectedSkills(currentEmployeeData.skills);
-    handleSkillsToDisplay(
-      skills.filter((skill) => !currentEmployeeData.skills.includes(skill))
-    );
-  }
-
+  useEffect(() => {
+    if (currentEmployeeData && selectedSkills !== currentEmployeeData.skills) {
+      setSelectedSkills(currentEmployeeData.skills);
+      handleSkillsToDisplay(
+        skills.filter((skill) => !currentEmployeeData.skills.includes(skill))
+      );
+    }
+  }, [currentEmployeeData]);
   const handleClearFilter = () => {
     inputTag.current!.value = "";
     setSkillsToDisplay(skills);
@@ -92,6 +92,7 @@ const FormPage = () => {
 
   const handleFormSubmit = async (values: IFormValues) => {
     let response;
+    setLoadingForm(true)
     try {
       const payload = {
         ...values,
@@ -113,6 +114,7 @@ const FormPage = () => {
       console.log(error);
     } finally {
       if (response?.request.status === 200) {
+        setLoadingForm(false)
         navigate(`/view_employee_page/${response?.data.data.id}`, {
           replace: true,
         });

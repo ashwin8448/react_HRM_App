@@ -2,7 +2,7 @@ import Button from "../Button/Button";
 import addEmployeeIcon from "../../assets/images/add_user_icon.svg";
 import clearFilterIcon from "../../assets/images/clear_filter_icon.svg";
 import TableOptionsWrapper from "./styles";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
 import { useState, useRef, useEffect } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
@@ -48,8 +48,7 @@ const TableOptions = () => {
   useEffect(() => {
     setSkillsToDisplay(skills);
   }, [skills]);
-
-  return skillsToDisplay.length ? (
+  return (
     <TableOptionsWrapper>
       <div className="table-options flex">
         <Button
@@ -88,7 +87,7 @@ const TableOptions = () => {
         />
       ) : null}
     </TableOptionsWrapper>
-  ) : null;
+  );
 };
 
 export default TableOptions;

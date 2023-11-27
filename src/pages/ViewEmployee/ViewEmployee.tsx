@@ -44,6 +44,9 @@ const ViewEmployee = () => {
             <h2>Employee Details</h2>
           </div>
           <p>
+            Employee ID: <span>{employee.id || "N/A"}</span>
+          </p>
+          <p>
             Name:{" "}
             <span>{employee.firstName + " " + employee.lastName || "N/A"}</span>
           </p>

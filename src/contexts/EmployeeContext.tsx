@@ -15,7 +15,7 @@ import { ISkill } from "../pages/FormPage/types";
 const initialContextValues: IEmployeeContextProps = {
   employeesData: [],
   updateEmployeesData: () => {},
-  filters: { skills: [], search: [] },
+  filters: { skills: [], search: [""] },
   updateFilters: () => {},
   idToDelete: 0,
   updateIdToDelete: () => {},
@@ -91,6 +91,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     skills?: ISkill[];
     search?: string[];
   }) => {
+    console.log("updating");
     if (newFilters.skills || newFilters.search) {
       setFilters((prev) => ({ ...prev, ...newFilters }));
     }

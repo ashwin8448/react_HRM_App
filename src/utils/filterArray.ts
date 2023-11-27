@@ -6,10 +6,18 @@ export const filterArray = (
   unfilteredEmployees: IEmployee[],
   filters: { skills?: ISkill[]; search?: string[] }
 ) => {
-  let filteredArray = unfilteredEmployees.filter((employee) =>
-    filters.skills?.every((skill) => {
-      return employee.skills.includes(skill);
-    })
+  let filteredArray = unfilteredEmployees.filter(
+    (employee) =>
+      (filters.skills?.every((skill) => {
+        console.log(filters.search, "aaaaaaaaaaaaaaaaaa");
+        return JSON.stringify(employee.skills).includes(JSON.stringify(skill));
+      }) &&
+        employee.firstName
+          ?.toLowerCase()
+          .startsWith(filters.search![0].toLowerCase())) ||
+      employee.lastName
+        ?.toLowerCase()
+        .startsWith(filters.search![0].toLowerCase())
   );
   console.log(filteredArray);
   // let result;
