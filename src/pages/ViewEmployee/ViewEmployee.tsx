@@ -30,6 +30,7 @@ const ViewEmployee = () => {
 
   useEffect(() => {
     if (employeeId) fetchCurrentEmployeeData();
+    // else throw new Response("Hello", { status: 404 });
   }, []);
 
   return (
@@ -44,7 +45,7 @@ const ViewEmployee = () => {
             <h2>Employee Details</h2>
           </div>
           <p>
-            Employee ID: <span>{employee.id || "N/A"}</span>
+            Employee ID: <span>{employee.id}</span>
           </p>
           <p>
             Name:{" "}

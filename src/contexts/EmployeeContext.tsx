@@ -67,10 +67,9 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const updateEmployeesData = (newData: IEmployee[]) => {
     setEmployeesData(newData);
   };
-
+  
   const [skills, setSkills] = useState(initialContextValues.skills);
   const { employeeId } = useParams();
-
   const fetchEmployeesData = async () => {
     try {
       updateLoading("isTableLoading", true);
@@ -85,7 +84,6 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
           sortDir: searchSortDir ? searchSortDir : "asc",
         },
       });
-      console.log(response);
       let employeesData = response.data.data.employees.map(
         (employeeData: any) => {
           return {
@@ -100,7 +98,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       updateEmployeesData(employeesData);
       count = response.data.data.count;
     } catch (error) {
-      console.log(error);
+      console.log("SCENEEEEEEEEEEEEEEEEEEEEEEe");
+      throw new Response("Hello", {status:404});
     } finally {
       updateLoading("isTableLoading", false);
     }
@@ -127,13 +126,13 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const value: IEmployeeContextProps = {
     count,
     filters,
-    updateFilters,
     employeesData,
     skills,
     fetchEmployeesData,
     searchParams,
-    updateSearchParams,
     loading,
+    updateFilters,
+    updateSearchParams,
     updateLoading,
   };
 
