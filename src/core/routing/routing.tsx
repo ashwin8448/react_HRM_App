@@ -1,4 +1,4 @@
-import { Routes, Route, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import EmployeeListing from "../../pages/EmployeeListing/EmployeeListing";
 import FormPage from "../../pages/FormPage/FormPage";
 import ViewEmployee from "../../pages/ViewEmployee/ViewEmployee";
