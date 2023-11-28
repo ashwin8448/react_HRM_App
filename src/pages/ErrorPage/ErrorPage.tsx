@@ -10,7 +10,8 @@ const ErrorPage = () => {
       <div>
         <img src={ErrorAnimation} alt="Error animation" />
         <h2>Error 404</h2>
-        <Button buttonType={"primary-button"} onClick={() => navigate("/")}>
+        <p>Page not found</p>
+        <Button buttonType={"primary-button"} onClick={() => navigate("/")} title="Click to go back to home page">
           <span>Back to home</span>
         </Button>
       </div>

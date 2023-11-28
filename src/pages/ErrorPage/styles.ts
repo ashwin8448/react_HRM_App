@@ -1,23 +1,28 @@
 import styled from "styled-components";
 
 const ErrorPageWrapper = styled.section`
-  height: 100%;
-  display: flex;
-  justify-content: center;
   div {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  button{
+  button {
     justify-content: center;
   }
   h2 {
-    color: red;
+    color: #d1001f;
+    margin: 0;
   }
-  img{
+  p {
+    margin: 10px;
+  }
+  img {
     width: 300px;
-  };
+  }
 `;
 
 export default ErrorPageWrapper;

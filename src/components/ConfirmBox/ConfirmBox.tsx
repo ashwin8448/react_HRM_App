@@ -53,12 +53,14 @@ const ConfirmBox = ({updateIdToDelete, idToDelete}:{updateIdToDelete:(id:number)
             buttonType="secondary-button"
             isNegative={true}
             onClick={deleteHandler}
+            title="Click to delete employeee"
           >
             <span>Yes</span>
           </Button>
           <Button
             buttonType="secondary-button"
             onClick={() => updateIdToDelete(0)}
+            title="Click to cancel"
           >
             <span>No</span>
           </Button>

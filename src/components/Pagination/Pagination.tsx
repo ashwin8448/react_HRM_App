@@ -34,6 +34,7 @@ const Pagination = () => {
         onClick={() => {
           updateParams(1);
         }}
+        title="First page"
       >
         <img src={endIcon} alt="Show first page icon" className="icon mirror" />
       </Button>
@@ -41,7 +42,7 @@ const Pagination = () => {
         buttonType="primary-button"
         onClick={() => {
           updateParams(-1, "step");
-        }}
+        }} title="Previous page"
       >
         <img
           src={nextIcon}
@@ -75,7 +76,7 @@ const Pagination = () => {
         buttonType="primary-button"
         onClick={() => {
           updateParams(1, "step");
-        }}
+        }} title="Next page"
       >
         <img src={nextIcon} alt="Show next page icon" className="icon" />
       </Button>
@@ -83,7 +84,7 @@ const Pagination = () => {
         buttonType="primary-button"
         onClick={() => {
           updateParams(totalPages);
-        }}
+        }} title="Last page"
       >
         <img src={endIcon} alt="Show last page icon" className="icon" />
       </Button>

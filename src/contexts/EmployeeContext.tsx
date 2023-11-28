@@ -11,6 +11,7 @@ import { getData } from "../core/api";
 import { rowsPerPage } from "../core/config/constants";
 import { useParams, useSearchParams } from "react-router-dom";
 import { ISkill } from "../pages/FormPage/types";
+import { toast } from "react-toastify";
 
 const initialContextValues: IEmployeeContextProps = {
   employeesData: [],
@@ -40,16 +41,19 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams({"page":"1","sortBy":"id","sortDir":"asc"});
   const updateSearchParams = (params: {
     page?: string;
     sortBy?: string;
     sortDir?: string;
   }) => {
-    setSearchParams({
-      ...Object.fromEntries(searchParams.entries()),
-      ...params,
-    });
+    setSearchParams(
+      {
+        ...Object.fromEntries(searchParams.entries()),
+        ...params,
+      },
+      { replace: true }
+    );
   };
   const [filters, setFilters] = useState(initialContextValues.filters);
   const updateFilters = (newFilters: {
@@ -67,7 +71,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const updateEmployeesData = (newData: IEmployee[]) => {
     setEmployeesData(newData);
   };
-  
+
   const [skills, setSkills] = useState(initialContextValues.skills);
   const { employeeId } = useParams();
   const fetchEmployeesData = async () => {
@@ -98,8 +102,16 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       updateEmployeesData(employeesData);
       count = response.data.data.count;
     } catch (error) {
-      
-      console.log(error)
+      toast.error(`Employees details could not be fetched from server.`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } finally {
       updateLoading("isTableLoading", false);
     }
@@ -115,7 +127,16 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         let response = await getData("/skills");
         setSkills(response.data.data);
       } catch (error) {
-        console.log(error);
+        toast.error(`Skill list could not be fetched from server.`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       } finally {
         updateLoading("isSkillsLoading", false);
       }

@@ -60,7 +60,7 @@ const TableOptions = ({icon}:{icon:string}) => {
           buttonType="primary-button"
           onClick={() => {
             navigate("/form_page");
-          }}
+          }} title="Click to add employee details"
         >
           <span>Add new employee</span>
           <img src={addEmployeeIcon} alt="Add employee icon" className="icon" />
@@ -74,11 +74,11 @@ const TableOptions = ({icon}:{icon:string}) => {
           placeholder="Filter by skills"
           inputTag={inputTag}
         >
-          <Button onClick={handleClearFilter}>
+          <Button onClick={handleClearFilter} title="Click to clear filters">
             <img
               src={icon}
               alt="Clear filter icon"
-              className="icon"
+              className="icon" 
             />
           </Button>
         </CustomDropdown>

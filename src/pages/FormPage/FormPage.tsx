@@ -46,11 +46,20 @@ const FormPage = () => {
       const response = (await getData(`employee/${employeeId}`)).data.data;
       setCurrentEmployeeData({
         ...response,
-        department: response.department.department,
-        role: response.role.role,
+        department: response.department ? response.department.department : "",
+        role: response.role ? response.role.role : "",
       });
     } catch (error) {
-      console.log(error);
+      toast.error(`Employee details could not be fetched from server.`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } finally {
       updateFormDataLoading("isFormLoading", false);
     }
@@ -61,7 +70,16 @@ const FormPage = () => {
       let response = await getData("/departments");
       setDepartments(response.data);
     } catch (error) {
-      console.log(error);
+      toast.error(`Department list could not be fetched from server.`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } finally {
       updateFormDataLoading("isDepartmentsLoading", false);
     }
@@ -72,7 +90,16 @@ const FormPage = () => {
       let response = await getData("/roles");
       setRoles(response.data);
     } catch (error) {
-      console.log(error);
+      toast.error(`Role list could not be fetched from server.`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } finally {
       updateFormDataLoading("isRoleLoading", false);
     }
@@ -161,7 +188,10 @@ const FormPage = () => {
       );
     } finally {
       updateFormDataLoading("isFormLoading", false);
-      if (response?.request.status === 200 || response?.request.status === 201) {
+      if (
+        response?.request.status === 200 ||
+        response?.request.status === 201
+      ) {
         navigate(`/view_employee_page/${response?.data.data.id}`, {
           replace: true,
         });
@@ -327,7 +357,10 @@ const FormPage = () => {
                               placeholder="Click to add skills"
                               inputTag={inputTag}
                             >
-                              <Button onClick={handleClearFilter}>
+                              <Button
+                                onClick={handleClearFilter}
+                                title="Click to clear skills"
+                              >
                                 <img
                                   src={closeIcon}
                                   alt="Clear filter icon"
@@ -352,22 +385,12 @@ const FormPage = () => {
                   />
                 </div>
                 <div className="buttons-container flex">
-                  {employeeId === "" ? (
-                    <input
-                      className="primary-button"
-                      type="submit"
-                      value="Save"
-                    />
-                  ) : (
-                    <>
-                      <input className="primary-button" type="reset" />
-                      <input
-                        className="primary-button"
-                        type="submit"
-                        value="Submit"
-                      />
-                    </>
-                  )}
+                  <input className="primary-button" type="reset" />
+                  <input
+                    className="primary-button"
+                    type="submit"
+                    value="Submit"
+                  />
                 </div>
               </>
             )}

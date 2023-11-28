@@ -24,7 +24,7 @@ const ViewEmployee = () => {
       });
     } catch (error) {
       toast.error(
-        `Employee details could not be ${employeeId ? "updated" : "added"}.`,
+        `Employee details could not be fetched from server.`,
         {
           position: "top-center",
           autoClose: 5000,

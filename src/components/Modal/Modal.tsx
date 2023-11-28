@@ -7,7 +7,7 @@ const Modal = ({ children, updateIdToDelete }: IModal) => {
   return (
     <ModalWrapper>
       <div className="modal">
-        <Button buttonType="close-button" onClick={() => updateIdToDelete(0)}>
+        <Button buttonType="close-button" onClick={() => updateIdToDelete(0)} title="Close button">
           <img src={closeButton} alt="Close icon" />
         </Button>
         {children}
