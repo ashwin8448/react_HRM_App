@@ -161,7 +161,6 @@ const FormPage = () => {
       );
     } finally {
       updateFormDataLoading("isFormLoading", false);
-      console.log(response);
       if (response?.request.status === 200 || response?.request.status === 201) {
         navigate(`/view_employee_page/${response?.data.data.id}`, {
           replace: true,

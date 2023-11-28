@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { getData } from "../../core/api";
 import { IEmployee } from "../../components/Table/types";
 import { CircularProgress } from "@mui/material";
+import { toast } from "react-toastify";
 
 const ViewEmployee = () => {
   const { employeeId } = useParams();
@@ -22,7 +23,19 @@ const ViewEmployee = () => {
         role: response.role ? response.role.role : "N/A",
       });
     } catch (error) {
-      console.log(error);
+      toast.error(
+        `Employee details could not be ${employeeId ? "updated" : "added"}.`,
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        }
+      );
     } finally {
       setLoading(false);
     }
@@ -30,7 +43,6 @@ const ViewEmployee = () => {
 
   useEffect(() => {
     if (employeeId) fetchCurrentEmployeeData();
-    // else throw new Response("Hello", { status: 404 });
   }, []);
 
   return (

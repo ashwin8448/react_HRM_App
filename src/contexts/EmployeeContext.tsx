@@ -98,8 +98,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       updateEmployeesData(employeesData);
       count = response.data.data.count;
     } catch (error) {
-      console.log("SCENEEEEEEEEEEEEEEEEEEEEEEe");
-      throw new Response("Hello", {status:404});
+      
+      console.log(error)
     } finally {
       updateLoading("isTableLoading", false);
     }
