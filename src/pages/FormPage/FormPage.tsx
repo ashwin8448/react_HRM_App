@@ -21,14 +21,27 @@ import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 
 const FormPage = () => {
-  const { fetchEmployeesData, skills, roles, departments, loading } =
-    useEmployeeContext();
-  const [loadingForm, setLoadingForm] = useState(false);
+  const { fetchEmployeesData, skills, loading } = useEmployeeContext();
+  const [formDataLoading, setFormDataLoading] = useState({
+    isDepartmentsLoading: true,
+    isRoleLoading: true,
+    isFormLoading: true,
+  });
+  const [departments, setDepartments] = useState<
+    { id: number; department: string }[]
+  >([]);
+  const [roles, setRoles] = useState<{ id: number; role: string }[]>([]);
   const { employeeId } = useParams();
   const [currentEmployeeData, setCurrentEmployeeData] = useState<IEmployee>();
 
+  const updateFormDataLoading = (loader: string, value: boolean) => {
+    setFormDataLoading((prev) => {
+      return { ...prev, [loader]: value };
+    });
+  };
+
   const fetchCurrentEmployeeData = async () => {
-    setLoadingForm(true);
+    updateFormDataLoading("isFormLoading", true);
     try {
       const response = (await getData(`employee/${employeeId}`)).data.data;
       setCurrentEmployeeData({
@@ -39,12 +52,37 @@ const FormPage = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoadingForm(false);
+      updateFormDataLoading("isFormLoading", false);
+    }
+  };
+
+  const fetchDepartments = async () => {
+    try {
+      let response = await getData("/departments");
+      setDepartments(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      updateFormDataLoading("isDepartmentsLoading", false);
+    }
+  };
+
+  const fetchRoles = async () => {
+    try {
+      let response = await getData("/roles");
+      setRoles(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      updateFormDataLoading("isRoleLoading", false);
     }
   };
 
   useEffect(() => {
     if (employeeId) fetchCurrentEmployeeData();
+    else updateFormDataLoading("isFormLoading", false);
+    fetchDepartments();
+    fetchRoles();
   }, []);
 
   const inputTag = useRef<HTMLInputElement>(null);
@@ -89,7 +127,7 @@ const FormPage = () => {
 
   const handleFormSubmit = async (values: IFormValues) => {
     let response;
-    setLoadingForm(true);
+    updateFormDataLoading("isFormLoading", true);
     try {
       const payload = {
         ...values,
@@ -122,8 +160,9 @@ const FormPage = () => {
         }
       );
     } finally {
-      setLoadingForm(false);
-      if (response?.request.status === 200) {
+      updateFormDataLoading("isFormLoading", false);
+      console.log(response);
+      if (response?.request.status === 200 || response?.request.status === 201) {
         navigate(`/view_employee_page/${response?.data.data.id}`, {
           replace: true,
         });
@@ -190,9 +229,9 @@ const FormPage = () => {
       >
         <Form autoComplete="off" className="form-container">
           <FormWrapper className="page-content employee-details-form">
-            {loadingForm ||
-            loading.isDepartmentsLoading ||
-            loading.isRoleLoading ||
+            {formDataLoading.isFormLoading ||
+            formDataLoading.isDepartmentsLoading ||
+            formDataLoading.isRoleLoading ||
             loading.isSkillsLoading ? (
               <div className="loader">
                 <CircularProgress />

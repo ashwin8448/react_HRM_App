@@ -46,8 +46,7 @@ const TableHeader = ({ tableHeader }: ITableHeader) => {
   );
 };
 
-const EmployeeRow = ({ employee }: any) => {
-  const { updateIdToDelete } = useEmployeeContext();
+const EmployeeRow = ({ employee,updateIdToDelete }: {employee:any, updateIdToDelete:(id:number)=>void}) => {
   const navigate = useNavigate();
   employee = {
     ...employee,
@@ -86,7 +85,11 @@ const EmployeeRow = ({ employee }: any) => {
   );
 };
 
-const Table = () => {
+const Table = ({
+  updateIdToDelete,
+}: {
+  updateIdToDelete: (id: number) => void;
+}) => {
   const { filters, employeesData, loading } = useEmployeeContext();
   const filteredEmployees = filterArray(employeesData, filters);
   return (
@@ -113,7 +116,11 @@ const Table = () => {
             </tr>
           ) : filteredEmployees.length ? (
             filteredEmployees.map((employee: IEmployee) => (
-              <EmployeeRow key={employee.id} employee={employee} />
+              <EmployeeRow
+                key={employee.id}
+                employee={employee}
+                updateIdToDelete={updateIdToDelete}
+              />
             ))
           ) : (
             <tr>

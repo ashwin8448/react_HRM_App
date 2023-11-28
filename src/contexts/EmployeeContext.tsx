@@ -14,30 +14,23 @@ import { ISkill } from "../pages/FormPage/types";
 
 const initialContextValues: IEmployeeContextProps = {
   employeesData: [],
-  updateEmployeesData: () => {},
+  count: 0,
   filters: { skills: [], search: [""] },
   updateFilters: () => {},
-  idToDelete: 0,
-  updateIdToDelete: () => {},
   skills: [],
-  departments: [],
-  roles: [],
   fetchEmployeesData: () => {},
-  totalPages: 1,
   searchParams: new URLSearchParams(),
   updateSearchParams: () => {},
   loading: {
     isTableLoading: true,
     isSkillsLoading: true,
-    isDepartmentsLoading: true,
-    isRoleLoading: true,
   },
   updateLoading: () => {},
-  employee: null,
-  updateEmployee: () => {},
 };
 
 const EmployeeContext = createContext(initialContextValues);
+
+let count = initialContextValues.count;
 
 export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(initialContextValues.loading);
@@ -46,19 +39,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       return { ...prev, [loader]: value };
     });
   };
+
   const [searchParams, setSearchParams] = useSearchParams();
-  const [filters, setFilters] = useState(initialContextValues.filters);
-  const [employeesData, setEmployeesData] = useState(
-    initialContextValues.employeesData
-  );
-  const [skills, setSkills] = useState(initialContextValues.skills);
-  const [departments, setDepartments] = useState(
-    initialContextValues.departments
-  );
-  const [idToDelete, setIdToDelete] = useState(initialContextValues.idToDelete);
-  const [roles, setRoles] = useState(initialContextValues.roles);
-  const [totalPages, setTotalPages] = useState(initialContextValues.totalPages);
-  const { employeeId } = useParams();
   const updateSearchParams = (params: {
     page?: string;
     sortBy?: string;
@@ -69,7 +51,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       ...params,
     });
   };
-
+  const [filters, setFilters] = useState(initialContextValues.filters);
   const updateFilters = (newFilters: {
     skills?: ISkill[];
     search?: string[];
@@ -79,13 +61,16 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const [employeesData, setEmployeesData] = useState(
+    initialContextValues.employeesData
+  );
   const updateEmployeesData = (newData: IEmployee[]) => {
     setEmployeesData(newData);
   };
 
-  const updateIdToDelete = (id: number) => {
-    setIdToDelete(id);
-  };
+  const [skills, setSkills] = useState(initialContextValues.skills);
+  const { employeeId } = useParams();
+
   const fetchEmployeesData = async () => {
     try {
       updateLoading("isTableLoading", true);
@@ -100,6 +85,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
           sortDir: searchSortDir ? searchSortDir : "asc",
         },
       });
+      console.log(response);
       let employeesData = response.data.data.employees.map(
         (employeeData: any) => {
           return {
@@ -112,7 +98,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         }
       );
       updateEmployeesData(employeesData);
-      setTotalPages(Math.ceil(response.data.data.count / rowsPerPage));
+      count = response.data.data.count;
     } catch (error) {
       console.log(error);
     } finally {
@@ -135,48 +121,22 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         updateLoading("isSkillsLoading", false);
       }
     };
-
     fetchSkills();
-    const fetchDepartments = async () => {
-      try {
-        let response = await getData("/departments");
-        setDepartments(response.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        updateLoading("isDepartmentsLoading", false);
-      }
-    };
-    fetchDepartments();
-    const fetchRoles = async () => {
-      try {
-        let response = await getData("/roles");
-        setRoles(response.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        updateLoading("isRoleLoading", false);
-      }
-    };
-    fetchRoles();
   }, []);
+
   const value: IEmployeeContextProps = {
+    count,
     filters,
     updateFilters,
     employeesData,
-    updateEmployeesData,
-    idToDelete,
-    updateIdToDelete,
     skills,
-    departments,
-    roles,
     fetchEmployeesData,
-    totalPages,
     searchParams,
     updateSearchParams,
     loading,
     updateLoading,
   };
+
   return (
     <EmployeeContext.Provider value={value}>
       {children}
