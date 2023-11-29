@@ -33,6 +33,7 @@ const ConfirmBox = ({
         toast.update(toastDel, {
           render: "Employee details deleted successfully.",
           type: toast.TYPE.SUCCESS,
+          autoClose: 5000,
         });
       }
     }

@@ -29,6 +29,8 @@ const Pagination = () => {
   }, [searchParams]);
   return totalPages > 1 ? (
     <PaginationWrapper>
+            {pageNumber > 1 && (
+        <>
       <Button
         buttonType="primary-button"
         onClick={() => {
@@ -42,14 +44,15 @@ const Pagination = () => {
         buttonType="primary-button"
         onClick={() => {
           updateParams(-1, "step");
-        }} title="Previous page"
+        }}
+        title="Previous page"
       >
         <img
           src={nextIcon}
           alt="Show previous page icon"
           className="icon mirror"
         />
-      </Button>
+      </Button></>)}
 
       <form
         onSubmit={(e) => {
@@ -72,22 +75,28 @@ const Pagination = () => {
         <span> of {totalPages} pages</span>
       </form>
 
-      <Button
-        buttonType="primary-button"
-        onClick={() => {
-          updateParams(1, "step");
-        }} title="Next page"
-      >
-        <img src={nextIcon} alt="Show next page icon" className="icon" />
-      </Button>
-      <Button
-        buttonType="primary-button"
-        onClick={() => {
-          updateParams(totalPages);
-        }} title="Last page"
-      >
-        <img src={endIcon} alt="Show last page icon" className="icon" />
-      </Button>
+      {pageNumber < totalPages && (
+        <>
+          <Button
+            buttonType="primary-button"
+            onClick={() => {
+              updateParams(1, "step");
+            }}
+            title="Next page"
+          >
+            <img src={nextIcon} alt="Show next page icon" className="icon" />
+          </Button>
+          <Button
+            buttonType="primary-button"
+            onClick={() => {
+              updateParams(totalPages);
+            }}
+            title="Last page"
+          >
+            <img src={endIcon} alt="Show last page icon" className="icon" />
+          </Button>
+        </>
+      )}
     </PaginationWrapper>
   ) : null;
 };
