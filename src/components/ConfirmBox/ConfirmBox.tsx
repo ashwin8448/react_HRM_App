@@ -3,10 +3,7 @@ import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { deleteData } from "../../core/api";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
-
 import ConfirmBoxWrapper from "./styles";
-import fetchData from "../../utils/apiFetchCall";
-import { apiURL, rowsPerPage } from "../../core/config/constants";
 
 const ConfirmBox = ({
   updateIdToDelete,
