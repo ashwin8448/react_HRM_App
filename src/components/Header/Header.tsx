@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const { updateFilters } = useEmployeeContext();
-  console.log(location.pathname);
   return (
     <HeaderWrapper>
       <Link to="/">
