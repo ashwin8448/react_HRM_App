@@ -16,7 +16,7 @@ import { IFormValues, ISkill } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { IEmployee } from "../../components/Table/types";
-import { getData, postData, updateData } from "../../core/api";
+import { postData, updateData } from "../../core/api";
 import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import fetchData from "../../utils/apiFetchCall";
