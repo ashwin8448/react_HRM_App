@@ -34,18 +34,3 @@ const router = createBrowserRouter(
   { basename: import.meta.env.DEV ? "/" : "/react_HRM_App/" }
 );
 export default router;
-// const AppRoutes = () => {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<EmployeeListing />}/>
-//       <Route path="/form_page" element={<FormPage />} />
-//       <Route path="/form_page/:employeeId" element={<FormPage />} />
-//       <Route
-//         path="/view_employee_page/:employeeId"
-//         element={<ViewEmployee />}
-//       />
-//       <Route path="*" element={<ErrorPage />} />
-//     </Routes>
-//   );
-// };
-// export default AppRoutes;
