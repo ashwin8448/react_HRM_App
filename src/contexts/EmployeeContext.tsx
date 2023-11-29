@@ -6,12 +6,10 @@ import {
   useState,
 } from "react";
 import { IEmployeeContextProps } from "./types";
-import { IEmployee } from "../components/Table/types";
-import { getData } from "../core/api";
-import { rowsPerPage } from "../core/config/constants";
+import { apiURL, rowsPerPage } from "../core/config/constants";
 import { useParams, useSearchParams } from "react-router-dom";
 import { ISkill } from "../pages/FormPage/types";
-import { toast } from "react-toastify";
+import fetchData from "../utils/apiFetchCall";
 
 const initialContextValues: IEmployeeContextProps = {
   employeesData: [],
@@ -19,7 +17,6 @@ const initialContextValues: IEmployeeContextProps = {
   filters: { skills: [], search: [""] },
   updateFilters: () => {},
   skills: [],
-  fetchEmployeesData: () => {},
   searchParams: new URLSearchParams(),
   updateSearchParams: () => {},
   loading: {
@@ -27,6 +24,7 @@ const initialContextValues: IEmployeeContextProps = {
     isSkillsLoading: true,
   },
   updateLoading: () => {},
+  fetchEmployeesData:()=>{}
 };
 
 const EmployeeContext = createContext(initialContextValues);
@@ -72,28 +70,25 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   const [employeesData, setEmployeesData] = useState(
     initialContextValues.employeesData
   );
-  const updateEmployeesData = (newData: IEmployee[]) => {
-    setEmployeesData(newData);
-  };
 
   const [skills, setSkills] = useState(initialContextValues.skills);
   const { employeeId } = useParams();
-  const fetchEmployeesData = async () => {
-    try {
-      updateLoading("isTableLoading", true);
-      const searchSortBy = searchParams.get("sortBy") || "id";
-      const searchSortDir = searchParams.get("sortDir") || "asc";
-      const searchPage = searchParams.get("page") || "1";
-      const response = await getData(`/employee`, {
+  const fetchEmployeesData = () => {
+    fetchData(
+      apiURL.employee,
+      (loaderState) => updateLoading("isTableLoading", loaderState),
+      "Employee details could not be fetched from server.",
+      {
         params: {
           limit: rowsPerPage,
-          offset: (Number(searchPage) - 1) * rowsPerPage,
-          sortBy: searchSortBy ? searchSortBy : "id",
-          sortDir: searchSortDir ? searchSortDir : "asc",
+          offset: (Number(searchParams.get("page") || "1") - 1) * rowsPerPage,
+          sortBy: searchParams.get("sortBy") || "id",
+          sortDir: searchParams.get("sortDir") || "asc",
         },
-      });
-      let employeesData = response.data.data.employees.map(
-        (employeeData: any) => {
+      }
+    ).then((data) => {
+      setEmployeesData(
+        data.employees.map((employeeData: any) => {
           return {
             ...employeeData,
             lastName: employeeData.lastName ? employeeData.lastName : "",
@@ -101,15 +96,10 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
             role: employeeData.role?.role || "N/A",
             department: employeeData.department?.department || "N/A",
           };
-        }
+        })
       );
-      updateEmployeesData(employeesData);
-      count = response.data.data.count;
-    } catch (error) {
-      toast.error(`Employees details could not be fetched from server.`);
-    } finally {
-      updateLoading("isTableLoading", false);
-    }
+      count = data.count;
+    });
   };
   useEffect(() => {
     if (!employeeId) {
@@ -117,17 +107,13 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [searchParams]);
   useEffect(() => {
-    const fetchSkills = async () => {
-      try {
-        let response = await getData("/skills");
-        setSkills(response.data.data);
-      } catch (error) {
-        toast.error(`Skill list could not be fetched from server.`);
-      } finally {
-        updateLoading("isSkillsLoading", false);
-      }
-    };
-    fetchSkills();
+    fetchData(
+      apiURL.skills,
+      (loaderState) => updateLoading("isSkillsLoading", loaderState),
+      "Skills could not be fetched from server."
+    ).then((data) => {
+      setSkills(data);
+    });
   }, []);
 
   const value: IEmployeeContextProps = {
@@ -135,12 +121,12 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     filters,
     employeesData,
     skills,
-    fetchEmployeesData,
     searchParams,
     loading,
     updateFilters,
     updateSearchParams,
     updateLoading,
+    fetchEmployeesData
   };
 
   return (

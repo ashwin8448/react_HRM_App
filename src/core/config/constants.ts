@@ -105,3 +105,9 @@ export const formData = [
   },
 ];
 export const rowsPerPage = 5;
+export const apiURL = {
+  employee: "/employee",
+  skills: "/skills",
+  roles: "/roles",
+  departments: "/departments",
+};

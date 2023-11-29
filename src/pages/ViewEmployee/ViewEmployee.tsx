@@ -1,73 +1,38 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import SelectedSkills from "../../components/SelectedSkills/SelectedSkills";
 import DivWrapper from "./styles";
 import { useState, useEffect } from "react";
-import { getData } from "../../core/api";
 import { IEmployee } from "../../components/Table/types";
 import { CircularProgress } from "@mui/material";
-import { toast } from "react-toastify";
+import { apiURL } from "../../core/config/constants";
+import fetchData from "../../utils/apiFetchCall";
 
 const ViewEmployee = () => {
-  const navigate = useNavigate();
   const { employeeId } = useParams();
   const [loading, setLoading] = useState(true);
-  const [employee, setEmployee] = useState<Promise<IEmployee | null>>({
-    skill: [],
-  });
-  const fetchData = async (
-    url: string,
-    updateLoader: (loaderState: boolean) => void,
-    errorMessage: string
-  ) => {
-    updateLoader(true);
-    try {
-      let response = (await getData(url)).data;
-      if (url.includes("/employee")) {
-        response = response.data;
-      }
-      return response;
-    } catch {
-      toast.error(errorMessage);
-    } finally {
-      updateLoader(false);
-    }
+  const [employee, setEmployee] = useState<IEmployee>();
+  const updateLoading = (loaderState: boolean) => {
+    setLoading(loaderState);
   };
-
-  // const fetchCurrentEmployeeData = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const response = (await getData(`employee/${employeeId}`)).data.data;
-  //     setEmployee({
-  //       ...response,
-  //       lastName: response.lastName || "",
-  //       department: response.department
-  //         ? response.department.department
-  //         : "N/A",
-  //       role: response.role ? response.role.role : "N/A",
-  //     });
-  //   } catch (error) {
-  //     toast.error(`Employee details could not be fetched from server.`);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   useEffect(() => {
     if (employeeId) {
-      const fetchData = async () => {
-        let data = await fetchData(
-          `employee/${employeeId}`,
-          setLoading,
-          "Employee details could not be fetched from server."
-        );
-        setEmployee(data);
-      };
+      fetchData(
+        apiURL.employee + "/" + employeeId,
+        updateLoading,
+        "Employee details could not be fetched from server."
+      ).then((data) =>
+        setEmployee({
+          ...data,
+          lastName: data.lastName || "",
+          department: data.department ? data.department.department : "N/A",
+          role: data.role ? data.role.role : "N/A",
+        })
+      );
     }
-    // fetchCurrentEmployeeData();
   }, []);
-  console.log(employee);
   return (
     <DivWrapper className="page-content">
-      {loading ? (
+      {!(!loading && employee) ? (
         <div className="loader">
           <CircularProgress />
         </div>

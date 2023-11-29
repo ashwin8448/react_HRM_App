@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import closeIcon from "../../assets/images/close_button_icon.svg";
 import SelectedSkills from "../../components/SelectedSkills/SelectedSkills";
-import { formData } from "../../core/config/constants";
+import { apiURL, formData } from "../../core/config/constants";
 import FormWrapper from "./styles";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -19,6 +19,7 @@ import { IEmployee } from "../../components/Table/types";
 import { getData, postData, updateData } from "../../core/api";
 import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
+import fetchData from "../../utils/apiFetchCall";
 
 const FormPage = () => {
   const { fetchEmployeesData, skills, loading } = useEmployeeContext();
@@ -33,56 +34,42 @@ const FormPage = () => {
   const [roles, setRoles] = useState<{ id: number; role: string }[]>([]);
   const { employeeId } = useParams();
   const [currentEmployeeData, setCurrentEmployeeData] = useState<IEmployee>();
-
-  const updateFormDataLoading = (loader: string, value: boolean) => {
+  const updateLoading = (loader: string, value: boolean) => {
     setFormDataLoading((prev) => {
       return { ...prev, [loader]: value };
     });
   };
-
   const fetchCurrentEmployeeData = async () => {
-    updateFormDataLoading("isFormLoading", true);
-    try {
-      const response = (await getData(`/employee/${employeeId}`)).data.data;
+    fetchData(
+      apiURL.employee + "/" + employeeId,
+      (loaderState) => updateLoading("isFormLoading", loaderState),
+      "Employee details could not be fetched from server."
+    ).then((data) =>
       setCurrentEmployeeData({
-        ...response,
-        department: response.department ? response.department.department : "",
-        role: response.role ? response.role.role : "",
-      });
-    } catch (error) {
-      toast.error(`Employee details could not be fetched from server.`);
-    } finally {
-      updateFormDataLoading("isFormLoading", false);
-    }
-  };
-
-  const fetchDepartments = async () => {
-    try {
-      let response = await getData("/departments");
-      setDepartments(response.data);
-    } catch (error) {
-      toast.error(`Department list could not be fetched from server.`);
-    } finally {
-      updateFormDataLoading("isDepartmentsLoading", false);
-    }
-  };
-
-  const fetchRoles = async () => {
-    try {
-      let response = await getData("/roles");
-      setRoles(response.data);
-    } catch (error) {
-      toast.error(`Role list could not be fetched from server.`);
-    } finally {
-      updateFormDataLoading("isRoleLoading", false);
-    }
+        ...data,
+        department: data.department ? data.department.department : "",
+        role: data.role ? data.role.role : "",
+      })
+    );
   };
 
   useEffect(() => {
     if (employeeId) fetchCurrentEmployeeData();
-    else updateFormDataLoading("isFormLoading", false);
-    fetchDepartments();
-    fetchRoles();
+    else updateLoading("isFormLoading", false);
+    fetchData(
+      apiURL.departments,
+      (loaderState) => updateLoading("isDepartmentsLoading", loaderState),
+      "Departments could not be fetched from server."
+    ).then((data) => {
+      setDepartments(data);
+    });
+    fetchData(
+      apiURL.roles,
+      (loaderState) => updateLoading("isRoleLoading", loaderState),
+      "Roles could not be fetched from server."
+    ).then((data) => {
+      setRoles(data);
+    });
   }, []);
 
   const inputTag = useRef<HTMLInputElement>(null);
@@ -127,7 +114,7 @@ const FormPage = () => {
 
   const handleFormSubmit = async (values: IFormValues) => {
     let response;
-    updateFormDataLoading("isFormLoading", true);
+    updateLoading("isFormLoading", true);
     try {
       const payload = {
         ...values,
@@ -150,7 +137,7 @@ const FormPage = () => {
         `Employee details could not be ${employeeId ? "updated" : "added"}.`
       );
     } finally {
-      updateFormDataLoading("isFormLoading", false);
+      updateLoading("isFormLoading", false);
       if (
         response?.request.status === 200 ||
         response?.request.status === 201
