@@ -31,7 +31,7 @@ const router = createBrowserRouter(
       errorElement: <ErrorPage />,
     },
   ],
-  { basename: import.meta.env.DEV ? "/" : "/HRM-App-React/" }
+  { basename: import.meta.env.DEV ? "/" : "/react_HRM_App/" }
 );
 export default router;
 // const AppRoutes = () => {
