@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const { updateFilters } = useEmployeeContext();
+  console.log(location.pathname);
   return (
     <HeaderWrapper>
       <Link to="/">
@@ -14,15 +15,16 @@ const Header = () => {
           <img className="logo" src={logo} alt="logo" />
         </h1>
       </Link>
-      {location.pathname==="/" &&
-      <SearchBar
-        placeholder="Search by name"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          updateFilters({ search: [e.target.value] });
-        }}
-      >
-        <img src={searchIcon} alt="logo" />
-      </SearchBar>}
+      {location.pathname === "/" && (
+        <SearchBar
+          placeholder="Search by name"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            updateFilters({ search: [e.target.value] });
+          }}
+        >
+          <img src={searchIcon} alt="logo" />
+        </SearchBar>
+      )}
     </HeaderWrapper>
   );
 };
