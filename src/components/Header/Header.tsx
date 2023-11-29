@@ -15,7 +15,8 @@ const Header = () => {
           <img className="logo" src={logo} alt="logo" />
         </h1>
       </Link>
-      {location.pathname === "/" && (
+      {(location.pathname === "/" ||
+        location.pathname === "/react_HRM_App/") && (
         <SearchBar
           placeholder="Search by name"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
