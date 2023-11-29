@@ -41,7 +41,11 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const [searchParams, setSearchParams] = useSearchParams({"page":"1","sortBy":"id","sortDir":"asc"});
+  const [searchParams, setSearchParams] = useSearchParams({
+    page: "1",
+    sortBy: "id",
+    sortDir: "asc",
+  });
   const updateSearchParams = (params: {
     page?: string;
     sortBy?: string;
@@ -102,16 +106,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       updateEmployeesData(employeesData);
       count = response.data.data.count;
     } catch (error) {
-      toast.error(`Employees details could not be fetched from server.`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toast.error(`Employees details could not be fetched from server.`);
     } finally {
       updateLoading("isTableLoading", false);
     }
@@ -127,16 +122,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         let response = await getData("/skills");
         setSkills(response.data.data);
       } catch (error) {
-        toast.error(`Skill list could not be fetched from server.`, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        toast.error(`Skill list could not be fetched from server.`);
       } finally {
         updateLoading("isSkillsLoading", false);
       }

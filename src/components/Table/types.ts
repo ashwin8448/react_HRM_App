@@ -1,3 +1,6 @@
+import { ReactNode } from "react";
+import {JsxElement} from "typescript"
+
 export interface IEmployee {
   id?: number;
   firstName?: string;
@@ -13,7 +16,8 @@ export interface IEmployee {
   moreDetails?: string | null;
   role?: string;
   department?: string;
-  skills: {id:number, skill:string}[];
+  skills: { id: number; skill: string }[];
+  actions?: JsxElement|ReactNode;
 }
 
 export interface ITableHeader {

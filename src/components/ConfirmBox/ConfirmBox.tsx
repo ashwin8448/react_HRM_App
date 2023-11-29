@@ -6,15 +6,18 @@ import Modal from "../Modal/Modal";
 
 import ConfirmBoxWrapper from "./styles";
 
-const ConfirmBox = ({updateIdToDelete, idToDelete}:{updateIdToDelete:(id:number)=>void, idToDelete:number}) => {
-  const { employeesData, fetchEmployeesData } =
-    useEmployeeContext();
+const ConfirmBox = ({
+  updateIdToDelete,
+  idToDelete,
+}: {
+  updateIdToDelete: (id: number) => void;
+  idToDelete: number;
+}) => {
+  const { employeesData, fetchEmployeesData } = useEmployeeContext();
   const deleteHandler = async () => {
     const toastDel = toast.info(`Deleting employee details...`, {
-      position: "top-center",
-      hideProgressBar: false,
+      autoClose: false,
       progress: undefined,
-      theme: "colored",
     });
     let response;
     try {

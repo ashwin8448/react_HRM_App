@@ -43,23 +43,14 @@ const FormPage = () => {
   const fetchCurrentEmployeeData = async () => {
     updateFormDataLoading("isFormLoading", true);
     try {
-      const response = (await getData(`employee/${employeeId}`)).data.data;
+      const response = (await getData(`/employee/${employeeId}`)).data.data;
       setCurrentEmployeeData({
         ...response,
         department: response.department ? response.department.department : "",
         role: response.role ? response.role.role : "",
       });
     } catch (error) {
-      toast.error(`Employee details could not be fetched from server.`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toast.error(`Employee details could not be fetched from server.`);
     } finally {
       updateFormDataLoading("isFormLoading", false);
     }
@@ -70,16 +61,7 @@ const FormPage = () => {
       let response = await getData("/departments");
       setDepartments(response.data);
     } catch (error) {
-      toast.error(`Department list could not be fetched from server.`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toast.error(`Department list could not be fetched from server.`);
     } finally {
       updateFormDataLoading("isDepartmentsLoading", false);
     }
@@ -90,16 +72,7 @@ const FormPage = () => {
       let response = await getData("/roles");
       setRoles(response.data);
     } catch (error) {
-      toast.error(`Role list could not be fetched from server.`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toast.error(`Role list could not be fetched from server.`);
     } finally {
       updateFormDataLoading("isRoleLoading", false);
     }
@@ -174,17 +147,7 @@ const FormPage = () => {
       }
     } catch (error) {
       toast.error(
-        `Employee details could not be ${employeeId ? "updated" : "added"}.`,
-        {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        }
+        `Employee details could not be ${employeeId ? "updated" : "added"}.`
       );
     } finally {
       updateFormDataLoading("isFormLoading", false);
@@ -196,17 +159,7 @@ const FormPage = () => {
           replace: true,
         });
         toast.success(
-          `Employee details ${employeeId ? "updated" : "added"} successfully.`,
-          {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          }
+          `Employee details ${employeeId ? "updated" : "added"} successfully.`
         );
         fetchEmployeesData();
       }
@@ -299,7 +252,7 @@ const FormPage = () => {
                             isMandatory={field.isMandatory}
                           >
                             <option value="">
-                              Select a {field.description}
+                              Select a {field.description.toLowerCase()}
                             </option>
                             {field.name === "role"
                               ? roles
