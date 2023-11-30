@@ -10,7 +10,6 @@ const TableWrapper = styled.section`
   table {
     width: 100%;
     border-collapse: collapse;
-    min-height: 323px;
     tr {
       border-bottom: 1px solid black;
       height: 50px;

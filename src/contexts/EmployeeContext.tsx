@@ -24,7 +24,7 @@ const initialContextValues: IEmployeeContextProps = {
     isSkillsLoading: true,
   },
   updateLoading: () => {},
-  fetchEmployeesData:()=>{}
+  fetchEmployeesData: () => {},
 };
 
 const EmployeeContext = createContext(initialContextValues);
@@ -57,6 +57,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       { replace: true }
     );
   };
+
   const [filters, setFilters] = useState(initialContextValues.filters);
   const updateFilters = (newFilters: {
     skills?: ISkill[];
@@ -126,7 +127,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     updateFilters,
     updateSearchParams,
     updateLoading,
-    fetchEmployeesData
+    fetchEmployeesData,
   };
 
   return (
