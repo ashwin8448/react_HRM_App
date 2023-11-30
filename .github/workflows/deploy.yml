@@ -21,7 +21,8 @@ concurrency:
   cancel-in-progress: true
 
 # To use enivironment secrets
-env: VITE_API_ENDPOINT:${{secrets.VITE_API_ENDPOINT}}
+env: 
+  VITE_API_ENDPOINT:${{secrets.VITE_API_ENDPOINT}}
 
 jobs:
   # Single deploy job since we're just deploying
