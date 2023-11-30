@@ -10,6 +10,7 @@ import { IEmployee, ITableHeader } from "./types";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { filterArray } from "../../utils/filterArray";
 import { CircularProgress } from "@mui/material";
+import { useEffect } from "react";
 
 const TableHeader = ({ tableHeader }: ITableHeader) => {
   const { searchParams, updateSearchParams } = useEmployeeContext();
@@ -90,7 +91,10 @@ const Table = ({
 }: {
   updateIdToDelete: (id: number) => void;
 }) => {
-  const { filters, employeesData, loading } = useEmployeeContext();
+  const { filters, employeesData, loading, fetchEmployeesData } = useEmployeeContext();
+  useEffect(()=>{if(!employeesData.length){
+    fetchEmployeesData();
+  }},[])
   const filteredEmployees = filterArray(employeesData, filters);
   return (
     <TableWrapper>
