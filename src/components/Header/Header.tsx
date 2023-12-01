@@ -2,18 +2,26 @@ import SearchBar from "../SearchBar/SearchBar";
 import logo from "../../assets/images/logo.png";
 import searchIcon from "../../assets/images/search_icon.svg";
 import HeaderWrapper from "./styles";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 
 const Header = () => {
   const { updateFilters } = useEmployeeContext();
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <HeaderWrapper>
       <button
         onClick={() => {
-          updateFilters({skills:[],search:[""]})
-          navigate("/");
+          if (
+            !(
+              location.pathname === "/" ||
+              location.pathname === "/react-HRM-App"
+            )
+          ) {
+            updateFilters({ skills: [], search: [""] });
+            navigate("/");
+          }
         }}
       >
         <h1>

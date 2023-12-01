@@ -1,6 +1,5 @@
 import Button from "../Button/Button";
 import addEmployeeIcon from "../../assets/images/add_user_icon.svg";
-
 import TableOptionsWrapper from "./styles";
 import { useNavigate } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
@@ -9,7 +8,7 @@ import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
 import { ISkill } from "../../pages/FormPage/types";
 
-const TableOptions = ({icon}:{icon:string}) => {
+const TableOptions = ({ icon }: { icon: string }) => {
   const { filters, updateFilters, skills } = useEmployeeContext();
   const navigate = useNavigate();
   const [selectedSkills, setSelectedSkills] = useState<ISkill[]>(
@@ -60,7 +59,8 @@ const TableOptions = ({icon}:{icon:string}) => {
           buttonType="primary-button"
           onClick={() => {
             navigate("/form_page");
-          }} title="Click to add employee details"
+          }}
+          title="Click to add employee details"
         >
           <span>Add new employee</span>
           <img src={addEmployeeIcon} alt="Add employee icon" className="icon" />
@@ -75,11 +75,7 @@ const TableOptions = ({icon}:{icon:string}) => {
           inputTag={inputTag}
         >
           <Button onClick={handleClearFilter} title="Click to clear filters">
-            <img
-              src={icon}
-              alt="Clear filter icon"
-              className="icon" 
-            />
+            <img src={icon} alt="Clear filter icon" className="icon" />
           </Button>
         </CustomDropdown>
       </div>

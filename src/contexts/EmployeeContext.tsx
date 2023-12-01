@@ -28,7 +28,6 @@ const initialContextValues: IEmployeeContextProps = {
 };
 
 const EmployeeContext = createContext(initialContextValues);
-
 let count = initialContextValues.count;
 
 export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
