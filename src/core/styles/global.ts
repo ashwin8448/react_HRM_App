@@ -2,19 +2,20 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 :root {
-  --bg-blue: #659dbd;
-  --bg-green: #8d8;
-  --font: black;
+  /* --bg-blue: #659dbd;
+  --bg-green: #8d8; */
+  --bg-blue: #2A8F42;
+  --bg-green: white;
+   --font: black;
   --input: #ffffff;
   --table: #dddddd;
   --search-bar: #dddddd;
   --modal-bg: #dddddd;
-  --button: #ffffff;
+  --button: #509910;;
   --button-hover: #d4af9b;
   --overlay-bg: rgba(0, 0, 0, 0.459);
   --hover-bg: #958989b5;
   --selected-skill: #d4af9b;
-  --asterisk: red;
   --validation-message: red;
   --dropdown-bg: white;
 }
@@ -24,7 +25,7 @@ html {
 }
 
 body {
-  background-image: linear-gradient(180deg, var(--bg-blue), var(--bg-green));
+  background: linear-gradient(to bottom, #add8e6, #f8f8f8,#add8e6);
   background-attachment: fixed;
   color: var(--font);
   font-family: Urbanist;

@@ -13,7 +13,7 @@ import CustomDropdown from "../../components/CustomDropdown/CustomDropdown";
 import Button from "../../components/Button/Button";
 import validationSchema from "./validationSchema";
 import { IFormValues, ISkill } from "./types";
-import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { useEmployeeContext } from "../../core/store/AppContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { IEmployee } from "../../components/Table/types";
 import { postData, updateData } from "../../core/api";

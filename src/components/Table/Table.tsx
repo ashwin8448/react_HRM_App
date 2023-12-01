@@ -7,7 +7,7 @@ import TableWrapper from "./styles";
 import { useNavigate } from "react-router-dom";
 import { tableHeaders } from "../../core/config/constants";
 import { IEmployee, ITableHeader } from "./types";
-import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { useEmployeeContext } from "../../core/store/AppContext";
 import { filterArray } from "../../utils/filterArray";
 import { CircularProgress } from "@mui/material";
 import { useEffect } from "react";
@@ -29,7 +29,8 @@ const TableHeader = ({ tableHeader }: ITableHeader) => {
                   : "asc",
             });
           }}
-          buttonType="primary-button" title="Click to sort"
+          buttonType="primary-button"
+          title="Click to sort"
         >
           <span>{tableHeader?.headerName}</span>
           {tableHeader.id === searchParams.get("sortBy") ? (
@@ -47,7 +48,13 @@ const TableHeader = ({ tableHeader }: ITableHeader) => {
   );
 };
 
-const EmployeeRow = ({ employee,updateIdToDelete }: {employee:any, updateIdToDelete:(id:number)=>void}) => {
+const EmployeeRow = ({
+  employee,
+  updateIdToDelete,
+}: {
+  employee: any;
+  updateIdToDelete: (id: number) => void;
+}) => {
   const navigate = useNavigate();
   employee = {
     ...employee,
@@ -55,21 +62,24 @@ const EmployeeRow = ({ employee,updateIdToDelete }: {employee:any, updateIdToDel
       <div className="flex employee-actions">
         <Button
           buttonType="primary-button"
-          onClick={() => navigate(`view_employee_page/${employee.id}`)} title="Click to edit employee details"
+          onClick={() => navigate(`view_employee_page/${employee.id}`)}
+          title="Click to edit employee details"
         >
           <img src={viewIcon} alt="View employee button" className="icon" />
         </Button>
 
         <Button
           buttonType="primary-button"
-          onClick={() => navigate(`form_page/${employee.id}`)} title="Click to view employee details"
+          onClick={() => navigate(`form_page/${employee.id}`)}
+          title="Click to view employee details"
         >
           <img src={editIcon} alt="Edit employee button" className="icon" />
         </Button>
 
         <Button
           buttonType="primary-button"
-          onClick={() => updateIdToDelete(employee.id)} title="Click to delete employee details"
+          onClick={() => updateIdToDelete(employee.id)}
+          title="Click to delete employee details"
         >
           <img src={deleteIcon} alt="Delete employee button" className="icon" />
         </Button>
@@ -91,10 +101,13 @@ const Table = ({
 }: {
   updateIdToDelete: (id: number) => void;
 }) => {
-  const { filters, employeesData, loading, fetchEmployeesData } = useEmployeeContext();
-  useEffect(()=>{if(!employeesData.length){
-    fetchEmployeesData();
-  }},[])
+  const { filters, employeesData, loading, fetchEmployeesData } =
+    useEmployeeContext();
+  useEffect(() => {
+    if (!employeesData.length) {
+      fetchEmployeesData();
+    }
+  }, []);
   const filteredEmployees = filterArray(employeesData, filters);
   return (
     <TableWrapper>

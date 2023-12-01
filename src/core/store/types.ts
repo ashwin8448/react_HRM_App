@@ -1,5 +1,5 @@
-import { IEmployee } from "../components/Table/types";
-import { ISkill } from "../pages/FormPage/types";
+import { IEmployee } from "../../components/Table/types";
+import { ISkill } from "../../pages/FormPage/types";
 
 export interface IEmployeeContextProps {
   filters: { skills?: ISkill[]; search?: string[] };

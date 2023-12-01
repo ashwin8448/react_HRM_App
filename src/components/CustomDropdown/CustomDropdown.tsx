@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CustomDropdownWrapper from "./styles";
 import { ICustomDropdown } from "./types";
-import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { useEmployeeContext } from "../../core/store/AppContext";
 import { CircularProgress } from "@mui/material";
 
 const CustomDropdown = ({

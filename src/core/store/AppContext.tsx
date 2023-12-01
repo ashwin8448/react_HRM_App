@@ -6,23 +6,23 @@ import {
   useState,
 } from "react";
 import { IEmployeeContextProps } from "./types";
-import { apiURL, rowsPerPage } from "../core/config/constants";
+import { apiURL, rowsPerPage } from "../config/constants";
 import { useParams, useSearchParams } from "react-router-dom";
-import { ISkill } from "../pages/FormPage/types";
-import fetchData from "../utils/apiFetchCall";
+import { ISkill } from "../../pages/FormPage/types";
+import fetchData from "../../utils/apiFetchCall";
 
 const initialContextValues: IEmployeeContextProps = {
   employeesData: [],
-  count: 0,
   filters: { skills: [], search: [""] },
-  updateFilters: () => {},
   skills: [],
-  searchParams: new URLSearchParams(),
-  updateSearchParams: () => {},
   loading: {
     isTableLoading: true,
     isSkillsLoading: true,
   },
+  searchParams: new URLSearchParams(),
+  count: 0,
+  updateFilters: () => {},
+  updateSearchParams: () => {},
   updateLoading: () => {},
   fetchEmployeesData: () => {},
 };
@@ -52,8 +52,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
       {
         ...Object.fromEntries(searchParams.entries()),
         ...params,
-      },
-      { replace: true }
+      }
     );
   };
 

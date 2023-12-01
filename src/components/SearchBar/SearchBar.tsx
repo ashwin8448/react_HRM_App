@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { useEmployeeContext } from "../../core/store/AppContext";
 import SearchBarWrapper from "./styles";
 import ISearchBarProps from "./types";
 

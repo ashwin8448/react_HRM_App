@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
 import { useState, useRef, useEffect } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
-import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { useEmployeeContext } from "../../core/store/AppContext";
 import { ISkill } from "../../pages/FormPage/types";
 
 const TableOptions = ({ icon }: { icon: string }) => {
