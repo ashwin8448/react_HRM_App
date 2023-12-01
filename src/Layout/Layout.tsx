@@ -1,13 +1,18 @@
-import { ReactNode } from "react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import { Outlet } from "react-router-dom";
+import EmployeeProvider from "../contexts/EmployeeContext";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = () => {
   return (
     <div className="container flex flex-column">
-      <Header />
-      <main>{children}</main>
-      <Footer />
+      <EmployeeProvider>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
+      </EmployeeProvider>
     </div>
   );
 };

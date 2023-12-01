@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import CustomDropdownWrapper from "./styles";
-import { skills } from "../../core/config/constants";
 import { ICustomDropdown } from "./types";
+import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { CircularProgress } from "@mui/material";
 
 const CustomDropdown = ({
   handleAddToSelectedSkills,
@@ -11,8 +12,9 @@ const CustomDropdown = ({
   children,
   placeholder,
   inputTag,
-  dropdownLocation
+  dropdownLocation,
 }: ICustomDropdown) => {
+  const { skills, loading } = useEmployeeContext();
   const [showSkills, setShowSkills] = useState(false);
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setTimeout(() => {
@@ -28,7 +30,7 @@ const CustomDropdown = ({
     handleSkillsToDisplay(
       skills.filter(
         (skill) =>
-          skill.toLowerCase().includes(e.target.value.toLowerCase()) &&
+          skill.skill.toLowerCase().includes(e.target.value.toLowerCase()) &&
           !selectedSkills.includes(skill)
       )
     );
@@ -47,20 +49,34 @@ const CustomDropdown = ({
         />
         {children}
       </div>
-      {showSkills && skillsToDisplay.length != 0 ? (
-        <ul className="options" tabIndex={0}>
-          {skillsToDisplay.map((skill) => (
-            <li
-              key={skill}
-              className="option flex"
-              onClick={() => {
-                handleAddToSelectedSkills(skill);
-              }}
-            >
-              {skill}
-            </li>
-          ))}
-        </ul>
+      { showSkills? (
+        loading.isSkillsLoading ? (
+          <ul className="options loader" tabIndex={0}>
+            <CircularProgress/>
+          </ul>
+        ) : skillsToDisplay.length != 0 ? (
+          <ul className="options" tabIndex={0}>
+            {skillsToDisplay
+              .sort((a, b) =>
+                a.skill.toLowerCase() > b.skill.toLowerCase()
+                  ? 1
+                  : a.skill.toLowerCase() < b.skill.toLowerCase()
+                  ? -1
+                  : 0
+              )
+              .map((skill) => (
+                <li
+                  key={skill.id}
+                  className="option flex"
+                  onClick={() => {
+                    handleAddToSelectedSkills(skill);
+                  }}
+                >
+                  {skill.skill}
+                </li>
+              ))}
+          </ul>
+        ) : null
       ) : null}
     </CustomDropdownWrapper>
   );

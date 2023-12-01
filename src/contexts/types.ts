@@ -1,18 +1,33 @@
 import { IEmployee } from "../components/Table/types";
+import { ISkill } from "../pages/FormPage/types";
 
 export interface IEmployeeContextProps {
-  sortConfig: { sortColumn: string; sortOrder: string };
-  updateSortConfig: (sortColumn: string) => void;
-  filters: { skills?: string[]; search?: string[] };
+  filters: { skills?: ISkill[]; search?: string[] };
+  count: number;
   updateFilters: ({
     skills,
     search,
   }: {
-    skills?: string[];
+    skills?: ISkill[];
     search?: string[];
   }) => void;
   employeesData: IEmployee[];
-  updateEmployeesData: ([]: IEmployee[]) => void;
-  idToDelete: number;
-  updateIdToDelete: (id:number)=>void
+  skills: { id: number; skill: string }[];
+  fetchEmployeesData: () => void;
+  searchParams: URLSearchParams;
+  updateSearchParams: ({
+    page,
+    sortBy,
+    sortDir,
+  }: {
+    page?: string;
+    sortBy?: string;
+    sortDir?: string;
+  }) => void;
+  loading: {
+    [key: string]: boolean;
+    isTableLoading: boolean;
+    isSkillsLoading: boolean;
+  };
+  updateLoading?: (loader: string, value: boolean) => void;
 }

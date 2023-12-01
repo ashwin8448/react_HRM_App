@@ -1,18 +1,42 @@
+import { toast } from "react-toastify";
 import { useEmployeeContext } from "../../contexts/EmployeeContext";
+import { deleteData } from "../../core/api";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
-
 import ConfirmBoxWrapper from "./styles";
 
-const ConfirmBox = () => {
-  const { updateIdToDelete, idToDelete, employeesData, updateEmployeesData } =
-    useEmployeeContext();
-  const deleteHandler = () => {
-    const updatedEmployees = employeesData.filter(
-      (employee) => employee.id != idToDelete
-    );
-    updateEmployeesData(updatedEmployees);
-    updateIdToDelete(0);
+const ConfirmBox = ({
+  updateIdToDelete,
+  idToDelete,
+}: {
+  updateIdToDelete: (id: number) => void;
+  idToDelete: number;
+}) => {
+  const { employeesData, fetchEmployeesData } = useEmployeeContext();
+  const deleteHandler = async () => {
+    const toastDel = toast.info(`Deleting employee details...`, {
+      autoClose: false,
+      progress: undefined,
+    });
+    let response;
+    try {
+      response = await deleteData(`/employee/${idToDelete}`);
+    } catch {
+      toast.update(toastDel, {
+        render: "Employee details could not be deleted.",
+        type: toast.TYPE.ERROR,
+      });
+    } finally {
+      fetchEmployeesData();
+      updateIdToDelete(0);
+      if (response?.request.status === 200) {
+        toast.update(toastDel, {
+          render: "Employee details deleted successfully.",
+          type: toast.TYPE.SUCCESS,
+          autoClose: 5000,
+        });
+      }
+    }
   };
   return (
     <Modal updateIdToDelete={updateIdToDelete}>
@@ -32,12 +56,14 @@ const ConfirmBox = () => {
             buttonType="secondary-button"
             isNegative={true}
             onClick={deleteHandler}
+            title="Click to delete employeee"
           >
             <span>Yes</span>
           </Button>
           <Button
             buttonType="secondary-button"
             onClick={() => updateIdToDelete(0)}
+            title="Click to cancel"
           >
             <span>No</span>
           </Button>

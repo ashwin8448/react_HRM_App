@@ -10,9 +10,9 @@ const SkillChip = ({
 }: ISkillChip) => {
   return (
     <ChipWrapper>
-      <span>{skill}</span>
+      <span>{skill?.skill}</span>
       {!isView && (
-        <Button onClick={() => handleDeleteFromSelectedSkills!(skill!)}>
+        <Button onClick={() => handleDeleteFromSelectedSkills!(skill!)} title="Close button">
           <img src={closeButton} alt="Close icon" className="icon" />
         </Button>
       )}

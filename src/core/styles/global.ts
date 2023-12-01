@@ -13,7 +13,6 @@ const GlobalStyle = createGlobalStyle`
   --button-hover: #d4af9b;
   --overlay-bg: rgba(0, 0, 0, 0.459);
   --hover-bg: #958989b5;
-  --toast-bg: rgb(70, 161, 70);
   --selected-skill: #d4af9b;
   --asterisk: red;
   --validation-message: red;
@@ -63,6 +62,11 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   outline: 2px solid blue;
+}
+
+.form-container{
+  height: 100%;
+  box-sizing: border-box;
 }
 
 button,

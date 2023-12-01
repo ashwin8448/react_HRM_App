@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ['Phase-2']
+    branches: ["Phase-3"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,6 +19,10 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: true
+
+# To use enivironment secrets
+env: 
+  VITE_API_ENDPOINT: ${{secrets.VITE_API_ENDPOINT}}
 
 jobs:
   # Single deploy job since we're just deploying

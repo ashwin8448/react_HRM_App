@@ -14,7 +14,7 @@ const SelectedSkills = ({
       <div className="flex selected-skills">
         {selectedSkills!.map((skill) => (
           <SkillChip
-            key={skill}
+            key={skill.id}
             skill={skill}
             isView={isView}
             handleDeleteFromSelectedSkills={handleDeleteFromSelectedSkills}

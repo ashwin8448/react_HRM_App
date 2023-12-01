@@ -1,10 +1,11 @@
 import { ReactNode, RefObject } from "react";
+import { ISkill } from "../../pages/FormPage/types";
 
 export interface ICustomDropdown {
-  handleAddToSelectedSkills: (currentSkill: string) => void;
-  handleSkillsToDisplay: (filteredSkills: string[]) => void;
-  selectedSkills: string[];
-  skillsToDisplay: string[];
+  handleAddToSelectedSkills: (currentSkill: ISkill) => void;
+  handleSkillsToDisplay: (filteredSkills: ISkill[]) => void;
+  selectedSkills: ISkill[];
+  skillsToDisplay: ISkill[];
   children: ReactNode;
   placeholder: string;
   inputTag: RefObject<HTMLInputElement>;

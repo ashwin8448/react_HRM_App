@@ -42,6 +42,10 @@ const CustomDropdownWrapper = styled.div<ICustomDropdownStyleProps>`
   button {
     padding: 0;
   }
+  .loader{
+    display:flex;
+    justify-content: center;
+  }
 `;
 
 export default CustomDropdownWrapper;

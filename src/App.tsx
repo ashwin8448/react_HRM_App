@@ -1,16 +1,24 @@
-import Layout from "./Layout/Layout";
 import { RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import router from "./core/routing/routing";
-import EmployeeProvider from "./contexts/EmployeeContext";
-
 function App() {
-
   return (
-    <EmployeeProvider>
-      <Layout>
-        <RouterProvider router={router}></RouterProvider>
-      </Layout>
-    </EmployeeProvider>
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+    </>
   );
 }
 
