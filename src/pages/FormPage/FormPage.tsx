@@ -20,6 +20,7 @@ import { postData, updateData } from "../../core/api";
 import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import fetchData from "../../utils/apiFetchCall";
+import sortObject from "../../utils/sortObject";
 
 const FormPage = () => {
   const { fetchEmployeesData, state } = useEmployeeContext();
@@ -61,14 +62,14 @@ const FormPage = () => {
       (loaderState) => updateLoading("isDepartmentsLoading", loaderState),
       "Departments could not be fetched from server."
     ).then((data) => {
-      setDepartments(data);
+      setDepartments(data.sort(sortObject));
     });
     fetchData(
       apiURL.roles,
       (loaderState) => updateLoading("isRoleLoading", loaderState),
       "Roles could not be fetched from server."
     ).then((data) => {
-      setRoles(data);
+      setRoles(data.sort(sortObject));
     });
   }, []);
 
@@ -102,7 +103,9 @@ const FormPage = () => {
     if (currentEmployeeData && selectedSkills !== currentEmployeeData.skills) {
       setSelectedSkills(currentEmployeeData.skills);
       handleSkillsToDisplay(
-        state.skills.filter((skill) => !currentEmployeeData.skills.includes(skill))
+        state.skills.filter(
+          (skill) => !currentEmployeeData.skills.includes(skill)
+        )
       );
     }
   }, [currentEmployeeData]);
@@ -195,6 +198,20 @@ const FormPage = () => {
         enableReinitialize
         validationSchema={Yup.object(validationSchema)}
         onSubmit={handleFormSubmit}
+        onReset={() => {
+          inputTag.current ? (inputTag.current.value = "") : null;
+          if (currentEmployeeData) {
+            setSkillsToDisplay(
+              state.skills.filter(
+                (skill) => !currentEmployeeData.skills.includes(skill)
+              )
+            );
+            setSelectedSkills(currentEmployeeData.skills);
+          } else {
+            setSelectedSkills([]);
+            handleClearFilter();
+          }
+        }}
       >
         <Form autoComplete="off" className="form-container">
           <FormWrapper className="page-content employee-details-form">
@@ -242,15 +259,7 @@ const FormPage = () => {
                               Select a {field.description.toLowerCase()}
                             </option>
                             {field.name === "role"
-                              ? roles
-                                  .sort((a, b) =>
-                                    a.role.toLowerCase() > b.role.toLowerCase()
-                                      ? 1
-                                      : a.role.toLowerCase() <
-                                        b.role.toLowerCase()
-                                      ? -1
-                                      : 0
-                                  )
+                              ? roles                                 
                                   .map((element) => (
                                     <option
                                       key={element.id}
@@ -259,17 +268,7 @@ const FormPage = () => {
                                       {element.role}
                                     </option>
                                   ))
-                              : departments
-                                  .sort((a, b) =>
-                                    a.department.toLowerCase() >
-                                    b.department.toLowerCase()
-                                      ? 1
-                                      : a.department.toLowerCase() <
-                                        b.department.toLowerCase()
-                                      ? -1
-                                      : 0
-                                  )
-                                  .map((element) => (
+                              : departments.map((element) => (
                                     <option
                                       key={element.id}
                                       value={element.department}

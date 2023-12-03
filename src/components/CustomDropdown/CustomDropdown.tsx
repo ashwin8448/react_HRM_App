@@ -3,6 +3,7 @@ import CustomDropdownWrapper from "./styles";
 import { ICustomDropdown } from "./types";
 import { useEmployeeContext } from "../../core/store/AppContext";
 import { CircularProgress } from "@mui/material";
+import sortObject from "../../utils/sortObject";
 
 const CustomDropdown = ({
   handleAddToSelectedSkills,
@@ -57,13 +58,7 @@ const CustomDropdown = ({
         ) : skillsToDisplay.length != 0 ? (
           <ul className="options" tabIndex={0}>
             {skillsToDisplay
-              .sort((a, b) =>
-                a.skill.toLowerCase() > b.skill.toLowerCase()
-                  ? 1
-                  : a.skill.toLowerCase() < b.skill.toLowerCase()
-                  ? -1
-                  : 0
-              )
+              .sort(sortObject)
               .map((skill) => (
                 <li
                   key={skill.id}

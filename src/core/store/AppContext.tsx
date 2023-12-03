@@ -11,6 +11,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import fetchData from "../../utils/apiFetchCall";
 import reducer from "./reducer";
 import ACTIONS from "./actionTypes";
+import sortObject from "../../utils/sortObject";
 
 const initialReducerValues: IReducer = {
   employeesData: [],
@@ -101,7 +102,7 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         }),
       "Skills could not be fetched from server."
     ).then((data) => {
-      dispatch({ type: ACTIONS.UPDATE_SKILLS, payload: data });
+      dispatch({ type: ACTIONS.UPDATE_SKILLS, payload: data.sort(sortObject) });
     });
   }, []);
 

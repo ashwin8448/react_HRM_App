@@ -14,7 +14,7 @@ export interface IFormValues {
   moreDetails?: string | null;
 }
 
-export interface ISkill {
+export type ISkill ={
   id: number;
   skill: string;
 }
