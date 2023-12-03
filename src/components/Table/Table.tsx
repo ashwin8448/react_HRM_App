@@ -101,14 +101,14 @@ const Table = ({
 }: {
   updateIdToDelete: (id: number) => void;
 }) => {
-  const { filters, employeesData, loading, fetchEmployeesData } =
+  const { state, fetchEmployeesData } =
     useEmployeeContext();
   useEffect(() => {
-    if (!employeesData.length) {
+    if (!state.employeesData.length) {
       fetchEmployeesData();
     }
   }, []);
-  const filteredEmployees = filterArray(employeesData, filters);
+  const filteredEmployees = filterArray(state.employeesData, state.filters);
   return (
     <TableWrapper>
       <table>
@@ -125,7 +125,7 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {loading.isTableLoading ? (
+          {state.loading.isTableLoading ? (
             <tr>
               <td className="table-no-data" colSpan={tableHeaders.length + 1}>
                 <CircularProgress />

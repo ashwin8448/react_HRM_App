@@ -14,7 +14,7 @@ const CustomDropdown = ({
   inputTag,
   dropdownLocation,
 }: ICustomDropdown) => {
-  const { skills, loading } = useEmployeeContext();
+  const { state } = useEmployeeContext();
   const [showSkills, setShowSkills] = useState(false);
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setTimeout(() => {
@@ -28,7 +28,7 @@ const CustomDropdown = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSkillsToDisplay(
-      skills.filter(
+      state.skills.filter(
         (skill) =>
           skill.skill.toLowerCase().includes(e.target.value.toLowerCase()) &&
           !selectedSkills.includes(skill)
@@ -50,7 +50,7 @@ const CustomDropdown = ({
         {children}
       </div>
       { showSkills? (
-        loading.isSkillsLoading ? (
+        state.loading.isSkillsLoading ? (
           <ul className="options loader" tabIndex={0}>
             <CircularProgress/>
           </ul>

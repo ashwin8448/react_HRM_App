@@ -41,41 +41,43 @@ const ViewEmployee = () => {
           <div>
             <h2>Employee Details</h2>
           </div>
-          <p>
-            Employee ID: <span>{employee.id}</span>
-          </p>
-          <p>
-            Name:{" "}
-            <span>{employee.firstName + " " + employee.lastName || "N/A"}</span>
-          </p>
-          <p>
-            Date of Birth: <span>{employee.dob || "N/A"}</span>
-          </p>
-          <p>
-            Address: <span>{employee.address || "N/A"}</span>
-          </p>
-          <p>
-            Phone: <span>{employee.phone || "N/A"}</span>
-          </p>
-          <p>
-            Email: <span>{employee.email || "N/A"}</span>
-          </p>
-          <p>
-            Date of joining: <span>{employee.dateOfJoining || "N/A"}</span>
-          </p>
-          <p>
-            Department: <span>{employee.department}</span>
-          </p>
-          <p>
-            Role: <span>{employee.role}</span>
-          </p>
-          <div>
-            <SelectedSkills
-              description="Skill(s)"
-              isView={true}
-              selectedSkills={employee.skills}
-            ></SelectedSkills>
+          <div className="flex employeeDetailsContainer">
+            <p>
+              Employee ID: <span>{employee.id}</span>
+            </p>
+            <p>
+              Date of Birth: <span>{employee.dob || "N/A"}</span>
+            </p>
+            <p>
+              Name:{" "}
+              <span>{employee.firstName + " " + employee.lastName || "N/A"}</span>
+            </p>
+            <p>
+              Address: <span>{employee.address || "N/A"}</span>
+            </p>
+            <p>
+              Phone: <span>{employee.phone || "N/A"}</span>
+            </p>
+            <p>
+              Email: <span>{employee.email || "N/A"}</span>
+            </p>
+            <p>
+              Date of joining: <span>{employee.dateOfJoining || "N/A"}</span>
+            </p>
+            <p>
+              Department: <span>{employee.department}</span>
+            </p>
+            <p>
+              Role: <span>{employee.role}</span>
+            </p>
           </div>
+            <div>
+              <SelectedSkills
+                description="Skill(s)"
+                isView={true}
+                selectedSkills={employee.skills}
+              ></SelectedSkills>
+            </div>
         </>
       )}
     </DivWrapper>

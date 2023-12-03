@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import fetchData from "../../utils/apiFetchCall";
 
 const FormPage = () => {
-  const { fetchEmployeesData, skills, loading } = useEmployeeContext();
+  const { fetchEmployeesData, state } = useEmployeeContext();
   const [formDataLoading, setFormDataLoading] = useState({
     isDepartmentsLoading: true,
     isRoleLoading: true,
@@ -79,7 +79,7 @@ const FormPage = () => {
     currentEmployeeData ? currentEmployeeData.skills : []
   );
   const [skillsToDisplay, setSkillsToDisplay] = useState<ISkill[]>(
-    skills.filter(
+    state.skills.filter(
       (skill) => !JSON.stringify(selectedSkills).includes(JSON.stringify(skill))
     )
   );
@@ -102,13 +102,13 @@ const FormPage = () => {
     if (currentEmployeeData && selectedSkills !== currentEmployeeData.skills) {
       setSelectedSkills(currentEmployeeData.skills);
       handleSkillsToDisplay(
-        skills.filter((skill) => !currentEmployeeData.skills.includes(skill))
+        state.skills.filter((skill) => !currentEmployeeData.skills.includes(skill))
       );
     }
   }, [currentEmployeeData]);
   const handleClearFilter = () => {
     inputTag.current!.value = "";
-    setSkillsToDisplay(skills);
+    setSkillsToDisplay(state.skills);
     setSelectedSkills([]);
   };
 
@@ -186,8 +186,8 @@ const FormPage = () => {
       };
 
   useEffect(() => {
-    setSkillsToDisplay(skills);
-  }, [skills, departments, roles]);
+    setSkillsToDisplay(state.skills);
+  }, [state.skills, departments, roles]);
   return (
     <>
       <Formik
@@ -201,7 +201,7 @@ const FormPage = () => {
             {formDataLoading.isFormLoading ||
             formDataLoading.isDepartmentsLoading ||
             formDataLoading.isRoleLoading ||
-            loading.isSkillsLoading ? (
+            state.loading.isSkillsLoading ? (
               <div className="loader">
                 <CircularProgress />
               </div>

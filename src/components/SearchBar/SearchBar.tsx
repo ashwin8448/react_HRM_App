@@ -2,10 +2,11 @@ import { useLocation } from "react-router-dom";
 import { useEmployeeContext } from "../../core/store/AppContext";
 import SearchBarWrapper from "./styles";
 import ISearchBarProps from "./types";
+import ACTIONS from "../../core/store/actionTypes";
 
 const SearchBar = ({ placeholder, children }: ISearchBarProps) => {
   const location = useLocation();
-  const { updateFilters, filters } = useEmployeeContext();
+  const { state, dispatch } = useEmployeeContext();
   return location.pathname === "/" ||
     location.pathname === "/react_HRM_App/" ? (
     <SearchBarWrapper className="flex">
@@ -17,9 +18,12 @@ const SearchBar = ({ placeholder, children }: ISearchBarProps) => {
         <input
           type="text"
           placeholder={placeholder}
-          defaultValue={filters.search}
+          defaultValue={state.filters.search}
           onChange={(e) => {
-            updateFilters({ search: [e.target.value] });
+            dispatch({
+              type: ACTIONS.UPDATE_FILTERS,
+              payload: { search: [e.target.value] },
+            });
           }}
         />
       </form>

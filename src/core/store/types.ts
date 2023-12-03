@@ -1,18 +1,10 @@
+import { Dispatch } from "react";
 import { IEmployee } from "../../components/Table/types";
-import { ISkill } from "../../pages/FormPage/types";
 
 export interface IEmployeeContextProps {
-  filters: { skills?: ISkill[]; search?: string[] };
+  state: IReducer,
   count: number;
-  updateFilters: ({
-    skills,
-    search,
-  }: {
-    skills?: ISkill[];
-    search?: string[];
-  }) => void;
-  employeesData: IEmployee[];
-  skills: { id: number; skill: string }[];
+  dispatch:Dispatch<any>;
   fetchEmployeesData: () => void;
   searchParams: URLSearchParams;
   updateSearchParams: ({
@@ -24,10 +16,19 @@ export interface IEmployeeContextProps {
     sortBy?: string;
     sortDir?: string;
   }) => void;
+}
+
+export interface IReducer {
+  employeesData: IEmployee[];
+  filters: { skills: []; search: [""] };
+  skills: {id:number, skill:string}[];
   loading: {
-    [key: string]: boolean;
-    isTableLoading: boolean;
-    isSkillsLoading: boolean;
+    isTableLoading: true;
+    isSkillsLoading: true;
   };
-  updateLoading?: (loader: string, value: boolean) => void;
+}
+
+export interface IAction {
+  type: string,
+  payload?:any,
 }

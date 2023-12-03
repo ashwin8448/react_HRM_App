@@ -7,15 +7,16 @@ import { useState, useRef, useEffect } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { useEmployeeContext } from "../../core/store/AppContext";
 import { ISkill } from "../../pages/FormPage/types";
+import ACTIONS from "../../core/store/actionTypes";
 
 const TableOptions = ({ icon }: { icon: string }) => {
-  const { filters, updateFilters, skills } = useEmployeeContext();
+  const { state, dispatch } = useEmployeeContext();
   const navigate = useNavigate();
   const [selectedSkills, setSelectedSkills] = useState<ISkill[]>(
-    filters.skills || []
+    state.filters.skills || []
   );
   const [skillsToDisplay, setSkillsToDisplay] = useState<ISkill[]>(
-    skills.filter(
+    state.skills.filter(
       (skill) => !JSON.stringify(selectedSkills).includes(JSON.stringify(skill))
     )
   );
@@ -28,7 +29,10 @@ const TableOptions = ({ icon }: { icon: string }) => {
     setSelectedSkills((prev) => {
       return [...prev, currentSkill];
     });
-    updateFilters({ skills: [...selectedSkills, currentSkill] });
+    dispatch({
+      type: ACTIONS.UPDATE_FILTERS,
+      payload: { skills: [...selectedSkills, currentSkill] },
+    });
   };
 
   const handleDeleteFromSelectedSkills = (skillToDelete: ISkill) => {
@@ -37,7 +41,10 @@ const TableOptions = ({ icon }: { icon: string }) => {
       (skill) => skill != skillToDelete
     );
     setSelectedSkills(currentlySelectedSkills);
-    updateFilters({ skills: currentlySelectedSkills });
+    dispatch({
+      type: ACTIONS.UPDATE_FILTERS,
+      payload: { skills: currentlySelectedSkills },
+    });
   };
 
   const handleSkillsToDisplay = (filteredSkills: ISkill[]) => {
@@ -45,13 +52,13 @@ const TableOptions = ({ icon }: { icon: string }) => {
   };
   const handleClearFilter = () => {
     inputTag.current!.value = "";
-    setSkillsToDisplay(skills);
+    setSkillsToDisplay(state.skills);
     setSelectedSkills([]);
-    updateFilters({ skills: [] });
+    dispatch({ type: ACTIONS.UPDATE_FILTERS, payload: { skills: [] } });
   };
   useEffect(() => {
-    setSkillsToDisplay(skills);
-  }, [skills]);
+    setSkillsToDisplay(state.skills);
+  }, [state.skills]);
   return (
     <TableOptionsWrapper>
       <div className="table-options flex">

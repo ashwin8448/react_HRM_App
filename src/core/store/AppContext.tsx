@@ -3,15 +3,16 @@ import {
   createContext,
   useContext,
   useEffect,
-  useState,
+  useReducer,
 } from "react";
-import { IEmployeeContextProps } from "./types";
+import { IEmployeeContextProps, IReducer } from "./types";
 import { apiURL, rowsPerPage } from "../config/constants";
 import { useParams, useSearchParams } from "react-router-dom";
-import { ISkill } from "../../pages/FormPage/types";
 import fetchData from "../../utils/apiFetchCall";
+import reducer from "./reducer";
+import ACTIONS from "./actionTypes";
 
-const initialContextValues: IEmployeeContextProps = {
+const initialReducerValues: IReducer = {
   employeesData: [],
   filters: { skills: [], search: [""] },
   skills: [],
@@ -19,11 +20,14 @@ const initialContextValues: IEmployeeContextProps = {
     isTableLoading: true,
     isSkillsLoading: true,
   },
+};
+
+const initialContextValues: IEmployeeContextProps = {
+  state: initialReducerValues,
+  dispatch: () => {},
   searchParams: new URLSearchParams(),
   count: 0,
-  updateFilters: () => {},
   updateSearchParams: () => {},
-  updateLoading: () => {},
   fetchEmployeesData: () => {},
 };
 
@@ -31,13 +35,7 @@ const EmployeeContext = createContext(initialContextValues);
 let count = initialContextValues.count;
 
 export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
-  const [loading, setLoading] = useState(initialContextValues.loading);
-  const updateLoading = (loader: string, value: boolean) => {
-    setLoading((prev) => {
-      return { ...prev, [loader]: value };
-    });
-  };
-
+  const [state, dispatch] = useReducer(reducer, initialReducerValues);
   const [searchParams, setSearchParams] = useSearchParams({
     page: "1",
     sortBy: "id",
@@ -48,34 +46,21 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
     sortBy?: string;
     sortDir?: string;
   }) => {
-    setSearchParams(
-      {
-        ...Object.fromEntries(searchParams.entries()),
-        ...params,
-      }
-    );
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      ...params,
+    });
   };
 
-  const [filters, setFilters] = useState(initialContextValues.filters);
-  const updateFilters = (newFilters: {
-    skills?: ISkill[];
-    search?: string[];
-  }) => {
-    if (newFilters.skills || newFilters.search) {
-      setFilters((prev) => ({ ...prev, ...newFilters }));
-    }
-  };
-
-  const [employeesData, setEmployeesData] = useState(
-    initialContextValues.employeesData
-  );
-
-  const [skills, setSkills] = useState(initialContextValues.skills);
   const { employeeId } = useParams();
   const fetchEmployeesData = () => {
     fetchData(
       apiURL.employee,
-      (loaderState) => updateLoading("isTableLoading", loaderState),
+      (loaderState) =>
+        dispatch({
+          type: ACTIONS.UPDATE_LOADING,
+          payload: { loader: "isTableLoading", value: loaderState },
+        }),
       "Employee details could not be fetched from server.",
       {
         params: {
@@ -86,8 +71,9 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
         },
       }
     ).then((data) => {
-      setEmployeesData(
-        data.employees.map((employeeData: any) => {
+      dispatch({
+        type: ACTIONS.UPDATE_EMPLOYEES,
+        payload: data.employees.map((employeeData: any) => {
           return {
             ...employeeData,
             lastName: employeeData.lastName ? employeeData.lastName : "",
@@ -95,8 +81,8 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
             role: employeeData.role?.role || "N/A",
             department: employeeData.department?.department || "N/A",
           };
-        })
-      );
+        }),
+      });
       count = data.count;
     });
   };
@@ -108,23 +94,23 @@ export const EmployeeProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     fetchData(
       apiURL.skills,
-      (loaderState) => updateLoading("isSkillsLoading", loaderState),
+      (loaderState) =>
+        dispatch({
+          type: ACTIONS.UPDATE_LOADING,
+          payload: { loader: "isSkillsLoading", value: loaderState },
+        }),
       "Skills could not be fetched from server."
     ).then((data) => {
-      setSkills(data);
+      dispatch({ type: ACTIONS.UPDATE_SKILLS, payload: data });
     });
   }, []);
 
   const value: IEmployeeContextProps = {
     count,
-    filters,
-    employeesData,
-    skills,
+    state,
+    dispatch,
     searchParams,
-    loading,
-    updateFilters,
     updateSearchParams,
-    updateLoading,
     fetchEmployeesData,
   };
 

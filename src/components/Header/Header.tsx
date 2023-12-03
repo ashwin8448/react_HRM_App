@@ -5,9 +5,10 @@ import searchIcon from "../../assets/images/search_icon.svg";
 import HeaderWrapper from "./styles";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEmployeeContext } from "../../core/store/AppContext";
+import ACTIONS from "../../core/store/actionTypes";
 
 const Header = () => {
-  const { updateFilters } = useEmployeeContext();
+  const { dispatch } = useEmployeeContext();
   const navigate = useNavigate();
   const location = useLocation();
   const currentMonth = new Date().getMonth();
@@ -22,7 +23,10 @@ const Header = () => {
               location.pathname === "/react-HRM-App"
             )
           ) {
-            updateFilters({ skills: [], search: [""] });
+            dispatch({
+              type: ACTIONS.UPDATE_FILTERS,
+              payload: { skills: [], search: [""] },
+            });
             navigate("/");
           }
         }}

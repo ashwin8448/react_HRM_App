@@ -12,7 +12,7 @@ const ConfirmBox = ({
   updateIdToDelete: (id: number) => void;
   idToDelete: number;
 }) => {
-  const { employeesData, fetchEmployeesData } = useEmployeeContext();
+  const { state, fetchEmployeesData } = useEmployeeContext();
   const deleteHandler = async () => {
     const toastDel = toast.info(`Deleting employee details...`, {
       autoClose: false,
@@ -45,7 +45,7 @@ const ConfirmBox = ({
         <p>
           Do you really want to delete details of&nbsp;
           <span className="negative">
-            {employeesData
+            {state.employeesData
               .filter((employee) => employee.id === idToDelete)
               .map((employee) => employee.firstName + " " + employee.lastName)}
           </span>
