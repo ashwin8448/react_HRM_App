@@ -7,9 +7,9 @@ const GlobalStyle = createGlobalStyle`
   --bg-blue: #2A8F42;
   --bg-green: white;
    --font: black;
-  --input: #ffffff;
-  --table: #dddddd;
-  --search-bar: #dddddd;
+  --input: white;
+  --table: #9f9f9f;
+  --search-bar: #9f9f9f;
   --modal-bg: #dddddd;
   --button: #509910;;
   --button-hover: #d4af9b;
@@ -18,6 +18,10 @@ const GlobalStyle = createGlobalStyle`
   --selected-skill: #d4af9b;
   --validation-message: red;
   --dropdown-bg: white;
+}
+
+input, select{
+border: .5px solid #509910;
 }
 
 html {
@@ -50,7 +54,6 @@ body {
 
 input,
 select{
-  border: none;
   border-radius: 5px;
   padding: 5px;
   box-sizing: border-box;
