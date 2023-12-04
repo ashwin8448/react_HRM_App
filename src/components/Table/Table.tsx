@@ -52,7 +52,7 @@ const EmployeeRow = ({
   employee,
   updateIdToDelete,
 }: {
-  employee: any;
+  employee: IEmployee;
   updateIdToDelete: (id: number) => void;
 }) => {
   const navigate = useNavigate();
@@ -78,7 +78,7 @@ const EmployeeRow = ({
 
         <Button
           buttonType="primary-button"
-          onClick={() => updateIdToDelete(employee.id)}
+          onClick={() => updateIdToDelete(employee.id!)}
           title="Click to delete employee details"
         >
           <img src={deleteIcon} alt="Delete employee button" className="icon" />
@@ -90,7 +90,7 @@ const EmployeeRow = ({
   return (
     <tr>
       {tableHeaders.map((tableHeader) => {
-        return <td key={tableHeader.id}>{employee[tableHeader.id]}</td>;
+        return <td key={tableHeader.id}>{employee[tableHeader.id as keyof IEmployee]}</td>;
       })}
     </tr>
   );
@@ -101,8 +101,7 @@ const Table = ({
 }: {
   updateIdToDelete: (id: number) => void;
 }) => {
-  const { state, fetchEmployeesData } =
-    useEmployeeContext();
+  const { state, fetchEmployeesData } = useEmployeeContext();
   useEffect(() => {
     if (!state.employeesData.length) {
       fetchEmployeesData();

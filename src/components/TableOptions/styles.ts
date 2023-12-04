@@ -14,11 +14,11 @@ const TableOptionsWrapper = styled.section`
     .table-options {
       flex-direction: column;
       gap: 10px;
-      width: 50%;
       align-items: baseline;
     }
 
-    .table-options button, .table-options div{
+    .table-options button,
+    .table-options div {
       box-sizing: border-box;
     }
   }

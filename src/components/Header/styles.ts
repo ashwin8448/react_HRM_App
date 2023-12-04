@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const HeaderWrapper = styled.header`
   display: flex;
-  height: 100px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
@@ -12,6 +11,12 @@ const HeaderWrapper = styled.header`
 
   .logo {
     width: 150px;
+  }
+
+  @media (max-width: 575px) {
+    margin-bottom: 10px;
+    flex-direction: column;
+    align-items: baseline;
   }
 `;
 

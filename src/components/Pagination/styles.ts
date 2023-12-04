@@ -14,6 +14,10 @@ const PaginationWrapper = styled.section`
   .mirror {
     transform: rotate(180deg);
   }
+
+  @media (max-width: 475px){
+    gap: 5px;
+  }
 `;
 
 export default PaginationWrapper;
