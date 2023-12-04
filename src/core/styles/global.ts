@@ -2,8 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 :root {
-  /* --bg-blue: #659dbd;
-  --bg-green: #8d8; */
+  --bg-primary: #add8e6;
+  --bg-secondary: #f8f8f8;
   --bg-blue: #2A8F42;
   --bg-green: white;
    --font: black;
@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
 
 input, select{
 border: .5px solid #509910;
+width: 100%;
 }
 
 html {
@@ -29,7 +30,7 @@ html {
 }
 
 body {
-  background: linear-gradient(to bottom, #add8e6, #f8f8f8,#add8e6);
+  background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary), var(--bg-primary));
   background-attachment: fixed;
   color: var(--font);
   font-family: Urbanist;

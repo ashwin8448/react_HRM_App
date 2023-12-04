@@ -1,6 +1,6 @@
 import { useField } from "formik";
 
-export const MyTextInput = ({ label, isMandatory,  ...props }: any) => {
+export const MyTextInput = ({ label, isMandatory, ...props }: any) => {
   const [field, meta] = useField(props);
 
   return (
@@ -11,12 +11,14 @@ export const MyTextInput = ({ label, isMandatory,  ...props }: any) => {
       <input id={props.name} className="text-input" {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
-      ) : <div className="error-placeholder">Error placeholder</div>}
+      ) : (
+        <div className="error-placeholder">Error placeholder</div>
+      )}
     </div>
   );
 };
 
-export const MySelect = ({ label, isMandatory,...props }: any) => {
+export const MySelect = ({ label, isMandatory, ...props }: any) => {
   const [field, meta] = useField(props);
   return (
     <div className="flex flex-column input-field">
@@ -26,7 +28,9 @@ export const MySelect = ({ label, isMandatory,...props }: any) => {
       <select id={props.name} {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
-      ) : null}
+      ) : (
+        <div className="error-placeholder">Error placeholder</div>
+      )}
     </div>
   );
 };

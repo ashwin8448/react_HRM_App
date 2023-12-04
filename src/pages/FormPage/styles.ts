@@ -74,6 +74,15 @@ const FormWrapper = styled.div`
     justify-content: center;
     align-items: center;
   }
+
+  @media (max-width: 500px) {
+    fieldset {
+      flex-direction: column;
+      .input-field {
+        width: 100%;
+      }
+    }
+  }
 `;
 
 export default FormWrapper;

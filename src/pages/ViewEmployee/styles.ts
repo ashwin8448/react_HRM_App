@@ -6,10 +6,10 @@ const DivWrapper = styled.div`
   h2 {
     margin-top: 0;
   }
-  p{
+  p {
     width: 50%;
   }
-  .employeeDetailsContainer{
+  .employeeDetailsContainer {
     flex-wrap: wrap;
   }
   .loader {
@@ -17,6 +17,12 @@ const DivWrapper = styled.div`
     justify-content: center;
     flex-grow: 1;
     align-items: center;
+  }
+
+  @media (max-width: 575px) {
+    .employeeDetailsContainer {
+      flex-direction: column;
+    }
   }
 `;
 

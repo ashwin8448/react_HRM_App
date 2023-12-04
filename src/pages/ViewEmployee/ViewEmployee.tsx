@@ -46,11 +46,13 @@ const ViewEmployee = () => {
               Employee ID: <span>{employee.id}</span>
             </p>
             <p>
-              Date of Birth: <span>{employee.dob || "N/A"}</span>
+              Name:{" "}
+              <span>
+                {employee.firstName + " " + employee.lastName || "N/A"}
+              </span>
             </p>
             <p>
-              Name:{" "}
-              <span>{employee.firstName + " " + employee.lastName || "N/A"}</span>
+              Date of Birth: <span>{employee.dob || "N/A"}</span>
             </p>
             <p>
               Address: <span>{employee.address || "N/A"}</span>
@@ -71,13 +73,13 @@ const ViewEmployee = () => {
               Role: <span>{employee.role}</span>
             </p>
           </div>
-            <div>
-              <SelectedSkills
-                description="Skill(s)"
-                isView={true}
-                selectedSkills={employee.skills}
-              ></SelectedSkills>
-            </div>
+          <div>
+            <SelectedSkills
+              description="Skill(s)"
+              isView={true}
+              selectedSkills={employee.skills}
+            ></SelectedSkills>
+          </div>
         </>
       )}
     </DivWrapper>

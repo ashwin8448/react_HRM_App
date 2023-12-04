@@ -19,7 +19,6 @@ const TableOptionsWrapper = styled.section`
     }
 
     .table-options button, .table-options div{
-      width: 100%;
       box-sizing: border-box;
     }
   }
