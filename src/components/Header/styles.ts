@@ -13,7 +13,7 @@ const HeaderWrapper = styled.header`
     width: 150px;
   }
 
-  @media (max-width: 575px) {
+  @media (max-width: 530px) {
     margin-bottom: 10px;
     flex-direction: column;
     align-items: baseline;

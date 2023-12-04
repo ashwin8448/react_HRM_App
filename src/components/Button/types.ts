@@ -6,6 +6,7 @@ export interface IButtonAttributes {
   children: ReactNode;
   isNegative?: boolean;
   title:string
+  styleClass?: string;
 }
 
 export interface IButtonStyleProps {

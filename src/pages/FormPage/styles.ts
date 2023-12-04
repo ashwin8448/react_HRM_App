@@ -75,7 +75,7 @@ const FormWrapper = styled.div`
     align-items: center;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 530px) {
     fieldset {
       flex-direction: column;
       .input-field {

@@ -6,7 +6,8 @@ const Button = ({
   onClick,
   children,
   isNegative = false,
-  title
+  title,
+  styleClass,
 }: IButtonAttributes) => {
   return (
     <ButtonWrapper
@@ -15,6 +16,7 @@ const Button = ({
       onClick={onClick}
       type="button"
       title={title}
+      className={styleClass}
     >
       {children}
     </ButtonWrapper>

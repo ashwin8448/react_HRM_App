@@ -6,20 +6,20 @@ const TableOptionsWrapper = styled.section`
     align-items: center;
   }
 
-  .add-icon {
-    height: 40px;
+  div input{
+    height: 35px;
   }
 
-  @media (max-width: 575px) {
+  @media (max-width: 530px) {
     .table-options {
       flex-direction: column;
       gap: 10px;
       align-items: baseline;
     }
 
-    .table-options button,
-    .table-options div {
+    .table-options .custom-dropdown {
       box-sizing: border-box;
+      width: 100%;
     }
   }
 `;

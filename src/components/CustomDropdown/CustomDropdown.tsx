@@ -37,7 +37,7 @@ const CustomDropdown = ({
     );
   };
   return (
-    <CustomDropdownWrapper $dropdownLocation={dropdownLocation}>
+    <CustomDropdownWrapper $dropdownLocation={dropdownLocation} className="custom-dropdown">
       <div className="flex">
         <input
           type="text"

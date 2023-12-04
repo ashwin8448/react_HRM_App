@@ -3,6 +3,12 @@ import { IButtonStyleProps } from "./types";
 
 const ButtonWrapper = styled.button<IButtonStyleProps>`
   display: flex;
+
+  &.full-width{
+    width: 100%;
+    height: 45px;
+  }
+
   ${(props) => {
     switch (props.$buttonType) {
       case "close-button":
