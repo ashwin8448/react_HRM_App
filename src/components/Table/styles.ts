@@ -41,6 +41,10 @@ const TableWrapper = styled.section`
       text-align: center;
     }
   }
+
+  @media (max-width: 768px) {
+    overflow: scroll;
+  }
 `;
 
 export default TableWrapper;

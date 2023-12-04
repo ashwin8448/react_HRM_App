@@ -70,7 +70,7 @@ const TableOptions = ({ icon }: { icon: string }) => {
           title="Click to add employee details"
         >
           <span>Add new employee</span>
-          <img src={addEmployeeIcon} alt="Add employee icon" className="icon" />
+          <img src={addEmployeeIcon} alt="Add employee icon" className="icon add-icon" />
         </Button>
         <CustomDropdown
           dropdownLocation="homepage"
