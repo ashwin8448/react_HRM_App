@@ -45,13 +45,15 @@ const FormPage = () => {
       apiURL.employee + "/" + employeeId,
       (loaderState) => updateLoading("isFormLoading", loaderState),
       "Employee details could not be fetched from server."
-    ).then((data) =>
-      setCurrentEmployeeData({
-        ...data,
-        department: data.department ? data.department.department : "",
-        role: data.role ? data.role.role : "",
-      })
-    );
+    )
+      .then((data) =>
+        setCurrentEmployeeData({
+          ...data,
+          department: data.department ? data.department.department : "",
+          role: data.role ? data.role.role : "",
+        })
+      )
+      .catch(() => navigate("/"));
   };
 
   useEffect(() => {
@@ -259,23 +261,19 @@ const FormPage = () => {
                               Select a {field.description.toLowerCase()}
                             </option>
                             {field.name === "role"
-                              ? roles                                 
-                                  .map((element) => (
-                                    <option
-                                      key={element.id}
-                                      value={element.role}
-                                    >
-                                      {element.role}
-                                    </option>
-                                  ))
+                              ? roles.map((element) => (
+                                  <option key={element.id} value={element.role}>
+                                    {element.role}
+                                  </option>
+                                ))
                               : departments.map((element) => (
-                                    <option
-                                      key={element.id}
-                                      value={element.department}
-                                    >
-                                      {element.department}
-                                    </option>
-                                  ))}
+                                  <option
+                                    key={element.id}
+                                    value={element.department}
+                                  >
+                                    {element.department}
+                                  </option>
+                                ))}
                           </MySelect>
                         );
                       } else if (field.inputType === "custom") {

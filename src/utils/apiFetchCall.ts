@@ -11,15 +11,13 @@ const fetchData = async (
 ) => {
   updateLoading(true);
   try {
-    let response = (await getData(url, urlParams)).data;
+    let response = await getData(url, urlParams);
     if (url.includes("/employee") || url.includes("/skills")) {
-      console.log(url, response.data);
-      if (response.data.isNull()) {
-        console.log("Before throwing",url, response.data);
+      if (!response.data.data) {
         throw new Error();
       }
-      return response.data;
-    } else return response;
+      return response.data.data;
+    } else return response.data;
   } catch (error) {
     toast.error(errorMessage);
   } finally {
