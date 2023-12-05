@@ -12,7 +12,12 @@ const fetchData = async (
   updateLoading(true);
   try {
     let response = (await getData(url, urlParams)).data;
-    if (url.includes("/employee")||url.includes("/skills")) {
+    if (url.includes("/employee") || url.includes("/skills")) {
+      console.log(url, response.data);
+      if (response.data.isNull()) {
+        console.log("Before throwing",url, response.data);
+        throw new Error();
+      }
       return response.data;
     } else return response;
   } catch (error) {

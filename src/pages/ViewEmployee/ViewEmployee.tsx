@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SelectedSkills from "../../components/SelectedSkills/SelectedSkills";
 import DivWrapper from "./styles";
 import { useState, useEffect } from "react";
@@ -11,6 +11,7 @@ const ViewEmployee = () => {
   const { employeeId } = useParams();
   const [loading, setLoading] = useState(true);
   const [employee, setEmployee] = useState<IEmployee>();
+  const navigate = useNavigate();
   const updateLoading = (loaderState: boolean) => {
     setLoading(loaderState);
   };
@@ -20,14 +21,18 @@ const ViewEmployee = () => {
         apiURL.employee + "/" + employeeId,
         updateLoading,
         "Employee details could not be fetched from server."
-      ).then((data) =>
-        setEmployee({
-          ...data,
-          lastName: data.lastName || "",
-          department: data.department ? data.department.department : "N/A",
-          role: data.role ? data.role.role : "N/A",
-        })
-      );
+      )
+        .then((data) =>
+          setEmployee({
+            ...data,
+            lastName: data.lastName || "",
+            department: data.department ? data.department.department : "N/A",
+            role: data.role ? data.role.role : "N/A",
+          })
+        )
+        .catch(() => {
+          // navigate("/");
+        });
     }
   }, []);
   return (
