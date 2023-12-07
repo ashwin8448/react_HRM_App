@@ -56,6 +56,27 @@ const FormPage = () => {
       .catch(() => navigate("/"));
   };
 
+  const inputTag = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+
+  const [selectedSkills, setSelectedSkills] = useState<ISkill[]>([]);
+  const [skillsToDisplay, setSkillsToDisplay] = useState<ISkill[]>(state.skills);
+  const handleAddToSelectedSkills = (currentSkill: ISkill) => {
+    setSkillsToDisplay(
+      skillsToDisplay.filter((skill) => skill !== currentSkill)
+    );
+    setSelectedSkills((prev) => [...prev, currentSkill]);
+  };
+  const handleDeleteFromSelectedSkills = (skillToDelete: ISkill) => {
+    setSkillsToDisplay((prev) => [...prev, skillToDelete]);
+    setSelectedSkills(
+      selectedSkills.filter((skill) => skill !== skillToDelete)
+    );
+  };
+  const handleSkillsToDisplay = (filteredSkills: ISkill[]) => {
+    setSkillsToDisplay(filteredSkills);
+  };
+
   useEffect(() => {
     if (employeeId) fetchCurrentEmployeeData();
     else updateLoading("isFormLoading", false);
@@ -75,42 +96,23 @@ const FormPage = () => {
     });
   }, []);
 
-  const inputTag = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
-
-  const [selectedSkills, setSelectedSkills] = useState<ISkill[]>(
-    currentEmployeeData ? currentEmployeeData.skills : []
-  );
-  const [skillsToDisplay, setSkillsToDisplay] = useState<ISkill[]>(
-    state.skills.filter(
-      (skill) => !JSON.stringify(selectedSkills).includes(JSON.stringify(skill))
-    )
-  );
-  const handleAddToSelectedSkills = (currentSkill: ISkill) => {
-    setSkillsToDisplay(
-      skillsToDisplay.filter((skill) => skill !== currentSkill)
-    );
-    setSelectedSkills((prev) => [...prev, currentSkill]);
-  };
-  const handleDeleteFromSelectedSkills = (skillToDelete: ISkill) => {
-    setSkillsToDisplay((prev) => [...prev, skillToDelete]);
-    setSelectedSkills(
-      selectedSkills.filter((skill) => skill !== skillToDelete)
-    );
-  };
-  const handleSkillsToDisplay = (filteredSkills: ISkill[]) => {
-    setSkillsToDisplay(filteredSkills);
-  };
   useEffect(() => {
-    if (currentEmployeeData && selectedSkills !== currentEmployeeData.skills) {
+    if (currentEmployeeData) {
       setSelectedSkills(currentEmployeeData.skills);
       handleSkillsToDisplay(
-        state.skills.filter(
-          (skill) => !currentEmployeeData.skills.includes(skill)
-        )
+        state.skills.filter((skill) => {
+          return !JSON.stringify(selectedSkills).includes(
+            JSON.stringify(skill)
+          );
+        })
       );
     }
   }, [currentEmployeeData]);
+
+  useEffect(() => {
+    if (!employeeId) setSkillsToDisplay(state.skills);
+  }, [state.skills]);
+
   const handleClearFilter = () => {
     inputTag.current!.value = "";
     setSkillsToDisplay(state.skills);
@@ -189,10 +191,6 @@ const FormPage = () => {
         phone: "",
         email: "",
       };
-
-  useEffect(() => {
-    setSkillsToDisplay(state.skills);
-  }, [state.skills, departments, roles]);
   return (
     <>
       <Formik

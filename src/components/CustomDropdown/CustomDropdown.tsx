@@ -29,15 +29,19 @@ const CustomDropdown = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSkillsToDisplay(
-      state.skills.filter(
-        (skill) =>
+      state.skills.filter((skill) => {
+        return (
           skill.skill.toLowerCase().includes(e.target.value.toLowerCase()) &&
           !selectedSkills.includes(skill)
-      )
+        );
+      })
     );
   };
   return (
-    <CustomDropdownWrapper $dropdownLocation={dropdownLocation} className="custom-dropdown">
+    <CustomDropdownWrapper
+      $dropdownLocation={dropdownLocation}
+      className="custom-dropdown"
+    >
       <div className="flex">
         <input
           type="text"
@@ -50,26 +54,24 @@ const CustomDropdown = ({
         />
         {children}
       </div>
-      { showSkills? (
+      {showSkills ? (
         state.loading.isSkillsLoading ? (
           <ul className="options loader" tabIndex={0}>
-            <CircularProgress/>
+            <CircularProgress />
           </ul>
         ) : skillsToDisplay.length != 0 ? (
           <ul className="options" tabIndex={0}>
-            {skillsToDisplay
-              .sort(sortObject)
-              .map((skill) => (
-                <li
-                  key={skill.id}
-                  className="option flex"
-                  onClick={() => {
-                    handleAddToSelectedSkills(skill);
-                  }}
-                >
-                  {skill.skill}
-                </li>
-              ))}
+            {skillsToDisplay.sort(sortObject).map((skill) => (
+              <li
+                key={skill.id}
+                className="option flex"
+                onClick={() => {
+                  handleAddToSelectedSkills(skill);
+                }}
+              >
+                {skill.skill}
+              </li>
+            ))}
           </ul>
         ) : null
       ) : null}

@@ -22,7 +22,7 @@ const CustomDropdownWrapper = styled.div<ICustomDropdownStyleProps>`
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
-    top: 49px;
+    top: 40px;
     left: 0;
     max-height: 140px;
     overflow-y: scroll;

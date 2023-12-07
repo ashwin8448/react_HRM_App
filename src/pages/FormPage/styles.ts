@@ -59,7 +59,6 @@ const FormWrapper = styled.div`
   .custom-dropdown {
     padding: 0;
     background-color: var(--input);
-    margin-top: 7px;
 
     input {
       margin-top: 0;
