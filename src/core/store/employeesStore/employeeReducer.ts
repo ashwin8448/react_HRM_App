@@ -1,8 +1,17 @@
-import { IEmployee } from "../../../components/Table/types";
-import { FETCH_EMPLOYEE_FAILURE, FETCH_EMPLOYEE_REQUEST, FETCH_EMPLOYEE_SUCCESS } from "./employeeActionTypes";
+import {
+  FETCH_EMPLOYEE_FAILURE,
+  FETCH_EMPLOYEE_REQUEST,
+  FETCH_EMPLOYEE_SUCCESS,
+} from "./employeeActionTypes";
+
+const initialState = {
+  loading: false,
+  employees: [],
+  error: "",
+};
 
 const employeeReducer = (
-  state: { loading: boolean; employees: IEmployee[]; error: Error },
+  state = initialState,
   action: { type?: string; payload?: any }
 ) => {
   switch (action.type) {

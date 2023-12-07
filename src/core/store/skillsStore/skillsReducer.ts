@@ -1,8 +1,13 @@
-import { IEmployee } from "../../../components/Table/types";
 import { FETCH_SKILL_FAILURE, FETCH_SKILL_REQUEST, FETCH_SKILL_SUCCESS } from "./skillsActionTypes";
 
+const initialState = {
+  loading: false,
+  employees: [],
+  error: "",
+};
+
 const skillsReducer = (
-  state: { loading: boolean; employees: IEmployee[]; error: Error },
+  state=initialState,
   action: { type?: string; payload?: any }
 ) => {
   switch (action.type) {

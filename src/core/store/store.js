@@ -1,9 +1,5 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
-import { reducer } from "./reducer.ts";
 import { thunk } from "redux-thunk";
-import { employeeReducer } from "./employeesStore/employeeReducer.ts";
+import { appReducer } from "./appReducer";
 
-const store = createStore(
-  combineReducers(reducer, employeeReducer, skillReducer),
-  applyMiddleware(thunk)
-);
+const store = createStore(appReducer, applyMiddleware(thunk));

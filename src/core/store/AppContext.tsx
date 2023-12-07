@@ -10,7 +10,6 @@ import { apiURL, rowsPerPage } from "../config/constants";
 import { useParams, useSearchParams } from "react-router-dom";
 import fetchData from "../../utils/apiFetchCall";
 import reducer from "./reducer";
-import ACTIONS from "./actionTypes";
 import sortObject from "../../utils/sortObject";
 
 const initialReducerValues: IReducer = {

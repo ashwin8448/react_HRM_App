@@ -11,6 +11,8 @@ import { useEmployeeContext } from "../../core/store/AppContext";
 import { filterArray } from "../../utils/filterArray";
 import { CircularProgress } from "@mui/material";
 import { useEffect } from "react";
+import { fetchEmployees } from "../../core/store/employeesStore/employeeActions";
+import { useSelector } from "react-redux";
 
 const TableHeader = ({ tableHeader }: ITableHeader) => {
   const { searchParams, updateSearchParams } = useEmployeeContext();
@@ -90,7 +92,11 @@ const EmployeeRow = ({
   return (
     <tr>
       {tableHeaders.map((tableHeader) => {
-        return <td key={tableHeader.id}>{employee[tableHeader.id as keyof IEmployee]}</td>;
+        return (
+          <td key={tableHeader.id}>
+            {employee[tableHeader.id as keyof IEmployee]}
+          </td>
+        );
       })}
     </tr>
   );
@@ -101,13 +107,18 @@ const Table = ({
 }: {
   updateIdToDelete: (id: number) => void;
 }) => {
-  const { state, fetchEmployeesData } = useEmployeeContext();
+  // const { state, fetchEmployeesData } = useEmployeeContext();
+  const employeesData = useSelector((state: any) => state.employees);
   useEffect(() => {
-    if (!state.employeesData.length) {
-      fetchEmployeesData();
-    }
+    fetchEmployees();
   }, []);
-  const filteredEmployees = filterArray(state.employeesData, state.filters);
+  // useEffect(() => {
+  //   if (!state.employeesData.length) {
+  //     fetchEmployeesData();
+  //   }
+  // }, []);
+  // const filteredEmployees = filterArray(state.employeesData, state.filters);
+  const filteredEmployees = employeesData;
   return (
     <TableWrapper>
       <table>
