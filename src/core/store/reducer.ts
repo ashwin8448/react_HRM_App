@@ -1,15 +1,15 @@
-import ACTIONS from "./actionTypes";
+import { UPDATE_EMPLOYEES, UPDATE_FILTERS, UPDATE_LOADING, UPDATE_SKILLS } from "./actionTypes";
 import { IAction, IReducer } from "./types";
 
 const reducer = (state: IReducer, action: IAction) => {
   switch (action.type) {
-    case ACTIONS.UPDATE_EMPLOYEES:
+    case UPDATE_EMPLOYEES:
       return { ...state, employeesData: action.payload };
-    case ACTIONS.UPDATE_SKILLS:
+    case UPDATE_SKILLS:
       return { ...state, skills: action.payload };
-    case ACTIONS.UPDATE_FILTERS:
+    case UPDATE_FILTERS:
       return { ...state, filters: { ...state.filters, ...action.payload } };
-    case ACTIONS.UPDATE_LOADING:
+    case UPDATE_LOADING:
       return {
         ...state,
         loading: {
