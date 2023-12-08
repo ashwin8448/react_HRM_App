@@ -10,10 +10,12 @@ import {
 export const fetchEmployeesRequest = () => {
   type: FETCH_EMPLOYEE_REQUEST;
 };
+
 export const fetchEmployeesSuccess = (employees: IEmployee[]) => {
   type: FETCH_EMPLOYEE_SUCCESS;
   payload: employees;
 };
+
 export const fetchEmployeesFailure = (error: Error) => {
   type: FETCH_EMPLOYEE_FAILURE;
   payload: error;

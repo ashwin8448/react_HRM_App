@@ -5,19 +5,23 @@ import { useNavigate } from "react-router-dom";
 import SelectedSkills from "../SelectedSkills/SelectedSkills";
 import { useState, useRef, useEffect } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
-import { useEmployeeContext } from "../../core/store/AppContext";
 import { ISkill } from "../../pages/FormPage/types";
-import ACTIONS from "../../core/store/actionTypes";
+import { updateFilters } from "../../core/store/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const TableOptions = ({ icon }: { icon: string }) => {
-  const { state, dispatch } = useEmployeeContext();
+  const { filters, skills } = useSelector((state: any) => {
+    return { skills: state.skills, filters: state.filters };
+  });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedSkills, setSelectedSkills] = useState<ISkill[]>(
-    state.filters.skills || []
+    filters.skills || []
   );
   const [skillsToDisplay, setSkillsToDisplay] = useState<ISkill[]>(
-    state.skills.filter(
-      (skill) => !JSON.stringify(selectedSkills).includes(JSON.stringify(skill))
+    skills.filter(
+      (skill: ISkill) =>
+        !JSON.stringify(selectedSkills).includes(JSON.stringify(skill))
     )
   );
   const inputTag = useRef<HTMLInputElement>(null);
@@ -29,10 +33,7 @@ const TableOptions = ({ icon }: { icon: string }) => {
     setSelectedSkills((prev) => {
       return [...prev, currentSkill];
     });
-    dispatch({
-      type: ACTIONS.UPDATE_FILTERS,
-      payload: { skills: [...selectedSkills, currentSkill] },
-    });
+    dispatch(updateFilters({ skills: [...selectedSkills, currentSkill] }));
   };
 
   const handleDeleteFromSelectedSkills = (skillToDelete: ISkill) => {
@@ -41,10 +42,7 @@ const TableOptions = ({ icon }: { icon: string }) => {
       (skill) => skill != skillToDelete
     );
     setSelectedSkills(currentlySelectedSkills);
-    dispatch({
-      type: ACTIONS.UPDATE_FILTERS,
-      payload: { skills: currentlySelectedSkills },
-    });
+    dispatch(updateFilters({ skills: currentlySelectedSkills }));
   };
 
   const handleSkillsToDisplay = (filteredSkills: ISkill[]) => {
@@ -52,13 +50,13 @@ const TableOptions = ({ icon }: { icon: string }) => {
   };
   const handleClearFilter = () => {
     inputTag.current!.value = "";
-    setSkillsToDisplay(state.skills);
+    setSkillsToDisplay(skills);
     setSelectedSkills([]);
-    dispatch({ type: ACTIONS.UPDATE_FILTERS, payload: { skills: [] } });
+    dispatch(updateFilters({ skills: [] }));
   };
   useEffect(() => {
-    setSkillsToDisplay(state.skills);
-  }, [state.skills]);
+    setSkillsToDisplay(skills);
+  }, [skills]);
   return (
     <TableOptionsWrapper>
       <div className="table-options flex">

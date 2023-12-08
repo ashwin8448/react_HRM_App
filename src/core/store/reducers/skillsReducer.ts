@@ -1,4 +1,4 @@
-import { FETCH_SKILL_FAILURE, FETCH_SKILL_REQUEST, FETCH_SKILL_SUCCESS } from "./skillsActionTypes";
+import { FETCH_SKILL_FAILURE, FETCH_SKILL_REQUEST, FETCH_SKILL_SUCCESS } from "../skillsStore/skillsActionTypes";
 
 const initialState = {
   loading: false,

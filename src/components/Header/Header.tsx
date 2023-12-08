@@ -4,11 +4,11 @@ import logo_christmas from "../../assets/images/logo_christmas.svg";
 import searchIcon from "../../assets/images/search_icon.svg";
 import HeaderWrapper from "./styles";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEmployeeContext } from "../../core/store/AppContext";
-import ACTIONS from "../../core/store/actionTypes";
+import { useDispatch } from "react-redux";
+import { updateFilters } from "../../core/store/actions";
 
 const Header = () => {
-  const { dispatch } = useEmployeeContext();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const currentMonth = new Date().getMonth();
@@ -23,10 +23,12 @@ const Header = () => {
               location.pathname === "/react-HRM-App"
             )
           ) {
-            dispatch({
-              type: ACTIONS.UPDATE_FILTERS,
-              payload: { skills: [], search: [""] },
-            });
+            dispatch(
+              updateFilters({
+                skills: [],
+                search: [""],
+              })
+            );
             navigate("/");
           }
         }}

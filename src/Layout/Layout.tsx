@@ -1,18 +1,19 @@
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { Outlet } from "react-router-dom";
-import EmployeeProvider from "../core/store/AppContext";
+import store from "../core/store/";
+import { Provider } from "react-redux";
 
 const Layout = () => {
   return (
     <div className="container flex flex-column">
-      <EmployeeProvider>
+      <Provider store={store}>
         <Header />
         <main>
           <Outlet />
         </main>
         <Footer />
-      </EmployeeProvider>
+      </Provider>
     </div>
   );
 };

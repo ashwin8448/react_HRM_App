@@ -2,7 +2,6 @@ import { useLocation } from "react-router-dom";
 import { useEmployeeContext } from "../../core/store/AppContext";
 import SearchBarWrapper from "./styles";
 import ISearchBarProps from "./types";
-import ACTIONS from "../../core/store/actionTypes";
 
 const SearchBar = ({ placeholder, children }: ISearchBarProps) => {
   const location = useLocation();

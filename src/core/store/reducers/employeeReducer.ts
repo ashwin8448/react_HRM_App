@@ -2,7 +2,7 @@ import {
   FETCH_EMPLOYEE_FAILURE,
   FETCH_EMPLOYEE_REQUEST,
   FETCH_EMPLOYEE_SUCCESS,
-} from "./employeeActionTypes";
+} from "../employeesStore/employeeActionTypes";
 
 const initialState = {
   loading: false,

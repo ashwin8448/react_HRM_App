@@ -5,9 +5,25 @@ import PaginationWrapper from "./styles";
 import { useEffect, useState } from "react";
 import { useEmployeeContext } from "../../core/store/AppContext";
 import { rowsPerPage } from "../../core/config/constants";
+import { useSearchParams } from "react-router-dom";
 
 const Pagination = () => {
-  const { searchParams, updateSearchParams, count } = useEmployeeContext();
+  const [searchParams, setSearchParams] = useSearchParams({
+    page: "1",
+    sortBy: "id",
+    sortDir: "asc",
+  });
+  const updateSearchParams = (params: {
+    page?: string;
+    sortBy?: string;
+    sortDir?: string;
+  }) => {
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      ...params,
+    });
+  };
+  const { count } = useEmployeeContext();
   const [totalPages, setTotalPages] = useState(1);
   useEffect(() => setTotalPages(Math.ceil(count / rowsPerPage)), [count]);
   const [pageInput, setPageInput] = useState("1");

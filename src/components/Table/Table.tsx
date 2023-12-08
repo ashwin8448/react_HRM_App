@@ -4,10 +4,9 @@ import editIcon from "../../assets/images/edit_icon.svg";
 import deleteIcon from "../../assets/images/delete_icon.svg";
 import sortIcon from "../../assets/images/ascending_order_icon.svg";
 import TableWrapper from "./styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { tableHeaders } from "../../core/config/constants";
 import { IEmployee, ITableHeader } from "./types";
-import { useEmployeeContext } from "../../core/store/AppContext";
 import { filterArray } from "../../utils/filterArray";
 import { CircularProgress } from "@mui/material";
 import { useEffect } from "react";
@@ -15,7 +14,21 @@ import { fetchEmployees } from "../../core/store/employeesStore/employeeActions"
 import { useSelector } from "react-redux";
 
 const TableHeader = ({ tableHeader }: ITableHeader) => {
-  const { searchParams, updateSearchParams } = useEmployeeContext();
+  const [searchParams, setSearchParams] = useSearchParams({
+    page: "1",
+    sortBy: "id",
+    sortDir: "asc",
+  });
+  const updateSearchParams = (params: {
+    page?: string;
+    sortBy?: string;
+    sortDir?: string;
+  }) => {
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      ...params,
+    });
+  };
   return (
     <th>
       {tableHeader.isSortable ? (
@@ -117,6 +130,7 @@ const Table = ({
   //     fetchEmployeesData();
   //   }
   // }, []);
+
   // const filteredEmployees = filterArray(state.employeesData, state.filters);
   const filteredEmployees = employeesData;
   return (
@@ -135,7 +149,7 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {state.loading.isTableLoading ? (
+          {employeesData.data.data.loading.isTableLoading ? (
             <tr>
               <td className="table-no-data" colSpan={tableHeaders.length + 1}>
                 <CircularProgress />

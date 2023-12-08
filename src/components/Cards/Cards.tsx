@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useEmployeeContext } from "../../core/store/AppContext";
 import { filterArray } from "../../utils/filterArray";
 import { IEmployee } from "../Table/types";
 import CardWrapper from "./styles";
@@ -9,6 +8,7 @@ import viewIcon from "../../assets/images/view_user_icon.svg";
 import editIcon from "../../assets/images/edit_icon.svg";
 import deleteIcon from "../../assets/images/delete_icon.svg";
 import { tableHeaders } from "../../core/config/constants";
+import { useSelector } from "react-redux";
 
 const EmployeeCard = ({
   employee,
@@ -68,13 +68,16 @@ const EmployeeCards = ({
 }: {
   updateIdToDelete: (id: number) => void;
 }) => {
-  const { state, fetchEmployeesData } = useEmployeeContext();
+  const { employeesData, filters } = useSelector((state: any) => ({
+    employeesData: state.employees,
+    filters: state.filters,
+  }));
   useEffect(() => {
-    if (!state.employeesData.length) {
+    if (!employeesData.length) {
       fetchEmployeesData();
     }
   }, []);
-  const filteredEmployees = filterArray(state.employeesData, state.filters);
+  const filteredEmployees = filterArray(employeesData, filters);
   return (
     <CardWrapper>
       {filteredEmployees.length ? (
