@@ -6,7 +6,6 @@ import SelectedSkills from "../SelectedSkills/SelectedSkills";
 import { useState, useRef, useEffect } from "react";
 import CustomDropdown from "../CustomDropdown/CustomDropdown";
 import { ISkill } from "../../pages/FormPage/types";
-import { updateFilters } from "../../core/store/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const TableOptions = ({ icon }: { icon: string }) => {

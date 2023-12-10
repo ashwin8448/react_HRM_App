@@ -3,7 +3,6 @@ import nextIcon from "../../assets/images/next_icon.svg";
 import endIcon from "../../assets/images/end_icon.svg";
 import PaginationWrapper from "./styles";
 import { useEffect, useState } from "react";
-import { useEmployeeContext } from "../../core/store/AppContext";
 import { rowsPerPage } from "../../core/config/constants";
 import { useSearchParams } from "react-router-dom";
 

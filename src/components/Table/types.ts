@@ -1,6 +1,25 @@
 import { ReactNode } from "react";
 import { JsxElement } from "typescript";
 
+export interface IEmployeeData {
+  data: IEmployee[];
+  count: number;
+}
+
+export interface ISkills {
+  id: number;
+  skill: string;
+}
+
+export interface IDepartment {
+  id: number;
+  department: string;
+}
+
+export interface IRole {
+  id: number;
+  role: string;}
+
 export interface IEmployee {
   [key: string]: any;
   id?: number;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import CustomDropdownWrapper from "./styles";
 import { ICustomDropdown } from "./types";
-import { useEmployeeContext } from "../../core/store/AppContext";
 import { CircularProgress } from "@mui/material";
 import sortObject from "../../utils/sortObject";
 

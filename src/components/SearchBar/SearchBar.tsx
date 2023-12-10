@@ -1,11 +1,13 @@
 import { useLocation } from "react-router-dom";
-import { useEmployeeContext } from "../../core/store/AppContext";
 import SearchBarWrapper from "./styles";
 import ISearchBarProps from "./types";
+import { useDispatch, useSelector } from "react-redux";
+import { update_filters } from "../../core/store/actions";
 
 const SearchBar = ({ placeholder, children }: ISearchBarProps) => {
   const location = useLocation();
-  const { state, dispatch } = useEmployeeContext();
+  const dispatch = useDispatch();
+  const {filters} = useSelector((state:any)=>({filters:state.filters.filters}));
   return location.pathname === "/" ||
     location.pathname === "/react_HRM_App/" ? (
     <SearchBarWrapper className="flex">
@@ -17,12 +19,9 @@ const SearchBar = ({ placeholder, children }: ISearchBarProps) => {
         <input
           type="text"
           placeholder={placeholder}
-          defaultValue={state.filters.search}
+          defaultValue={filters.search}
           onChange={(e) => {
-            dispatch({
-              type: ACTIONS.UPDATE_FILTERS,
-              payload: { search: [e.target.value] },
-            });
+            dispatch(update_filters({ search: [e.target.value] }));
           }}
         />
       </form>

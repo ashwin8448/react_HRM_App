@@ -2,11 +2,11 @@ import {
   FETCH_EMPLOYEE_FAILURE,
   FETCH_EMPLOYEE_REQUEST,
   FETCH_EMPLOYEE_SUCCESS,
-} from "../employeesStore/employeeActionTypes";
+} from "../actionTypes";
 
 const initialState = {
   loading: false,
-  employees: [],
+  employeesData: {},
   error: "",
 };
 
@@ -18,11 +18,11 @@ const employeeReducer = (
     case FETCH_EMPLOYEE_REQUEST:
       return { ...state, loading: true };
     case FETCH_EMPLOYEE_SUCCESS:
-      return { ...state, employees: action.payload, error: "" };
+      return { loading:false, employeesData: action.payload, error: "" };
     case FETCH_EMPLOYEE_FAILURE:
-      return { ...state, employees: [], error: action.payload };
+      return { loading:false, employeesData: [], error: action.payload };
     default:
-      state;
+      return state;
   }
 };
 

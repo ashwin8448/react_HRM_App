@@ -1,4 +1,4 @@
-import { FETCH_SKILL_FAILURE, FETCH_SKILL_REQUEST, FETCH_SKILL_SUCCESS } from "../skillsStore/skillsActionTypes";
+import { FETCH_SKILL_FAILURE, FETCH_SKILL_REQUEST, FETCH_SKILL_SUCCESS } from "../actionTypes";
 
 const initialState = {
   loading: false,
@@ -18,7 +18,7 @@ const skillsReducer = (
     case FETCH_SKILL_FAILURE:
       return { ...state, skills: [], error: action.payload };
     default:
-      state;
+      return state;
   }
 };
 

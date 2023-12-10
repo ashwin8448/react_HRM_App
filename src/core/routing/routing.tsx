@@ -11,22 +11,22 @@ const router = createBrowserRouter(
       path: "",
       element: <Layout />,
       children: [
-        {
-          path: "/",
-          element: <EmployeeListing />,
-        },
-        {
-          path: "/form_page",
-          element: <FormPage />,
-        },
-        {
-          path: "/form_page/:employeeId",
-          element: <FormPage />,
-        },
-        {
-          path: "/view_employee_page/:employeeId",
-          element: <ViewEmployee />,
-        },
+        // {
+        //   path: "/",
+        //   element: <EmployeeListing />,
+        // },
+        // {
+        //   path: "/form_page",
+        //   element: <FormPage />,
+        // },
+        // {
+        //   path: "/form_page/:employeeId",
+        //   element: <FormPage />,
+        // },
+        // {
+        //   path: "/view_employee_page/:employeeId",
+        //   element: <ViewEmployee />,
+        // },
       ],
       errorElement: <ErrorPage />,
     },

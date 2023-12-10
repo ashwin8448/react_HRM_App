@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import { useEmployeeContext } from "../../core/store/AppContext";
 import { deleteData } from "../../core/api";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";

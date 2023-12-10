@@ -5,7 +5,7 @@ import searchIcon from "../../assets/images/search_icon.svg";
 import HeaderWrapper from "./styles";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateFilters } from "../../core/store/actions";
+import { update_filters } from "../../core/store/actions";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const Header = () => {
             )
           ) {
             dispatch(
-              updateFilters({
+              update_filters({
                 skills: [],
                 search: [""],
               })

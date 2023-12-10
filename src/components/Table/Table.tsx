@@ -10,7 +10,6 @@ import { IEmployee, ITableHeader } from "./types";
 import { filterArray } from "../../utils/filterArray";
 import { CircularProgress } from "@mui/material";
 import { useEffect } from "react";
-import { fetchEmployees } from "../../core/store/employeesStore/employeeActions";
 import { useSelector } from "react-redux";
 
 const TableHeader = ({ tableHeader }: ITableHeader) => {
@@ -122,9 +121,6 @@ const Table = ({
 }) => {
   // const { state, fetchEmployeesData } = useEmployeeContext();
   const employeesData = useSelector((state: any) => state.employees);
-  useEffect(() => {
-    fetchEmployees();
-  }, []);
   // useEffect(() => {
   //   if (!state.employeesData.length) {
   //     fetchEmployeesData();
